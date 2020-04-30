@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="alekseon_widget_form" class="Alekseon\WidgetForms\Block\WidgetForm">
+        <label translate="true">[Alekseon] Widget Form</label>
+        <description translate="true">Widget Form</description>
+        <parameters>
+            <parameter name="form_id" xsi:type="select" visible="true" source_model="Alekseon\WidgetForms\Model\Config\Source\AvailableForms">
+                <label translate="true">Select Form</label>
+            </parameter>
+            <parameter name="hide_title" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno">
+                <label translate="true">Hide Form Title</label>
+            </parameter>
+            <parameter name="hide_description" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno">
+                <label translate="true">Hide Form Description</label>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>
+

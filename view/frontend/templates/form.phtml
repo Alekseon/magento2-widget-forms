@@ -1,0 +1,34 @@
+<?php
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
+?>
+<?php if ($block->getForm()): ?>
+    <form id="custom_form_<?= $block->getForm()->getId() ?>" data-mage-init='{"validation":{}}' autocomplete="off">
+        <input type="hidden" name="hideit" id="hideit" />
+        <input type="hidden" name="form_key" id="form_key" value="<?= $block->getFormKey()?>" />
+        <fieldset class="fieldset">
+            <?php if ($title = $block->getTitle()): ?>
+                <legend class="legend">
+                    <span><?= $title ?></span>
+                </legend>
+            <?php endif ?>
+            <?php if ($description = $block->getDescription()): ?>
+                <div class="field note no-label"><?= $description ?></div>
+            <?php endif ?>
+            <?= $block->getChildHtml() ?>
+        </fieldset>
+    </form>
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "Alekseon_WidgetForms/js/form": {
+                "formId": "custom_form_<?= $block->getForm()->getId() ?>",
+                "formSubmitUrl": "<?= $block->getUrl('Alekseon_WidgetForms/form/submit', ['form_id' => $block->getForm()->getId()]) ?>",
+                "successMessage": "<?= $block->getSuccessMessage() ?>"
+            }
+        }
+    }
+</script>
+<?php endif ?>

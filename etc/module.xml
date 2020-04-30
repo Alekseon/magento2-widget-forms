@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Alekseon_WidgetForms" setup_version="1.0.0">
+        <sequence>
+            <module name="Alekseon_CustomFormsBuilder"/>
+            <module name="Magento_Widget" />
+        </sequence>
+    </module>
+</config>

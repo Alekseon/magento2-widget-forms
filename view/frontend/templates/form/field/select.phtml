@@ -1,0 +1,24 @@
+<?php
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
+?>
+<div class="field <?= $block->isRequired() ? 'required' : '' ?>">
+    <label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
+    <div class="control">
+        <select
+            name="<?= $block->getName() ?>"
+            id="<?= $block->getId() ?>"
+            title="<?= $block->getLabel() ?>"
+            data-validate=<?= $block->getDataValidateJson() ?>
+        >
+            <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
+                <option value="<?= $optionId ?>"><?= $optionLabel ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <?php if ($note = $block->getNote()): ?>
+        <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
+    <?php endif ?>
+</div>

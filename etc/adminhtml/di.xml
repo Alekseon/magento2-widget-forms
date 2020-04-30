@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Backend\Model\Menu\Builder">
+        <plugin name="Alekseon_WidgetForms::AddWidgetFormsToAdminMenuPlugin" type="Alekseon\WidgetForms\Plugin\AddWidgetFormsToAdminMenuPlugin"/>
+    </type>
+    <type name="Alekseon\CustomFormsBuilder\Model\FormRecord\Attribute">
+        <plugin name="Alekseon_WidgetForms::FromAttributeGroupCodesPlugin" type="Alekseon\WidgetForms\Plugin\FromAttributeGroupCodesPlugin"/>
+    </type>
+    <type name="Alekseon\CustomFormsBuilder\Block\Adminhtml\Form\Edit\Tab\Fields\Form">
+        <plugin name="Alekseon_WidgetForms::AddFormFieldsetWarningPlugin" type="Alekseon\WidgetForms\Plugin\AddFormFieldsetWarningPlugin"/>
+    </type>
+    <type name="Alekseon\CustomFormsBuilder\Block\Adminhtml\Form\Edit\Tab\General">
+        <plugin name="Alekseon_WidgetForms::RemoveWidgetGroupAttributesFromGeneralTabPlugin" type="Alekseon\WidgetForms\Plugin\RemoveWidgetGroupAttributesFromGeneralTabPlugin"/>
+    </type>
+</config>

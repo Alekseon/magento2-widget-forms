@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Alekseon\AlekseonEav\Model\Attribute\InputTypeRepository">
+        <arguments>
+            <argument name="frontendInputTypes" xsi:type="array">
+                <item name="text" xsi:type="array">
+                    <item name="frontend_blocks" xsi:type="array">
+                        <item name="default" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Text</item>
+                    </item>
+                </item>
+                <item name="textarea" xsi:type="array">
+                    <item name="frontend_blocks" xsi:type="array">
+                        <item name="default" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Textarea</item>
+                    </item>
+                </item>
+                <item name="boolean" xsi:type="array">
+                    <item name="frontend_blocks" xsi:type="array">
+                        <item name="default" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Select</item>
+                    </item>
+                </item>
+                <item name="select" xsi:type="array">
+                    <item name="frontend_blocks" xsi:type="array">
+                        <item name="default" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Select</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>
