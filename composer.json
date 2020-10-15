@@ -7,7 +7,7 @@
         "php": "~7.0.0|~7.1.0|~7.2.0|~7.3.0|~7.4.0"
     },
     "type": "magento2-module",
-    "version": "102.0.0,
+    "version": "102.0.2",
     "license": [
         "OSL-3.0",
         "AFL-3.0"

@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
-## [102.0.0] - 2020-10-15
+## [102.0.2] - 2020-10-15
 ### Added
 - Added compatibility with Magento 2.4.0
 
