@@ -2,12 +2,12 @@
     "name": "alekseon/widget-forms",
     "description": "N/A",
     "require": {
-        "magento/framework": "100.* | 101.* | 102.*",
-		"alekseon/custom-forms-builder": "101.*",
-        "php": "~7.0.0|~7.1.0|~7.2.0|~7.3.0"
+        "magento/framework": "100.* | 101.* | 102.* | 103.*",
+		"alekseon/custom-forms-builder": "102.*",
+        "php": "~7.0.0|~7.1.0|~7.2.0|~7.3.0|~7.4.0"
     },
     "type": "magento2-module",
-    "version": "101.0.1",
+    "version": "102.0.1",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
