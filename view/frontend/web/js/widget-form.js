@@ -49,6 +49,6 @@ define([
 
         validateForm: function (form) {
             return $(form).validation() && $(form).validation('isValid');
-        },
+        }
     });
 });
