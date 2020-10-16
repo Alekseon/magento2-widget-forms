@@ -5,8 +5,29 @@
  */
 ?>
 <?php if ($block->getForm()): ?>
-    <div>
-        <?= $block->getChildHtml('form') ?>
+    <div id="widget-form-wrapper-<?= $block->getForm()->getId() ?>"
+         data-bind="scope: 'widgetForm-<?= $block->getForm()->getId() ?>'">
+         <!-- ko template: getTemplate() --><!-- /ko -->
     </div>
+    <script type="text/x-magento-init">
+        {
+            "#widget-form-wrapper-<?= $block->getForm()->getId() ?>": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "widgetForm-<?= $block->getForm()->getId() ?>": {
+                            "component": "Alekseon_WidgetForms/js/widget-form",
+                            "formId": "custom_form_<?= $block->getForm()->getId() ?>",
+                            "formKey": "<?= $block->getFormKey() ?>",
+                            "title": "<?= $block->getFormTitle() ?>",
+                            "description": "<?= $block->getFromDescription() ?>",
+                            "formFieldsetHtml": <?= json_encode($block->getFormFieldsHtml()) ?>,
+                            "actionToolbarHtml": <?= json_encode($block->getActtionToolbarHtml()) ?>,
+                            "formSubmitUrl": "<?= $block->getUrl('Alekseon_WidgetForms/form/submit', ['form_id' => $block->getForm()->getId()]) ?>",
+                            "children": <?= json_encode($block->getUiComponentChildren()) ?>
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 <?php endif ?>
-

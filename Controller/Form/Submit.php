@@ -74,7 +74,7 @@ class Submit extends \Magento\Framework\App\Action\Action
 
             $formRecord->getResource()->save($formRecord);
             $resultJson->setHttpResponseCode(200);
-            $resultJson->setData(['message' => __('Form has been sent.')]);
+            $resultJson->setData(['message' => $form->getFormSubmitSuccessMessage()]);
         } catch (LocalizedException $e) {
             $resultJson->setHttpResponseCode(500);
             $resultJson->setData(['message' => $e->getMessage()]);

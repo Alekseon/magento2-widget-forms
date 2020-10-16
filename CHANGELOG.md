@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [Unreleased]
+### Changed
+- rewrited widget forms to ui component on frontend
+- changes to be campatible for recaptcha module
+
 ## [102.0.2] - 2020-10-15
 ### Added
 - Added compatibility with Magento 2.4.0

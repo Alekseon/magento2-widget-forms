@@ -22,6 +22,18 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
      * @var
      */
     protected $form;
+    /**
+     * @var
+     */
+    protected $formFieldsCollection;
+    /**
+     * @var \Magento\Framework\Data\Form\FormKey
+     */
+    protected $formKey;
+    /**
+     * @var \Magento\Framework\EntityManager\EventManager
+     */
+    protected $eventManager;
 
     /**
      * WidgetForm constructor.
@@ -32,9 +44,13 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Alekseon\CustomFormsBuilder\Model\FormRepository $formRepository,
+        \Magento\Framework\Data\Form\FormKey $formKey,
+        \Magento\Framework\EntityManager\EventManager $eventManager,
         array $data = []
     ) {
         $this->formRepository = $formRepository;
+        $this->formKey = $formKey;
+        $this->eventManager = $eventManager;
         parent::__construct($context, $data);
     }
 
@@ -44,15 +60,89 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
      */
     protected function _prepareLayout()
     {
-        $this->addChild(
-            'form',
-            \Alekseon\WidgetForms\Block\Form::class,
+        $form = $this->getForm();
+        $fields = $this->getFormFieldsCollection();
+
+        foreach ($fields as $field) {
+            $frontendInputTypeConfig = $field->getFrontendInputTypeConfig();
+            $frontendBlocks = $frontendInputTypeConfig->getFrontendBlocks();
+
+            $frontendBlock = false;
+            if (isset($frontendBlocks['default'])) {
+                $frontendBlock = $frontendBlocks['default'];
+            }
+
+            if ($frontendBlock) {
+                $this->addChild(
+                    'form_'. $form->getId() . '_field_' . $field->getAttributeCode(),
+                    $frontendBlock,
+                    [
+                        'field' => $field,
+                        'form' => $form
+                    ]
+                );
+            }
+        }
+
+        $additinalInfoBlock = $this->addChild(
+            'form_' . $form->getId() . '_additional.info',
+            \Alekseon\WidgetForms\Block\Form\AdditionalInfo::class
+        );
+
+        $this->eventManager->dispatch(
+            'alekseon_widget_form_prepare_layout',
             [
                 'form' => $this->getForm(),
+                'additional_info_block' => $additinalInfoBlock,
             ]
         );
 
+        $this->addChild(
+            'form_'. $form->getId() . '_action',
+            \Alekseon\WidgetForms\Block\Form\Action::class,
+            []
+        );
+
         return parent::_prepareLayout();
+    }
+
+    /**
+     * @return |null
+     */
+    protected function getFormFieldsCollection()
+    {
+        if ($this->formFieldsCollection === null) {
+            $form = $this->getForm();
+            $this->formFieldsCollection = $form->getFieldsCollection();
+        }
+        return $this->formFieldsCollection;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormFieldsHtml()
+    {
+        $form = $this->getForm();
+        $fields = $this->getFormFieldsCollection();
+        $html = '';
+        foreach ($fields as $field) {
+            $html .= $this->getChildHtml('form_'. $form->getId() . '_field_' . $field->getAttributeCode());
+        }
+
+        $additionalInfo = $this->getChildHtml('form_'. $form->getId() . '_additional.info');
+        $html .= $additionalInfo;
+
+        return $html;
+    }
+
+    /**
+     * @return string
+     */
+    public function getActtionToolbarHtml()
+    {
+        $form = $this->getForm();
+        return $this->getChildHtml('form_'. $form->getId() . '_action');
     }
 
     /**
@@ -71,5 +161,59 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
             }
         }
         return $this->form;
+    }
+
+    /**
+     * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function getFormTitle()
+    {
+        if ($this->getHideTitle()) {
+            return false;
+        }
+
+        return $this->getForm()->getTitle();
+    }
+
+    /**
+     * @return bool
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function getFromDescription()
+    {
+        if ($this->getHideDescription()) {
+            return false;
+        }
+
+        return $this->getForm()->getFrontendFormDescription();
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormKey()
+    {
+        return $this->formKey->getFormKey();
+    }
+
+    /**
+     * @return array
+     */
+    public function getUiComponentChildren()
+    {
+        $dataObject = new \Magento\Framework\DataObject();
+        $dataObject->setUiComponentChildren([]);
+
+        $this->eventManager->dispatch(
+            'alekseon_widget_form_ui_component_children',
+            [
+                'widget_block' => $this,
+                'form' => $this->getForm(),
+                'data_object' => $dataObject,
+            ]
+        );
+        
+        return $dataObject->getUiComponentChildren();
     }
 }
