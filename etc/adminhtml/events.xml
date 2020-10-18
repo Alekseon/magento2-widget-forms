@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="alekseon_custom_form_after_add_field_fieldset">
+        <observer name="Alekseon_WidgetForms::AddFrontendInputBlockOptions" instance="Alekseon\WidgetForms\Observer\AddFrontendInputBlockOptions" />
+    </event>
+    <event name="alekseon_custom_form_record_attibute_save_before">
+        <observer name="Alekseon_WidgetForms::FormRecordAttributeSaveAfter" instance="Alekseon\WidgetForms\Observer\FormRecordAttributeSaveAfter" />
+    </event>
+</config>

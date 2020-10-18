@@ -11,22 +11,46 @@
             <argument name="frontendInputTypes" xsi:type="array">
                 <item name="text" xsi:type="array">
                     <item name="frontend_blocks" xsi:type="array">
-                        <item name="default" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Text</item>
+                        <item name="default" xsi:type="array">
+                            <item name="label" xsi:type="string">Text</item>
+                            <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Text</item>
+                        </item>
                     </item>
                 </item>
                 <item name="textarea" xsi:type="array">
                     <item name="frontend_blocks" xsi:type="array">
-                        <item name="default" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Textarea</item>
+                        <item name="default" xsi:type="array">
+                            <item name="label" xsi:type="string">Textarea</item>
+                            <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Textarea</item>
+                        </item>
                     </item>
                 </item>
                 <item name="boolean" xsi:type="array">
                     <item name="frontend_blocks" xsi:type="array">
-                        <item name="default" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Select</item>
+                        <item name="default" xsi:type="array">
+                            <item name="label" xsi:type="string">Select</item>
+                            <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Select</item>
+                        </item>
+                        <item name="radio" xsi:type="array">
+                            <item name="label" xsi:type="string">Radio</item>
+                            <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\RadioButtons</item>
+                        </item>
+                        <item name="checkbox" xsi:type="array">
+                            <item name="label" xsi:type="string">Checkbox</item>
+                            <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Checkbox</item>
+                        </item>
                     </item>
                 </item>
                 <item name="select" xsi:type="array">
                     <item name="frontend_blocks" xsi:type="array">
-                        <item name="default" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Select</item>
+                        <item name="default" xsi:type="array">
+                            <item name="label" xsi:type="string">Select</item>
+                            <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Select</item>
+                        </item>
+                        <item name="radio" xsi:type="array">
+                            <item name="label" xsi:type="string">Radio</item>
+                            <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\RadioButtons</item>
+                        </item>
                     </item>
                 </item>
             </argument>

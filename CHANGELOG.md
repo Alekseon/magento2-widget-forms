@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - empty option for select input
 - log error during form submition
+- form input types options (checkbox and radio buttons)
 
 ## [102.0.2] - 2020-10-15
 ### Added

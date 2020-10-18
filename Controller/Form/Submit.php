@@ -73,9 +73,14 @@ class Submit extends \Magento\Framework\App\Action\Action
             foreach ($formFields as $field) {
                 $fieldCode = $field->getAttributeCode();
                 if (isset($post[$fieldCode])) {
-
-                    $formRecord->setData($fieldCode, $post[$fieldCode]);
+                    $value = $post[$fieldCode];
+                } else {
+                    /**
+                     * @TODO: probably temprary solution until there is no deafult values in EAV module
+                     */
+                    $value = $field->getDefaultValue();
                 }
+                $formRecord->setData($fieldCode, $value);
             }
 
             $formRecord->getResource()->save($formRecord);

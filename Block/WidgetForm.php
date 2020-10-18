@@ -68,14 +68,20 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
             $frontendBlocks = $frontendInputTypeConfig->getFrontendBlocks();
 
             $frontendBlock = false;
-            if (isset($frontendBlocks['default'])) {
+            $frontendInputBlock = $field->getAttributeExtraParam('frontend_input_block');
+
+            if (isset($frontendBlocks[$frontendInputBlock])) {
+                $frontendBlock = $frontendBlocks[$frontendInputBlock];
+            }
+
+            if (!$frontendBlock && isset($frontendBlocks['default'])) {
                 $frontendBlock = $frontendBlocks['default'];
             }
 
             if ($frontendBlock) {
                 $this->addChild(
                     'form_'. $form->getId() . '_field_' . $field->getAttributeCode(),
-                    $frontendBlock,
+                    $frontendBlock['class'],
                     [
                         'field' => $field,
                         'form' => $form
@@ -213,7 +219,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
                 'data_object' => $dataObject,
             ]
         );
-        
+
         return $dataObject->getUiComponentChildren();
     }
 }
