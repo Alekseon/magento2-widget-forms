@@ -13,6 +13,7 @@
             title="<?= $block->getLabel() ?>"
             data-validate=<?= $block->getDataValidateJson() ?>
         >
+            <option value=""></option>
             <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
                 <option value="<?= $optionId ?>"><?= $optionLabel ?></option>
             <?php endforeach; ?>

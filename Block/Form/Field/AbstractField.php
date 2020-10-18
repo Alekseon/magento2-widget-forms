@@ -88,6 +88,6 @@ class AbstractField extends \Magento\Framework\View\Element\Template
      */
     public function getPlaceholder()
     {
-
+        return '';
     }
 }

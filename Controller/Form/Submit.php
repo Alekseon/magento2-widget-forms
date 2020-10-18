@@ -30,6 +30,10 @@ class Submit extends \Magento\Framework\App\Action\Action
      * @var \Magento\Framework\Data\Form\FormKey\Validator
      */
     protected $formKeyValidator;
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
 
     /**
      * Submit constructor.
@@ -40,12 +44,14 @@ class Submit extends \Magento\Framework\App\Action\Action
         \Magento\Framework\Controller\Result\JsonFactory $jsonFactory,
         \Alekseon\CustomFormsBuilder\Model\FormRepository $formRepository,
         \Alekseon\CustomFormsBuilder\Model\FormRecordFactory $formRecordFactory,
-        \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
+        \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
+        \Psr\Log\LoggerInterface $logger
     ) {
         $this->formRecordFactory = $formRecordFactory;
         $this->jsonFactory = $jsonFactory;
         $this->formRepository = $formRepository;
         $this->formKeyValidator = $formKeyValidator;
+        $this->logger = $logger;
         parent::__construct($context);
     }
 
@@ -79,6 +85,7 @@ class Submit extends \Magento\Framework\App\Action\Action
             $resultJson->setHttpResponseCode(500);
             $resultJson->setData(['message' => $e->getMessage()]);
         } catch (\Exception $e) {
+            $this->logger->error('Widget Form Error during submit action: ' . $e->getMessage());
             $resultJson->setHttpResponseCode(500);
             $resultJson->setData(['message' => __('Unable To Submit Form.')]);
         }

@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - rewrited widget forms to ui component on frontend
 - changes to be campatible for recaptcha module
+### Added
+- empty option for select input
+- log error during form submition
 
 ## [102.0.2] - 2020-10-15
 ### Added
