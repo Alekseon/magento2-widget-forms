@@ -32,12 +32,23 @@ CJM Ver. | Magento 2.0 | Magento 2.1 | Magento 2.2 | Magento 2.3 | Magento 2.4
 ## Features  
   
 ### Add Forms to CMS Pages 
+
+Manege Your forms from Magento admin panel: Menu -> Content -> Elements -> Custom Forms
+
+<img src="https://i.imgur.com/WBdzGSm.png/">
   
 You can place any Form you will create by [Alekseon_CustomFormsBuilder](https://github.com/Alekseon/magento2-custom-forms-builder) extension to CMS page.
 
 <img src="https://i.imgur.com/0foIQFe.png"/>  
 
- 
+### Supported field types
+
+<ul>
+  <li>Text</li>
+  <li>Text Area</li>
+  <li>Boolen (Yes/No)</li>
+  <li>Select</li>
+</ul>
   
 ## Issue Tracking / Upcoming Features  
   
