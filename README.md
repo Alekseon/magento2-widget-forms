@@ -33,7 +33,7 @@ CJM Ver. | Magento 2.0 | Magento 2.1 | Magento 2.2 | Magento 2.3 | Magento 2.4
   
 ### Add Forms to CMS Pages 
 
-Manege Your forms from Magento admin panel: Menu -> Content -> Elements -> Custom Forms
+Menage Your forms from Magento admin panel: Menu -> Content -> Elements -> Custom Forms
 
 <img src="https://i.imgur.com/WBdzGSm.png/">
   
