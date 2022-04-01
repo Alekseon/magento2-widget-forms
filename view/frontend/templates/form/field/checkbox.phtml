@@ -11,6 +11,7 @@
             name="<?= $block->getName() ?>"
             id="<?= $block->getId() . '-checkbox' ?>"
             value="<?= $block->getValue() ?>"
+            <?= $block->isRequired() ? 'data-validate="{required:true}"' : '' ?>
         >
             <label for="<?= $block->getId() . '-checkbox' ?>"><?= $block->getLabel() ?></label>
         </input>
