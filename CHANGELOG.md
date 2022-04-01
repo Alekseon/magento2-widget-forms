@@ -9,7 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
-## [Unreleased]
+## [102.0.4] - 2022-04-01
+### Changed
+- require for checkbox input
+
+## [102.0.3]
 ### Changed
 - rewrited widget forms to ui component on frontend
 - changes to be campatible for recaptcha module
