@@ -61,6 +61,10 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     protected function _prepareLayout()
     {
         $form = $this->getForm();
+        if (!$form) {
+            return parent::_prepareLayout();
+        }
+
         $fields = $this->getFormFieldsCollection();
 
         foreach ($fields as $field) {

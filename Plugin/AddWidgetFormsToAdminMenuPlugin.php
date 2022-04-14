@@ -47,16 +47,39 @@ class AddWidgetFormsToAdminMenuPlugin
         $formCollection->addAttributeToFilter('can_use_for_widget', true);
 
         foreach ($formCollection as $form) {
+            $defaultTitle = __('Form #%1', $form->getId());
+
+            $title = $form->getTitle();
+            if (strlen($title) < 3) {
+                $title = $defaultTitle;
+            }
+            if (strlen($title) > 50) {
+                $title = substr($title, 0, 50);
+            }
+
             $params = [
                 'id' => 'widget_forms_answer_' . $form->getId(),
-                'title' => $form->getTitle() ? $form->getTitle() : __('No title'),
+                'title' => $title,
                 'resource' => 'Alekseon_WidgetForms::widget_forms_answers',
                 'action' => 'alekseon_customFormsBuilder/formRecord/index/id/' . $form->getId(),
             ];
 
-            $item = $this->menuItemFactory->create($params);
-            $contentElements = $menu->get('Alekseon_WidgetForms::widget_forms_answers');
-            $contentElements->getChildren()->add($item, null, 1);
+            try {
+                $item = $this->menuItemFactory->create($params);
+            } catch (\InvalidArgumentException $e) {
+                $params['title'] = (string) $defaultTitle;
+                $item = false;
+            }
+
+            try {
+                if (!$item) {
+                    $item = $this->menuItemFactory->create($params);
+                }
+                $contentElements = $menu->get('Alekseon_WidgetForms::widget_forms_answers');
+                $contentElements->getChildren()->add($item, null, 1);
+            } catch (\Exception $e) {
+
+            }
         }
 
         return $menu;
