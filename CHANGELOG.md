@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [Unreleased]
+### Added
+- checkbox intup block type for multiselect
+
+
 ## [102.0.7] - 2022-04-14
 ### Fixed
 - fix for widgets with non existing forms

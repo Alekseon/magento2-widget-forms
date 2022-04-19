@@ -5,21 +5,46 @@
  */
 namespace Alekseon\WidgetForms\Block\Form\Field;
 
+use Alekseon\AlekseonEav\Model\Attribute\InputType\AbstractInputType;
 use Alekseon\AlekseonEav\Model\Attribute\Source\Boolean;
 
 /**
  * Class Checkbox
  * @package Alekseon\WidgetForms\Block\Form\Field
  */
-class Checkbox extends \Alekseon\WidgetForms\Block\Form\Field\AbstractField
+class Checkbox extends \Alekseon\WidgetForms\Block\Form\Field\Select
 {
     protected $_template = "Alekseon_WidgetForms::form/field/checkbox.phtml";
 
     /**
-     * @return int
+     * @return bool
      */
-    public function getValue()
+    public function displayLabel()
     {
-        return Boolean::VALUE_YES;
+        /** @var AbstractInputType $field */
+        $field = $this->getField();
+
+        if ($field->getFrontendInput() == 'boolean') {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        $options = parent::getOptions();
+
+        /** @var AbstractInputType $field */
+        $field = $this->getField();
+
+        if ($field->getFrontendInput() == 'boolean') {
+            unset($options[Boolean::VALUE_NO]);
+            $options[Boolean::VALUE_YES] = $this->getLabel();
+        }
+
+        return $options;
     }
 }

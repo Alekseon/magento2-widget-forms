@@ -59,6 +59,10 @@
                             <item name="label" xsi:type="string">Select</item>
                             <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Multiselect</item>
                         </item>
+                        <item name="checkbox" xsi:type="array">
+                            <item name="label" xsi:type="string">Checkbox</item>
+                            <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Checkbox</item>
+                        </item>
                     </item>
                 </item>
             </argument>
