@@ -12,7 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - checkbox intup block type for multiselect
-
+### Changed
+- Removed widget forms from menu. Now its done by CustomFormsBuilder module
 
 ## [102.0.7] - 2022-04-14
 ### Fixed
