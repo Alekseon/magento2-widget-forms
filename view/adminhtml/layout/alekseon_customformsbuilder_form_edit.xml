@@ -13,6 +13,11 @@
                 <argument name="name" xsi:type="string">form_widget_settings_tab</argument>
                 <argument name="block" xsi:type="string">form_widget_settings_tab</argument>
             </action>
+            <block class="Alekseon\WidgetForms\Block\Adminhtml\Form\Edit\Tab\NewsletterSettings" name="newsletter_settings_tab"/>
+            <action method="addTab">
+                <argument name="name" xsi:type="string">newsletter_settings_tab</argument>
+                <argument name="block" xsi:type="string">newsletter_settings_tab</argument>
+            </action>
         </referenceBlock>
     </body>
 </page>

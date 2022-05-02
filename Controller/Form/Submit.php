@@ -84,6 +84,8 @@ class Submit extends \Magento\Framework\App\Action\Action
             }
 
             $formRecord->getResource()->save($formRecord);
+            $this->_eventManager->dispatch('alekseon_widget_form_after_submit', ['form_record' => $formRecord]);
+
             $resultJson->setHttpResponseCode(200);
             $resultJson->setData(['message' => $form->getFormSubmitSuccessMessage()]);
         } catch (LocalizedException $e) {

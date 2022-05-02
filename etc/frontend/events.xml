@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="alekseon_widget_form_after_submit">
+        <observer name="Alekseon_WidgetForms::SubscribeToNewsletter" instance="Alekseon\WidgetForms\Observer\SubscribeToNewsletter" />
+    </event>
+</config>

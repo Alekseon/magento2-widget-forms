@@ -13,6 +13,6 @@
         <plugin name="Alekseon_WidgetForms::AddFormFieldsetWarningPlugin" type="Alekseon\WidgetForms\Plugin\AddFormFieldsetWarningPlugin"/>
     </type>
     <type name="Alekseon\CustomFormsBuilder\Block\Adminhtml\Form\Edit\Tab\General">
-        <plugin name="Alekseon_WidgetForms::RemoveWidgetGroupAttributesFromGeneralTabPlugin" type="Alekseon\WidgetForms\Plugin\RemoveWidgetGroupAttributesFromGeneralTabPlugin"/>
+        <plugin name="Alekseon_WidgetForms::RemoveAttributesFromGeneralTabPlugin" type="Alekseon\WidgetForms\Plugin\RemoveAttributesFromGeneralTabPlugin"/>
     </type>
 </config>
