@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
-## [Unreleased]
+## [102.0.8] - 2022-05-02
 ### Added
 - checkbox intup block type for multiselect
 - subscribe to newsetter
