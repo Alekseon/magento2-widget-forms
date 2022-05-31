@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [102.0.9] - 2022-05-31
+### Added
+- added form submit failure message
+### Changed
+- form submit success message is now wysiwyg field
+### Fixed
+- some typos
+
 ## [102.0.8] - 2022-05-02
 ### Added
 - checkbox intup block type for multiselect

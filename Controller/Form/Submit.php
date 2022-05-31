@@ -63,9 +63,9 @@ class Submit extends \Magento\Framework\App\Action\Action
         $resultJson = $this->jsonFactory->create();
 
         try {
+            $form = $this->getForm();
             $this->validateData();
             $post = $this->getRequest()->getPost();
-            $form = $this->getForm();
             $formRecord = $this->formRecordFactory->create();
             $formRecord->setStoreId(\Magento\Store\Model\Store::DEFAULT_STORE_ID);
             $formRecord->setFormId($form->getId());
@@ -87,14 +87,14 @@ class Submit extends \Magento\Framework\App\Action\Action
             $this->_eventManager->dispatch('alekseon_widget_form_after_submit', ['form_record' => $formRecord]);
 
             $resultJson->setHttpResponseCode(200);
-            $resultJson->setData(['message' => $form->getFormSubmitSuccessMessage()]);
+            $resultJson->setData(['message' => __($form->getFormSubmitSuccessMessage())]);
         } catch (LocalizedException $e) {
             $resultJson->setHttpResponseCode(500);
             $resultJson->setData(['message' => $e->getMessage()]);
         } catch (\Exception $e) {
             $this->logger->error('Widget Form Error during submit action: ' . $e->getMessage());
             $resultJson->setHttpResponseCode(500);
-            $resultJson->setData(['message' => __('Unable To Submit Form.')]);
+            $resultJson->setData(['message' => __($form->getFormSubmitFailureMessage())]);
         }
 
         return $resultJson;
@@ -109,9 +109,9 @@ class Submit extends \Magento\Framework\App\Action\Action
             throw new \Exception(__('Incorrect Form Key'));
         }
 
-       if ($this->getRequest()->getParam('hideit')) {
-           throw new \Exception(__('Interrupted Data'));
-       }
+        if ($this->getRequest()->getParam('hideit')) {
+            throw new \Exception(__('Interrupted Data'));
+        }
     }
 
     /**

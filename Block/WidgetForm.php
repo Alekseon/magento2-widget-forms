@@ -190,7 +190,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
      * @return bool
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getFromDescription()
+    public function getFormDescription()
     {
         if ($this->getHideDescription()) {
             return false;

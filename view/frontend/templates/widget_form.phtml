@@ -19,7 +19,7 @@
                             "formId": "custom_form_<?= $block->getForm()->getId() ?>",
                             "formKey": "<?= $block->getFormKey() ?>",
                             "title": "<?= $block->getFormTitle() ?>",
-                            "description": "<?= $block->getFromDescription() ?>",
+                            "description": "<?= $block->getFormDescription() ?>",
                             "formFieldsetHtml": <?= json_encode($block->getFormFieldsHtml()) ?>,
                             "actionToolbarHtml": <?= json_encode($block->getActtionToolbarHtml()) ?>,
                             "formSubmitUrl": "<?= $block->getUrl('Alekseon_WidgetForms/form/submit', ['form_id' => $block->getForm()->getId()]) ?>",

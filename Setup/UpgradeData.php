@@ -17,7 +17,7 @@ use Magento\Framework\Setup\UpgradeDataInterface;
 class UpgradeData implements UpgradeDataInterface
 {
     /**
-     * @var EavDataSetupFactory
+     * @var \Alekseon\AlekseonEav\Setup\EavDataSetupFactory
      */
     protected $eavSetupFactory;
     /**
@@ -45,30 +45,34 @@ class UpgradeData implements UpgradeDataInterface
     public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         if (version_compare($context->getVersion(), '1.0.1', '<')) {
-            $this->addNewsletterAttributes($setup);
+            $this->addNewsletterAttributes();
+        }
+
+        if (version_compare($context->getVersion(), '1.0.2', '<')) {
+            $this->addFormSubmitFailureMessage();
         }
     }
-
 
     /**
      *
      */
     protected function addNewsletterAttributes()
     {
+        /** @var \Alekseon\AlekseonEav\Setup\EavDataSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create();
         $eavSetup->setAttributeRepository($this->formAttributeRepository);
 
         $eavSetup->createAttribute(
             'subscribe_to_newsletter',
-                [
-                    'frontend_input' => 'boolean',
-                    'frontend_label' => 'Subscribe to newletter',
-                    'visible_in_grid' => false,
-                    'is_required' => false,
-                    'sort_order' => 10,
-                    'scope' => Scopes::SCOPE_GLOBAL,
-                    'group_code' => 'newsletter',
-                ]
+            [
+                'frontend_input' => 'boolean',
+                'frontend_label' => 'Subscribe to newletter',
+                'visible_in_grid' => false,
+                'is_required' => false,
+                'sort_order' => 10,
+                'scope' => Scopes::SCOPE_GLOBAL,
+                'group_code' => 'newsletter',
+            ]
         );
 
         $eavSetup->createAttribute(
@@ -83,6 +87,43 @@ class UpgradeData implements UpgradeDataInterface
                 'sort_order' => 20,
                 'scope' => Scopes::SCOPE_GLOBAL,
                 'group_code' => 'newsletter',
+            ]
+        );
+    }
+
+    /**
+     *
+     */
+    protected function addFormSubmitFailureMessage()
+    {
+        /** @var \Alekseon\AlekseonEav\Setup\EavDataSetup $eavSetup */
+        $eavSetup = $this->eavSetupFactory->create();
+        $eavSetup->setAttributeRepository($this->formAttributeRepository);
+
+        $eavSetup->updateAttribute('form_submit_success_message',
+            [
+                'frontend_input' => 'textarea',
+                'frontend_label' => 'Form Submit Success Message',
+                'visible_in_grid' => false,
+                'is_required' => false,
+                'sort_order' => 30,
+                'group_code' => 'widget_form_attribute',
+                'scope' => Scopes::SCOPE_STORE,
+                'is_wysiwyg_enabled' => true,
+            ]
+        );
+
+        $eavSetup->createAttribute(
+            'form_submit_failure_message',
+            [
+                'frontend_input' => 'textarea',
+                'frontend_label' => 'Form Submit Failure Message',
+                'visible_in_grid' => false,
+                'is_required' => false,
+                'sort_order' => 31,
+                'group_code' => 'widget_form_attribute',
+                'scope' => Scopes::SCOPE_STORE,
+                'is_wysiwyg_enabled' => true,
             ]
         );
     }
