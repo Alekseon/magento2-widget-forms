@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [102.0.10] - 2022-06-01
+### Added
+- added css className to the form wrapper element
+
 ## [102.0.9] - 2022-05-31
 ### Added
 - added form submit failure message
