@@ -12,7 +12,7 @@
         <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
             <input
                 type="checkbox"
-                name="<?= $block->getName() ?>[]"
+                name="<?= $block->getName() ?><?= $block->displayLabel() ? '[]' : '' ?>"
                 id="<?= $block->getId() . '-option-' . $optionId ?>"
                 value="<?= $optionId ?>"
                 data-validate=<?= $block->getDataValidateJson() ?>
