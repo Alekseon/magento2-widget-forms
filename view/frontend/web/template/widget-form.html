@@ -14,12 +14,12 @@
     <fieldset class="fieldset">
         <!-- ko if: title -->
             <legend class="legend">
-                <span data-bind="text: title" />
+                <span data-bind="html: title" />
             </legend>
         <!--/ko-->
 
         <!-- ko if: description -->
-            <div class="field note no-label" data-bind="text: description" />
+            <div class="field note no-label" data-bind="html: description" />
         <!--/ko-->
 
         <fieldset class="fieldset" data-bind="html: formFieldsetHtml" />

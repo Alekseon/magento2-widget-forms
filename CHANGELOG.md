@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [102.0.12] - 2022-06-15
+### Fixed
+- changed web template to render title and description as html
+
 ## [102.0.11] - 2022-06-14
 ### Fixed
 - template rendering checkbox input when it is boolean type
