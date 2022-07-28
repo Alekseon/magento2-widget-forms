@@ -22,10 +22,15 @@ define([
 
             var self = this;
 
+            const formData = new FormData(form);
+            formData.append("form_key", $.mage.cookies.get("form_key"))
+
             $.ajax({
                 url: this.formSubmitUrl,
                 type: 'POST',
-                data: $(form).serializeArray(),
+                data: formData,
+                processData: false,
+                contentType: false,
                 dataType: 'json',
                 showLoader: true
             }).done(function (response) {

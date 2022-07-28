@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [102.0.14] - 2022-07-07
+### Fixed
+- form_key is now passed to Form from frontend
+
 ## [102.0.13] - 2022-07-07
 ### Added
 - added input=date field to frontend
