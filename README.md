@@ -35,6 +35,8 @@ CJM Ver. | Magento 2.0 | Magento 2.1 | Magento 2.2 | Magento 2.3 | Magento 2.4
 
 You can place any Form you will create by [Alekseon_CustomFormsBuilder](https://github.com/Alekseon/magento2-custom-forms-builder) extension to CMS page.
 
+Visit our [alekseon.com](https://alekseon.com/en/blog/post/module-widget-forms/) website for more information about the Widget.
+
 <img src="https://i.imgur.com/0foIQFe.png"/>  
   
 ## Issue Tracking / Upcoming Features  
