@@ -83,7 +83,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
             }
 
             if ($frontendBlock) {
-                $this->addChild(
+                $block = $this->addChild(
                     'form_'. $form->getId() . '_field_' . $field->getAttributeCode(),
                     $frontendBlock['class'],
                     [
@@ -91,6 +91,10 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
                         'form' => $form
                     ]
                 );
+
+                if (isset($frontendBlock['template'])) {
+                    $block->setTemplate($frontendBlock['template']);
+                }
             }
         }
 
