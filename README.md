@@ -38,6 +38,10 @@ You can place any Form you will create by [Alekseon_CustomFormsBuilder](https://
 Visit our [alekseon.com](https://alekseon.com/en/blog/post/module-widget-forms/) website for more information about the Widget.
 
 <img src="https://i.imgur.com/0foIQFe.png"/>  
+
+## Hyvä Theme compatibility
+
+Alekseon_WidgetForms is also available as a [Compatibility module](https://gitlab.hyva.io/hyva-public/module-tracker/-/issues/236) for [Hyvä Themes](https://hyva.io/)
   
 ## Issue Tracking / Upcoming Features  
   
