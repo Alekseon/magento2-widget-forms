@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [102.0.17] - 2022-09-02
+### Added
+- new template checkbox_vertical for multiselected checkbox  
+
 ## [102.0.16] - 2022-09-02
 ### Added
 - alow to set tempate on frontend block by di.xml

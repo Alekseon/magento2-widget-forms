@@ -68,8 +68,13 @@
                             <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Multiselect</item>
                         </item>
                         <item name="checkbox" xsi:type="array">
-                            <item name="label" xsi:type="string">Checkbox</item>
+                            <item name="label" xsi:type="string">Checkbox Horizontal</item>
                             <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Checkbox</item>
+                        </item>
+                        <item name="checkbox_v" xsi:type="array">
+                            <item name="label" xsi:type="string">Checkbox Vertical</item>
+                            <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Checkbox</item>
+                            <item name="template" xsi:type="string">Alekseon_WidgetForms::form/field/checkbox_vertical.phtml</item>
                         </item>
                     </item>
                 </item>
