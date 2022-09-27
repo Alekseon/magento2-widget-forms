@@ -13,6 +13,9 @@
             title="<?= $block->getLabel() ?>"
             cols="5"
             rows="3"
+            <?php if ($block->getMaxLength()): ?>
+                maxlength="<?= $block->getMaxLength() ?>"
+            <?php endif ?>
             data-validate=<?= $block->getDataValidateJson() ?>
         ><?=$block->getPlaceholder() ?></textarea>
     </div>
