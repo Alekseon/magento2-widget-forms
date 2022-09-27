@@ -1,0 +1,9 @@
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  .control.multi-columns {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(6, auto);
+    column-gap: 10px;
+  }
+}
