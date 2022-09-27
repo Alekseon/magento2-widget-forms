@@ -67,6 +67,7 @@ class Submit extends \Magento\Framework\App\Action\Action
             $this->validateData();
             $post = $this->getRequest()->getPost();
             $formRecord = $this->formRecordFactory->create();
+            $formRecord->getResource()->setCurrentForm($form);
             $formRecord->setStoreId(\Magento\Store\Model\Store::DEFAULT_STORE_ID);
             $formRecord->setFormId($form->getId());
             $formFields = $form->getFieldsCollection();

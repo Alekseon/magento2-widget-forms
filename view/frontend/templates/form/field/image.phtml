@@ -1,0 +1,27 @@
+<?php
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
+?>
+<div class="field <?= $block->isRequired() ? 'required' : '' ?>">
+    <div class="control" style="margin-bottom: 47px">
+        <label
+            class="label custom-file-upload"
+            for="<?= $block->getId() ?>">
+            <i class="fa fa-cloud-upload"></i>
+            <?= $block->getLabel() ?>
+            <input
+                name="<?= $block->getName() ?>"
+                id="<?= $block->getId() ?>"
+                title="<?= $block->getLabel() ?>"
+                type="file"
+                placeholder="<?=$block->getPlaceholder() ?>"
+                data-validate=<?= $block->getDataValidateJson() ?>
+            />
+        </label>
+    </div>
+    <?php if ($note = $block->getNote()): ?>
+        <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
+    <?php endif ?>
+</div>
