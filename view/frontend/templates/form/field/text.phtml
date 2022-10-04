@@ -12,6 +12,7 @@
             id="<?= $block->getId() ?>"
             title="<?= $block->getLabel() ?>"
             type="text"
+            class="<?= $block->getValidationClass() ?>"
             placeholder="<?=$block->getPlaceholder() ?>"
             data-validate=<?= $block->getDataValidateJson() ?>
         />

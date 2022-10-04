@@ -14,7 +14,7 @@ class Textarea extends \Alekseon\WidgetForms\Block\Form\Field\AbstractField
     protected $_template = "Alekseon_WidgetForms::form/field/textarea.phtml";
 
     /**
-     * 
+     *
      */
     public function getMaxLength()
     {

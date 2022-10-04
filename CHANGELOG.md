@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [102.0.19] - 2022-10-04
+### Changed
+- changed composer requirements
+- modification for input validations
+
 ## [102.0.18] - 2022-09-27
 ### Added
 - images input
