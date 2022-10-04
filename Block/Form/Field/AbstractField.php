@@ -14,6 +14,15 @@ use Magento\Framework\View\Element\Template;
 class AbstractField extends \Magento\Framework\View\Element\Template
 {
     /**
+     * @var
+     */
+    protected $dataValidateParams;
+    /**
+     * @var
+     */
+    protected $validationClass;
+
+    /**
      * @return bool
      */
     public function isRequired()
@@ -50,20 +59,34 @@ class AbstractField extends \Magento\Framework\View\Element\Template
      */
     protected function getDataValidateParams()
     {
-        $dataValidate = [];
-        if ($this->isRequired()) {
-            $dataValidate['required'] = true;
-        }
+        if ($this->dataValidateParams === null) {
+            $this->validationClass = '';
+            $this->dataValidateParams = [];
+            if ($this->isRequired()) {
+                $this->dataValidateParams['required'] = true;
+            }
 
-        $inputValidator = $this->getField()->getInputValidator();
-        if ($inputValidator) {
-            $validateParams = $inputValidator->getDataValidateParams($this->getField());
-            foreach ($validateParams as $key => $value) {
-                $dataValidate[$key] = $value;
+            $inputValidators = $this->getField()->getInputValidators();
+            foreach ($inputValidators as $validator) {
+                $validateParams = $validator->getDataValidateParams();
+                foreach ($validateParams as $key => $value) {
+                    $this->dataValidateParams[$key] = $value;
+                }
+
+                $this->validationClass .= $validator->getValidationFieldClass();
             }
         }
 
-        return $dataValidate;
+        return $this->dataValidateParams;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValidationClass()
+    {
+        $this->getDataValidateParams();
+        return $this->validationClass;
     }
 
     /**

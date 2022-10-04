@@ -13,6 +13,7 @@
             title="<?= $block->getLabel() ?>"
             cols="5"
             rows="3"
+            class="<?= $block->getValidationClass() ?>"
             <?php if ($block->getMaxLength()): ?>
                 maxlength="<?= $block->getMaxLength() ?>"
             <?php endif ?>
