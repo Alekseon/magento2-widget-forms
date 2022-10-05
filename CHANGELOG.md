@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
-## [102.0.20] - 2022-10-05
+## [102.0.21] - 2022-10-05
 ### Changed
 - compability to attribute default values
 
