@@ -16,7 +16,9 @@
         >
             <option value=""></option>
             <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
-                <option value="<?= $optionId ?>"><?= $optionLabel ?></option>
+                <option value="<?= $optionId ?>" <?php if ($block->isSelected($optionId)): ?>selected<?php endif ?>>
+                    <?= $optionLabel ?>
+                </option>
             <?php endforeach; ?>
         </select>
     </div>
