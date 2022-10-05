@@ -25,4 +25,12 @@ class Select extends \Alekseon\WidgetForms\Block\Form\Field\AbstractField
         }
         return [];
     }
+
+    /**
+     * @return bool
+     */
+    public function isSelected($optionId)
+    {
+        return true;
+    }
 }

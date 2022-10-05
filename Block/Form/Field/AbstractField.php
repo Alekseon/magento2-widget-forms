@@ -113,4 +113,12 @@ class AbstractField extends \Magento\Framework\View\Element\Template
     {
         return '';
     }
+
+    /**
+     *
+     */
+    public function getDefaultValue()
+    {
+        return $this->getField()->getDefaultValue();
+    }
 }

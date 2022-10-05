@@ -3,11 +3,11 @@
     "description": "N/A",
     "require": {
         "magento/framework": "103.*",
-		"alekseon/custom-forms-builder": "^102.0.7",
+		"alekseon/custom-forms-builder": "^102.0.8",
         "alekseon/widget-forms-re-captcha": "100.*"
     },
     "type": "magento2-module",
-    "version": "102.0.19",
+    "version": "102.0.20",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
