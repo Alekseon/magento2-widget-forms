@@ -12,6 +12,10 @@ namespace Alekseon\WidgetForms\Block\Form\Field;
 class Select extends \Alekseon\WidgetForms\Block\Form\Field\AbstractField
 {
     protected $_template = "Alekseon_WidgetForms::form/field/select.phtml";
+    /**
+     * @var
+     */
+    protected $selectedOptions;
 
     /**
      * @return array
@@ -31,6 +35,16 @@ class Select extends \Alekseon\WidgetForms\Block\Form\Field\AbstractField
      */
     public function isSelected($optionId)
     {
-        return true;
+        if ($this->selectedOptions === null) {
+            $this->selectedOptions = [];
+            $defaultValue = $this->getField()->getDefaultValue();
+            $options = $this->getOptions();
+            foreach ($options as $id => $label) {
+                if (in_array($id, $defaultValue)) {
+                    $this->selectedOptions[$id] = $id;
+                }
+            }
+        }
+        return isset($this->selectedOptions[$optionId]);
     }
 }

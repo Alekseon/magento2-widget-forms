@@ -64,7 +64,7 @@
                 <item name="multiselect" xsi:type="array">
                     <item name="frontend_blocks" xsi:type="array">
                         <item name="default" xsi:type="array">
-                            <item name="label" xsi:type="string">Select</item>
+                            <item name="label" xsi:type="string">Multiselect</item>
                             <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Multiselect</item>
                         </item>
                         <item name="checkbox" xsi:type="array">
