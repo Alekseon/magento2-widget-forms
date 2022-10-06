@@ -16,6 +16,7 @@
                     name="<?= $block->getName() ?><?= $block->displayLabel() ? '[]' : '' ?>"
                     id="<?= $block->getId() . '-option-' . $optionId ?>"
                     value="<?= $optionId ?>"
+                    <?php if ($block->isSelected($optionId)): ?>checked<?php endif ?>
                     data-validate=<?= $block->getDataValidateJson() ?>
                 >
                 <label for="<?= $block->getId() . '-option-' . $optionId ?>"><?= $optionLabel ?></label>

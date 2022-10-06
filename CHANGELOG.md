@@ -9,9 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [102.0.22] - 2022-10-06
+### Fixed
+- compatibility to attribute default values
+
 ## [102.0.21] - 2022-10-05
-### Changed
-- compability to attribute default values
+### Added
+- compatibility to attribute default values
 
 ## [102.0.19] - 2022-10-04
 ### Changed
