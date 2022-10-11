@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [Unreleased]
+### Fixed
+- fix for warning in isSelected method for Select Field
+
 ## [102.0.22] - 2022-10-06
 ### Fixed
 - compatibility to attribute default values

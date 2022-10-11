@@ -38,10 +38,12 @@ class Select extends \Alekseon\WidgetForms\Block\Form\Field\AbstractField
         if ($this->selectedOptions === null) {
             $this->selectedOptions = [];
             $defaultValue = $this->getField()->getDefaultValue();
-            $options = $this->getOptions();
-            foreach ($options as $id => $label) {
-                if (in_array($id, $defaultValue)) {
-                    $this->selectedOptions[$id] = $id;
+            if (is_array($defaultValue)) {
+                $options = $this->getOptions();
+                foreach ($options as $id => $label) {
+                    if (in_array($id, $defaultValue)) {
+                        $this->selectedOptions[$id] = $id;
+                    }
                 }
             }
         }
