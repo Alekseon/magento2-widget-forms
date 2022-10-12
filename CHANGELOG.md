@@ -9,9 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
-## [Unreleased]
+## [102.0.23]
 ### Fixed
 - fix for warning in isSelected method for Select Field
+- fix validation for newsletter email
+### Changed
+- TextFormAttribute source extends from CustomFormBuilder module
 
 ## [102.0.22] - 2022-10-06
 ### Fixed
