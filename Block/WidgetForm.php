@@ -70,30 +70,29 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
         foreach ($fields as $field) {
             $frontendInputTypeConfig = $field->getFrontendInputTypeConfig();
             $frontendBlocks = $frontendInputTypeConfig->getFrontendBlocks();
-            $frontendBlock = false;
+            $frontendBlock = [];
             $frontendInputBlock = $field->getAttributeExtraParam('frontend_input_block');
 
-            if (isset($frontendBlocks[$frontendInputBlock])) {
-                $frontendBlock = $frontendBlocks[$frontendInputBlock];
-            }
-
-            if (!$frontendBlock && isset($frontendBlocks['default'])) {
+            if (isset($frontendBlocks['default'])) {
                 $frontendBlock = $frontendBlocks['default'];
             }
 
-            if ($frontendBlock) {
+            if (isset($frontendBlocks[$frontendInputBlock])) {
+                $frontendBlock = array_merge($frontendBlock, $frontendBlocks[$frontendInputBlock]);
+            }
+
+            if (isset($frontendBlock['class'])) {
+
+                $class = $frontendBlock['class'];
+                unset($frontendBlock['class']);
+                $frontendBlock['field'] = $field;
+                $frontendBlock['form'] = $form;
+
                 $block = $this->addChild(
                     'form_'. $form->getId() . '_field_' . $field->getAttributeCode(),
-                    $frontendBlock['class'],
-                    [
-                        'field' => $field,
-                        'form' => $form
-                    ]
+                    $class,
+                    $frontendBlock
                 );
-
-                if (isset($frontendBlock['template'])) {
-                    $block->setTemplate($frontendBlock['template']);
-                }
             }
         }
 

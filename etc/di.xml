@@ -12,7 +12,14 @@
                 <item name="current_product" xsi:type="array">
                     <item name="label" xsi:type="string">Current Product</item>
                     <item name="factory" xsi:type="object">Alekseon\WidgetForms\Model\Attribute\DefaultValueProvider\CurrentProductFactory</item>
-                    <item name="applicable_input_types" xsi:type="array">
+                    <item name="applicable_frontend_inputs" xsi:type="array">
+                        <item name="text" xsi:type="string">text</item>
+                    </item>
+                </item>
+                <item name="customer_email" xsi:type="array">
+                    <item name="label" xsi:type="string">Customer Email</item>
+                    <item name="factory" xsi:type="object">Alekseon\WidgetForms\Model\Attribute\DefaultValueProvider\CustomerEmailFactory</item>
+                    <item name="applicable_frontend_inputs" xsi:type="array">
                         <item name="text" xsi:type="string">text</item>
                     </item>
                 </item>
@@ -30,8 +37,12 @@
                         </item>
                         <item name="hidden" xsi:type="array">
                             <item name="label" xsi:type="string">Hidden</item>
-                            <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Text</item>
                             <item name="template" xsi:type="string">Alekseon_WidgetForms::form/field/hidden.phtml</item>
+                        </item>
+                        <item name="hidden_if_has_default_value" xsi:type="array">
+                            <item name="label" xsi:type="string">Hidden If Has Default Value</item>
+                            <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\TextHiddenIfHasDefaultValue</item>
+                            <item name="hidden_template" xsi:type="string">Alekseon_WidgetForms::form/field/hidden.phtml</item>
                         </item>
                     </item>
                 </item>

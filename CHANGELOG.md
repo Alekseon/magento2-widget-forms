@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ## Added
 - current product default value
+- customer email default value
 - hidden text input type block
 
 ## [102.0.23]
