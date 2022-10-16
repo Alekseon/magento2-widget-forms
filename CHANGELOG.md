@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [Unreleased]
+## Added
+- current product default value
+- hidden text input type block
+
 ## [102.0.23]
 ### Fixed
 - fix for warning in isSelected method for Select Field

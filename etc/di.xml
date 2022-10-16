@@ -6,6 +6,19 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Alekseon\AlekseonEav\Model\Attribute\DefaultValueProviderRepository">
+        <arguments>
+            <argument name="defaultValueProviders" xsi:type="array">
+                <item name="current_product" xsi:type="array">
+                    <item name="label" xsi:type="string">Current Product</item>
+                    <item name="factory" xsi:type="object">Alekseon\WidgetForms\Model\Attribute\DefaultValueProvider\CurrentProductFactory</item>
+                    <item name="applicable_input_types" xsi:type="array">
+                        <item name="text" xsi:type="string">text</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
     <type name="Alekseon\AlekseonEav\Model\Attribute\InputTypeRepository">
         <arguments>
             <argument name="frontendInputTypes" xsi:type="array">
@@ -14,6 +27,11 @@
                         <item name="default" xsi:type="array">
                             <item name="label" xsi:type="string">Text</item>
                             <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Text</item>
+                        </item>
+                        <item name="hidden" xsi:type="array">
+                            <item name="label" xsi:type="string">Hidden</item>
+                            <item name="class" xsi:type="string">Alekseon\WidgetForms\Block\Form\Field\Text</item>
+                            <item name="template" xsi:type="string">Alekseon_WidgetForms::form/field/hidden.phtml</item>
                         </item>
                     </item>
                 </item>

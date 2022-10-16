@@ -58,11 +58,11 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
      * @return \Magento\Framework\View\Element\Template
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    protected function _prepareLayout()
+    protected function _toHtml()
     {
         $form = $this->getForm();
         if (!$form) {
-            return parent::_prepareLayout();
+            return parent::_toHtml();
         }
 
         $fields = $this->getFormFieldsCollection();
@@ -70,7 +70,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
         foreach ($fields as $field) {
             $frontendInputTypeConfig = $field->getFrontendInputTypeConfig();
             $frontendBlocks = $frontendInputTypeConfig->getFrontendBlocks();
-
             $frontendBlock = false;
             $frontendInputBlock = $field->getAttributeExtraParam('frontend_input_block');
 
@@ -117,7 +116,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
             []
         );
 
-        return parent::_prepareLayout();
+        return parent::_toHtml();
     }
 
     /**
@@ -138,6 +137,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     public function getFormFieldsHtml()
     {
         $form = $this->getForm();
+
         $fields = $this->getFormFieldsCollection();
         $html = '';
         foreach ($fields as $field) {
@@ -160,20 +160,24 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     }
 
     /**
-     * @return bool|mixed
+     * @return false|mixed
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getForm()
     {
-        if ($this->form == null) {
+        if ($this->form === null) {
             $formId = (int)$this->getData("form_id");
-            $form = $this->formRepository->getById($formId, null, true);
-            if ($form->getCanUseForWidget()) {
-                $this->form = $form;
-            } else {
-                $this->form = false;
+
+            if ($formId) {
+                $form = $this->formRepository->getById($formId, null, true);
+                if ($form->getCanUseForWidget()) {
+                    $this->form = $form;
+                } else {
+                    $this->form = false;
+                }
             }
         }
+
         return $this->form;
     }
 
