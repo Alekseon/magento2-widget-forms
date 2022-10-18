@@ -165,9 +165,9 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     public function getForm()
     {
         if ($this->form === null) {
-            $formCode = $this->getData('form_code');
-            if ($formCode) {
-                $form = $this->formRepository->getByCode($formCode, null);
+            $identifier = $this->getData('identifier');
+            if ($identifier) {
+                $form = $this->formRepository->getByIdentifier($identifier, null);
             } else {
                 $formId = (int)$this->getData('form_id');
                 if ($formId) {
