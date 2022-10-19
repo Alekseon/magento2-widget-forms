@@ -86,19 +86,34 @@ class Submit extends \Magento\Framework\App\Action\Action
 
             $formRecord->getResource()->save($formRecord);
             $this->_eventManager->dispatch('alekseon_widget_form_after_submit', ['form_record' => $formRecord]);
-
             $resultJson->setHttpResponseCode(200);
-            $resultJson->setData(['message' => __($form->getFormSubmitSuccessMessage())]);
+            $resultJson->setData(['message' => $this->getSuccessMessage($formRecord)]);
         } catch (LocalizedException $e) {
             $resultJson->setHttpResponseCode(500);
             $resultJson->setData(['message' => $e->getMessage()]);
         } catch (\Exception $e) {
             $this->logger->error('Widget Form Error during submit action: ' . $e->getMessage());
             $resultJson->setHttpResponseCode(500);
-            $resultJson->setData(['message' => __($form->getFormSubmitFailureMessage())]);
+            $resultJson->setData(['message' => $this->getFailureMessage($formRecord)]);
         }
 
         return $resultJson;
+    }
+
+    /**
+     * @param $form
+     */
+    public function getSuccessMessage($formRecord)
+    {
+        return $formRecord->getForm()->getFormSubmitSuccessMessage();
+    }
+
+    /**
+     * @param $form
+     */
+    public function getFailureMessage($formRecord)
+    {
+        return $formRecord->getForm()->getFormSubmitFailureMessage();
     }
 
     /**

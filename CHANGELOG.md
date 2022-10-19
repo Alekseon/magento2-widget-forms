@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - customer email default value
 - hidden text input type block
 - form identifier parameter for widget
+- create getter methods for success and failure message
 
 ## [102.0.23]
 ### Fixed
