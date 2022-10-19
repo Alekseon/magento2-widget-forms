@@ -10,8 +10,7 @@
 <h4 align="center">Place forms as widgets to CMS page in Magento 2</h4>  
   
 <p align="center"><i>Let you add forms to CMS pages</i></p>  
-  
-  
+
 ## Installation  
   
 In your Magento2 root directory, you may install this package via composer:  
@@ -62,6 +61,10 @@ If you want to contribute please follow the below instructions:
 5. Publish the branch (`git push origin my-new-feature`)  
 6. Submit a new Pull Request for review  
   
+## Wiki
+
+<a href="https://github.com/Alekseon/magento2-widget-forms/wiki">https://github.com/Alekseon/magento2-widget-forms/wiki</a>
+
 ## Maintainers  
   
 Current maintainers:  
