@@ -18,6 +18,6 @@ class Textarea extends \Alekseon\WidgetForms\Block\Form\Field\AbstractField
      */
     public function getMaxLength()
     {
-        return $this->getField()->getInputParam('maxlength');
+        return $this->getField()->getInputParam('maxLength');
     }
 }
