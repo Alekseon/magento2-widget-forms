@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 ## [Unreleased]
+### Fixed
+- fix infinite loading on submit where returned server error
 ## Added
 - current product default value
 - customer email default value
