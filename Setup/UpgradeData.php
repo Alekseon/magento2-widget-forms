@@ -49,7 +49,12 @@ class UpgradeData implements UpgradeDataInterface
         }
 
         if (version_compare($context->getVersion(), '1.0.2', '<')) {
-            $this->addFormSubmitFailureMessage();
+            $this->addFormSubmitSuccessMessage();
+        }
+
+        if ($context->getVersion() && version_compare($context->getVersion(), '1.0.3', '<')) {
+            $this->removeFormSubmitFailureMessage();
+            $this->addFormSubmitSuccessTitle();
         }
     }
 
@@ -94,7 +99,7 @@ class UpgradeData implements UpgradeDataInterface
     /**
      *
      */
-    protected function addFormSubmitFailureMessage()
+    protected function addFormSubmitSuccessMessage()
     {
         /** @var \Alekseon\AlekseonEav\Setup\EavDataSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create();
@@ -112,19 +117,38 @@ class UpgradeData implements UpgradeDataInterface
                 'is_wysiwyg_enabled' => true,
             ]
         );
+    }
 
-        $eavSetup->createAttribute(
-            'form_submit_failure_message',
+    /**
+     *
+     */
+    protected function addFormSubmitSuccessTitle()
+    {
+        /** @var \Alekseon\AlekseonEav\Setup\EavDataSetup $eavSetup */
+        $eavSetup = $this->eavSetupFactory->create();
+        $eavSetup->setAttributeRepository($this->formAttributeRepository);
+
+        $eavSetup->createOrUpdateAttribute('form_submit_success_title',
             [
-                'frontend_input' => 'textarea',
-                'frontend_label' => 'Form Submit Failure Message',
+                'frontend_input' => 'text',
+                'frontend_label' => 'Form Submit Success Title',
                 'visible_in_grid' => false,
                 'is_required' => false,
-                'sort_order' => 31,
+                'sort_order' => 29,
                 'group_code' => 'widget_form_attribute',
                 'scope' => Scopes::SCOPE_STORE,
-                'is_wysiwyg_enabled' => true,
             ]
         );
+    }
+
+    /**
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    protected function removeFormSubmitFailureMessage()
+    {
+        /** @var \Alekseon\AlekseonEav\Setup\EavDataSetup $eavSetup */
+        $eavSetup = $this->eavSetupFactory->create();
+        $eavSetup->setAttributeRepository($this->formAttributeRepository);
+        $eavSetup->deleteAttribute('form_submit_failure_message');
     }
 }

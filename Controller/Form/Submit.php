@@ -84,14 +84,27 @@ class Submit extends \Magento\Framework\App\Action\Action
             $formRecord->getResource()->save($formRecord);
             $this->_eventManager->dispatch('alekseon_widget_form_after_submit', ['form_record' => $formRecord]);
             $resultJson->setHttpResponseCode(200);
-            $resultJson->setData(['message' => $this->getSuccessMessage($formRecord)]);
+            $resultJson->setData(
+                [
+                    'title' => $this->getSuccessTitle($formRecord),
+                    'message' => $this->getSuccessMessage($formRecord),
+                ]
+            );
         } catch (LocalizedException $e) {
             $resultJson->setHttpResponseCode(500);
-            $resultJson->setData(['message' => $e->getMessage()]);
+            $resultJson->setData(
+                [
+                    'message' => $e->getMessage()
+                ]
+            );
         } catch (\Exception $e) {
             $this->logger->error('Widget Form Error during submit action: ' . $e->getMessage());
             $resultJson->setHttpResponseCode(500);
-            $resultJson->setData(['message' => $this->getFailureMessage($formRecord)]);
+            $resultJson->setData(
+                [
+                    'message' => __('We are unable to process your request. Please, try again later.'),
+                ]
+            );
         }
 
         return $resultJson;
@@ -102,15 +115,23 @@ class Submit extends \Magento\Framework\App\Action\Action
      */
     public function getSuccessMessage($formRecord)
     {
-        return $formRecord->getForm()->getFormSubmitSuccessMessage();
+        $successMessage = $formRecord->getForm()->getFormSubmitSuccessMessage();
+        if (!$successMessage) {
+            $successMessage = __('Thank You!');
+        }
+        return $successMessage;
     }
 
     /**
      * @param $form
      */
-    public function getFailureMessage($formRecord)
+    public function getSuccessTitle($formRecord)
     {
-        return $formRecord->getForm()->getFormSubmitFailureMessage();
+        $successTitle = $formRecord->getForm()->getFormSubmitSuccessTitle();
+        if (!$successTitle) {
+            $successTitle = __('Success');
+        }
+        return $successTitle;
     }
 
     /**

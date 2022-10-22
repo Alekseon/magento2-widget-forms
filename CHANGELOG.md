@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 ### Fixed
 ### Added
+### Removed
+
+## [102.1.1] - 2022-10-22
+### Removed
+- removed FormSubmitFailureMessage attribute
+### Added
+- added FormSubmitSuccessTitle attribute
+### Changed
+- changes in displaying success/error messages on form submit
 
 ## [102.1.0] - 2022-10-22
 ### Fixed

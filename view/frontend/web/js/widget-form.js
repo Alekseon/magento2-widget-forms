@@ -35,7 +35,7 @@ define([
                 showLoader: true
             }).done(function (response) {
                 alert({
-                    title: $.mage.__('Success'),
+                    title: response.title,
                     content: response.message
                 });
                 form.reset();
