@@ -88,6 +88,18 @@ class InstallData implements InstallDataInterface
         );
 
         $eavSetup->createAttribute(
+            [
+                'frontend_input' => 'text',
+                'frontend_label' => 'Form Submit Success Title',
+                'visible_in_grid' => false,
+                'is_required' => false,
+                'sort_order' => 29,
+                'group_code' => 'widget_form_attribute',
+                'scope' => Scopes::SCOPE_STORE,
+            ]
+        );
+
+        $eavSetup->createAttribute(
             'form_submit_success_message',
             [
                 'frontend_input' => 'textarea',
@@ -97,6 +109,7 @@ class InstallData implements InstallDataInterface
                 'sort_order' => 30,
                 'group_code' => 'widget_form_attribute',
                 'scope' => Scopes::SCOPE_STORE,
+                'is_wysiwyg_enabled' => true,
             ]
         );
     }
