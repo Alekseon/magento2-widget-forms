@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - hidden text input type block
 - form identifier parameter for widget
 - create getter methods for success and failure message
+- current cms page default value provider
+- default text defaul value provider
+
 
 ## [102.0.23]
 ### Fixed

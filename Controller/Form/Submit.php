@@ -76,9 +76,6 @@ class Submit extends \Magento\Framework\App\Action\Action
                 if (isset($post[$fieldCode])) {
                     $value = $post[$fieldCode];
                 } else {
-                    /**
-                     * @TODO: probably temprary solution until there is no deafult values in EAV module
-                     */
                     $value = $field->getDefaultValue();
                 }
                 $formRecord->setData($fieldCode, $value);

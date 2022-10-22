@@ -38,14 +38,13 @@ class CustomerEmail extends AbstractProvider
     }
 
     /**
-     * @param Attribute $attribute
-     * @return bool|void
+     * @return bool
      */
-    public function canBeUsedForAttribute(Attribute $attribute)
+    public function canBeUsedForAttribute()
     {
-        if (parent::canBeUsedForAttribute($attribute)) {
-            if ($attribute->getForm()
-                && $attribute->getForm()->getCanUseForWidget()
+        if (parent::canBeUsedForAttribute()) {
+            if ($this->attribute->getForm()
+                && $this->attribute->getForm()->getCanUseForWidget()
             ) {
                 return true;
             }
