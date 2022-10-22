@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
-## [Unreleased]
+## [102.1.0] - 2022-10-22
 ### Fixed
 - fix infinite loading on submit where returned server error
 ## Added
@@ -20,7 +20,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - create getter methods for success and failure message
 - current cms page default value provider
 - default text defaul value provider
-
 
 ## [102.0.23]
 ### Fixed
