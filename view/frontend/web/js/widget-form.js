@@ -40,9 +40,17 @@ define([
                 });
                 form.reset();
             }).fail(function (error) {
+                var message = $.mage.__('Unexpected error.');
+                if (error.status) {
+                    message += ' ' + $.mage.__('Error Code') + ': ' + error.status;
+                }
+                if (error.responseJSON) {
+                    message = error.responseJSON.message;
+                }
+
                 alert({
                     title: $.mage.__('Error'),
-                    content: error.responseJSON.message
+                    content: message
                 });
             }).complete(function() {
                 self.onComplete();

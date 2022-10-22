@@ -2,12 +2,11 @@
     "name": "alekseon/widget-forms",
     "description": "N/A",
     "require": {
-        "magento/framework": "103.*",
-		"alekseon/custom-forms-builder": "^102.1.1",
+		"alekseon/custom-forms-builder": "^102.2.0",
         "alekseon/widget-forms-re-captcha": "100.*"
     },
     "type": "magento2-module",
-    "version": "102.0.23",
+    "version": "102.1.0",
     "license": [
         "OSL-3.0",
         "AFL-3.0"

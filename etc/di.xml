@@ -10,8 +10,15 @@
         <arguments>
             <argument name="defaultValueProviders" xsi:type="array">
                 <item name="current_product" xsi:type="array">
-                    <item name="label" xsi:type="string">Current Product</item>
+                    <item name="label" xsi:type="string">Current Product SKU</item>
                     <item name="factory" xsi:type="object">Alekseon\WidgetForms\Model\Attribute\DefaultValueProvider\CurrentProductFactory</item>
+                    <item name="applicable_frontend_inputs" xsi:type="array">
+                        <item name="text" xsi:type="string">text</item>
+                    </item>
+                </item>
+                <item name="current_cms_page" xsi:type="array">
+                    <item name="label" xsi:type="string">Current Cms Page Identifier</item>
+                    <item name="factory" xsi:type="object">Alekseon\WidgetForms\Model\Attribute\DefaultValueProvider\CurrentCmsPageFactory</item>
                     <item name="applicable_frontend_inputs" xsi:type="array">
                         <item name="text" xsi:type="string">text</item>
                     </item>
@@ -21,6 +28,19 @@
                     <item name="factory" xsi:type="object">Alekseon\WidgetForms\Model\Attribute\DefaultValueProvider\CustomerEmailFactory</item>
                     <item name="applicable_frontend_inputs" xsi:type="array">
                         <item name="text" xsi:type="string">text</item>
+                    </item>
+                </item>
+                <item name="default_text" xsi:type="array">
+                    <item name="label" xsi:type="string">Default Text</item>
+                    <item name="factory" xsi:type="object">Alekseon\WidgetForms\Model\Attribute\DefaultValueProvider\DefaultTextFactory</item>
+                    <item name="applicable_frontend_inputs" xsi:type="array">
+                        <item name="textarea" xsi:type="string">textarea</item>
+                        <item name="text" xsi:type="string">text</item>
+                    </item>
+                    <item name="input_params" xsi:type="array">
+                        <item name="defaultText" xsi:type="array">
+                            <item name="label" xsi:type="string">Default Value</item>
+                        </item>
                     </item>
                 </item>
             </argument>

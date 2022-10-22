@@ -8,10 +8,10 @@ namespace Alekseon\WidgetForms\Model\Attribute\DefaultValueProvider;
 use Alekseon\AlekseonEav\Model\Attribute\DefaultValueProvider\AbstractProvider;
 
 /**
- * Class CurrentProduct
+ * Class CurrentCmsPage
  * @package Alekseon\WidgetForms\Model\Attribute\DefaultValueProvider
  */
-class CurrentProduct extends AbstractProvider
+class CurrentCmsPage extends AbstractProvider
 {
     /**
      * @var \Magento\Framework\Registry
@@ -50,9 +50,9 @@ class CurrentProduct extends AbstractProvider
     /**
      * @return mixed|null
      */
-    protected function getCurrentProduct()
+    protected function getCurrentCmsPage()
     {
-        return $this->registry->registry('current_product');
+        return $this->registry->registry('current_cms_page_for_widget_forms');
     }
 
     /**
@@ -60,9 +60,9 @@ class CurrentProduct extends AbstractProvider
      */
     public function getValue()
     {
-        $product = $this->getCurrentProduct();
-        if ($product) {
-            return $product->getSku();
+        $cmsPage = $this->getCurrentCmsPage();
+        if ($cmsPage) {
+            return $cmsPage->getIdentifier();
         }
 
         return '';
