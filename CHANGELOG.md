@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.1.2] - 2022-10-22
+### Changed
+- change widget block parameter identifier to form_identifier
+
 ## [102.1.1] - 2022-10-22
 ### Removed
 - removed FormSubmitFailureMessage attribute
