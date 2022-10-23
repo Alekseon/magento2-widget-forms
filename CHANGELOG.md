@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [Unreleased]
+### Added
+- email validation for logged in customers
+- subsribe to newsletter as customer if logged in 
+
 ## [102.1.2] - 2022-10-22
 ### Changed
 - change widget block parameter identifier to form_identifier
