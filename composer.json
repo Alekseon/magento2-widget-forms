@@ -6,7 +6,7 @@
         "alekseon/widget-forms-re-captcha": "100.*"
     },
     "type": "magento2-module",
-    "version": "102.1.2",
+    "version": "102.1.3",
     "license": [
         "OSL-3.0",
         "AFL-3.0"

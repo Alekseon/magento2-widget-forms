@@ -88,6 +88,7 @@ class InstallData implements InstallDataInterface
         );
 
         $eavSetup->createAttribute(
+            'form_submit_success_title',
             [
                 'frontend_input' => 'text',
                 'frontend_label' => 'Form Submit Success Title',
