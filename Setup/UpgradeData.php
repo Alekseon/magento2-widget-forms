@@ -105,7 +105,8 @@ class UpgradeData implements UpgradeDataInterface
         $eavSetup = $this->eavSetupFactory->create();
         $eavSetup->setAttributeRepository($this->formAttributeRepository);
 
-        $eavSetup->updateAttribute('form_submit_success_message',
+        $eavSetup->updateAttribute(
+            'form_submit_success_message',
             [
                 'frontend_input' => 'textarea',
                 'frontend_label' => 'Form Submit Success Message',
@@ -128,7 +129,8 @@ class UpgradeData implements UpgradeDataInterface
         $eavSetup = $this->eavSetupFactory->create();
         $eavSetup->setAttributeRepository($this->formAttributeRepository);
 
-        $eavSetup->createOrUpdateAttribute('form_submit_success_title',
+        $eavSetup->createOrUpdateAttribute(
+            'form_submit_success_title',
             [
                 'frontend_input' => 'text',
                 'frontend_label' => 'Form Submit Success Title',
