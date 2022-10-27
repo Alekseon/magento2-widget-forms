@@ -10,10 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
-## [Unreleased]
+## [102.1.3] - 2022-10-27
 ### Added
 - email validation for logged in customers
 - subsribe to newsletter as customer if logged in 
+### Fixed
+- fix for install data
 
 ## [102.1.2] - 2022-10-22
 ### Changed
