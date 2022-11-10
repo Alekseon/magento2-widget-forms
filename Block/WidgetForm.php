@@ -34,6 +34,10 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
      * @var \Magento\Framework\EntityManager\EventManager
      */
     protected $eventManager;
+    /**
+     * @var array
+     */
+    protected $formFields = [];
 
     /**
      * WidgetForm constructor.
@@ -88,7 +92,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
                 $frontendBlock['field'] = $field;
                 $frontendBlock['form'] = $form;
 
-                $block = $this->addChild(
+                $block = $this->addFormField(
                     'form_'. $form->getId() . '_field_' . $field->getAttributeCode(),
                     $class,
                     $frontendBlock
@@ -96,7 +100,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
             }
         }
 
-        $additinalInfoBlock = $this->addChild(
+        $additionalInfoBlock = $this->addFormField(
             'form_' . $form->getId() . '_additional.info',
             \Alekseon\WidgetForms\Block\Form\AdditionalInfo::class
         );
@@ -104,8 +108,9 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
         $this->eventManager->dispatch(
             'alekseon_widget_form_prepare_layout',
             [
+                'widget_block' => $this,
                 'form' => $this->getForm(),
-                'additional_info_block' => $additinalInfoBlock,
+                'additional_info_block' => $additionalInfoBlock,
             ]
         );
 
@@ -116,6 +121,21 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
         );
 
         return parent::_toHtml();
+    }
+
+    /**
+     * @param $alias
+     * @param $block
+     * @param array $data
+     * @return $this
+     */
+    public function addFormField($alias, $block, $data = [])
+    {
+        if (!isset($this->formFields[$alias])) {
+            $this->addChild($alias, $block, $data);
+            $this->formFields[$alias] = $alias;
+        }
+        return $this->getChildBlock($this->formFields[$alias]);
     }
 
     /**
@@ -135,16 +155,11 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
      */
     public function getFormFieldsHtml()
     {
-        $form = $this->getForm();
 
-        $fields = $this->getFormFieldsCollection();
         $html = '';
-        foreach ($fields as $field) {
-            $html .= $this->getChildHtml('form_'. $form->getId() . '_field_' . $field->getAttributeCode());
+        foreach ($this->formFields as $field) {
+            $html .= $this->getChildHtml($field);
         }
-
-        $additionalInfo = $this->getChildHtml('form_'. $form->getId() . '_additional.info');
-        $html .= $additionalInfo;
 
         return $html;
     }

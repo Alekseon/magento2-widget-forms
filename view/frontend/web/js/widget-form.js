@@ -39,6 +39,7 @@ define([
                     content: response.message
                 });
                 form.reset();
+                self.onSuccess();
             }).fail(function (error) {
                 var message = $.mage.__('Unexpected error.');
                 if (error.status) {
@@ -58,6 +59,13 @@ define([
         },
 
         onComplete: function() {
+        },
+
+        onSuccess: function() {
+        },
+
+        onElementRender: function (element) {
+            $(element).trigger('contentUpdated');
         },
 
         validateForm: function (form) {
