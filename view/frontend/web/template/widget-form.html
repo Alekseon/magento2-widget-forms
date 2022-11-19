@@ -21,7 +21,7 @@
         <div class="field note no-label" data-bind="html: description"></div>
         <!--/ko-->
 
-        <fieldset class="fieldset" data-bind="html: formFieldsetHtml" afterRender="onElementRender"></fieldset>
+        <div data-bind="html: formFieldsetHtml" afterRender="onElementRender"></div>
 
         <!-- ko foreach: elems() -->
         <!-- ko template: getTemplate() --><!-- /ko -->
