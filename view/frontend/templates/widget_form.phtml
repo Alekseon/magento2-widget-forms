@@ -16,7 +16,7 @@
                     "components": {
                         "widgetForm-<?= $block->getForm()->getId() ?>": {
                             "component": "Alekseon_WidgetForms/js/widget-form",
-                            "formId": "custom_form_<?= $block->getForm()->getId() ?>",
+                            "formId": "<?= $block->getForm()->getId() ?>",
                             "title": "<?= $block->getFormTitle() ?>",
                             "description": "<?= $block->getFormDescription() ?>",
                             "formFieldsetHtml": <?= json_encode($block->getFormFieldsHtml()) ?>,

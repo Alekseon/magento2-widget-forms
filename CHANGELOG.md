@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.1.4] - 2022-11-19
+### Changed
+- modifications for native magento captcha
+### Fixed
+- decreased gap between form and submit button
+
 ## [102.1.3] - 2022-10-27
 ### Added
 - email validation for logged in customers
