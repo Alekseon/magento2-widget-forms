@@ -21,7 +21,7 @@
         <div class="field note no-label" data-bind="html: description"></div>
         <!--/ko-->
 
-        <div data-bind="html: formFieldsetHtml" afterRender="onElementRender"></div>
+        <div class="widget-form-fields-container" data-bind="html: formFieldsetHtml" afterRender="onElementRender"></div>
 
         <!-- ko foreach: elems() -->
         <!-- ko template: getTemplate() --><!-- /ko -->
@@ -29,6 +29,4 @@
     </fieldset>
 
     <div class="actions-toolbar" data-bind="html: actionToolbarHtml" />
-
-
 </form>
