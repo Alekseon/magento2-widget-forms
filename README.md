@@ -40,6 +40,8 @@ Visit our [alekseon.com](https://alekseon.com/en/blog/post/module-widget-forms/)
 
 ## Hyvä Theme compatibility
 
+[<img src="https://i.imgur.com/nibkuEV.png" alt="Hyvä compatibility" width="140"/>](https://hyva.io/)
+<br>
 Alekseon_WidgetForms is also available as a [Compatibility module](https://gitlab.hyva.io/hyva-public/module-tracker/-/issues/236) for [Hyvä Themes](https://hyva.io/)
   
 ## Issue Tracking / Upcoming Features  
