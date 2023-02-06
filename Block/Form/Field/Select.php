@@ -40,18 +40,28 @@ class Select extends \Alekseon\WidgetForms\Block\Form\Field\AbstractField
             $defaultValue = $this->getField()->getDefaultValue();
 
             if (!is_array($defaultValue)) {
-                $defaultValue = [$defaultValue];
+                if ($defaultValue !== false) {
+                    $defaultValue = [(string) $defaultValue];
+                } else {
+                    $defaultValue = [];
+                }
             }
 
-            if (is_array($defaultValue)) {
-                $options = $this->getOptions();
-                foreach ($options as $id => $label) {
-                    if (in_array($id, $defaultValue)) {
-                        $this->selectedOptions[$id] = $id;
-                    }
+            $options = $this->getOptions();
+            foreach ($options as $id => $label) {
+                if (in_array($id, $defaultValue)) {
+                    $this->selectedOptions[$id] = $id;
                 }
             }
         }
         return isset($this->selectedOptions[$optionId]);
+    }
+
+    /**
+     * @return false
+     */
+    public function hasEmptyOption()
+    {
+        return $this->getField()->getInputTypeModel()->hasEmptyOption();
     }
 }

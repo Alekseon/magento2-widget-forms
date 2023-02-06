@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [Unreleased]
+### Fixed
+- default values for select
+
 ## [102.1.5] - 2022-11-22
 ### Added
 - class "widget-form-fields-container" for div container

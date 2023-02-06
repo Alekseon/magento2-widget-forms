@@ -13,7 +13,9 @@
             title="<?= $block->getLabel() ?>"
             data-validate=<?= $block->getDataValidateJson() ?>
         >
-            <option value=""></option>
+            <?php if ($block->hasEmptyOption()): ?>
+                <option value=""></option>
+            <?php endif ?>
             <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
                 <option value="<?= $optionId ?>" <?php if ($block->isSelected($optionId)): ?>selected<?php endif ?>>
                     <?= $optionLabel ?>
