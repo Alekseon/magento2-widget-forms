@@ -11,8 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Removed
 
 ## [Unreleased]
+### Added
+- rating type input (stars)
 ### Fixed
 - default values for select
+- fix widget html code
 
 ## [102.1.5] - 2022-11-22
 ### Added
