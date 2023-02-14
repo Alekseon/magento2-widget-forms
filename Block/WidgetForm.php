@@ -38,6 +38,10 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
      * @var array
      */
     protected $formFields = [];
+    /**
+     * @var
+     */
+    protected $tabCodes;
 
     /**
      * WidgetForm constructor.
@@ -91,18 +95,23 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
                 unset($frontendBlock['class']);
                 $frontendBlock['field'] = $field;
                 $frontendBlock['form'] = $form;
+                $frontendBlock['tab_code'] = $field->getGroupCode();
 
-                $block = $this->addFormField(
-                    'form_'. $form->getId() . '_field_' . $field->getAttributeCode(),
+                $fieldBlockAlias = 'form_' . $form->getId() . '_field_' . $field->getAttributeCode();
+                $this->addFormField(
+                    $fieldBlockAlias,
                     $class,
-                    $frontendBlock
+                    $frontendBlock,
                 );
             }
         }
 
         $additionalInfoBlock = $this->addFormField(
             'form_' . $form->getId() . '_additional.info',
-            \Alekseon\WidgetForms\Block\Form\AdditionalInfo::class
+            \Alekseon\WidgetForms\Block\Form\AdditionalInfo::class,
+            [
+                'tab_code' => array_key_last($this->getTabCodes())
+            ]
         );
 
         $this->eventManager->dispatch(
@@ -117,7 +126,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
         $this->addChild(
             'form_'. $form->getId() . '_action',
             \Alekseon\WidgetForms\Block\Form\Action::class,
-            []
         );
 
         return parent::_toHtml();
@@ -129,13 +137,18 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
      * @param array $data
      * @return $this
      */
-    public function addFormField($alias, $block, $data = [])
+    public function addFormField($fieldBlockAlias, $block, $data = [])
     {
-        if (!isset($this->formFields[$alias])) {
-            $this->addChild($alias, $block, $data);
-            $this->formFields[$alias] = $alias;
+        $tabCode = $data['tab_code'] ?? '';
+        $tabCodes = $this->getTabCodes();
+        if (!isset($tabCodes[$tabCode])) {
+            $tabCode = array_key_first($tabCodes);
         }
-        return $this->getChildBlock($this->formFields[$alias]);
+        if (!isset($this->formFields[$tabCode][$fieldBlockAlias])) {
+            $this->addChild($fieldBlockAlias, $block, $data);
+            $this->formFields[$tabCode][$fieldBlockAlias] = $fieldBlockAlias;
+        }
+        return $this->getChildBlock($this->formFields[$tabCode][$fieldBlockAlias]);
     }
 
     /**
@@ -151,17 +164,51 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     }
 
     /**
-     * @return string
+     * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getFormFieldsHtml()
+    public function getTabCodes()
     {
+        if ($this->tabCodes === null) {
+            $formTabs = $this->getForm()->getFormTabs();
+            foreach ($formTabs as $tab) {
+                $this->tabCodes[$tab['code']] = $tab['code'];
+            }
+            if (empty($this->tabCodes)) {
+                $this->tabCodes[1] = 1; // backward compatible, to be sure there is alwyas at least one tab
+            }
+        }
+        return $this->tabCodes;
+    }
 
-        $html = '';
-        foreach ($this->formFields as $field) {
-            $html .= $this->getChildHtml($field);
+    /**
+     * @return void
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function getFormTabsHtml()
+    {
+        $tabCodes = $this->getTabCodes();
+        $formTabsHtml = [];
+        $tabsCounter = 0;
+        foreach ($tabCodes as $tabCode) {
+            $formFields = $this->formFields[$tabCode] ?? [];
+            if (!isset($formTabsHtml[$tabCode])) {
+                $formTabsHtml[$tabCode]['is_last'] = 0;
+                $formTabsHtml[$tabCode]['fields'] = [];
+                $formTabsHtml[$tabCode]['code'] = $tabCode;
+                $formTabsHtml[$tabCode]['index'] = $tabsCounter;
+                $formTabsHtml[$tabCode]['visible'] = $tabsCounter ? false : true;
+            }
+            foreach ($formFields as $field) {
+                $formTabsHtml[$tabCode]['fields'][] = [
+                    'html' => $this->getChildHtml($field),
+                ];
+            }
+            $tabsCounter ++;
         }
 
-        return $html;
+        $formTabsHtml[$tabCode]['is_last'] = 1;
+        return array_values($formTabsHtml);
     }
 
     /**

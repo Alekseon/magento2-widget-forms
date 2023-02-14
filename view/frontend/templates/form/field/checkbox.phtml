@@ -4,25 +4,23 @@
  * http://www.alekseon.com/
  */
 ?>
-<div class="field <?= $block->isRequired() ? 'required' : '' ?>">
-    <?php if ($block->displayLabel()): ?>
-        <label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
-    <?php endif ?>
-    <div class="control">
-        <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
-            <input
-                type="checkbox"
-                name="<?= $block->getName() ?><?= $block->displayLabel() ? '[]' : '' ?>"
-                id="<?= $block->getId() . '-option-' . $optionId ?>"
-                value="<?= $optionId ?>"
-                <?php if ($block->isSelected($optionId)): ?>checked<?php endif ?>
-                data-validate=<?= $block->getDataValidateJson() ?>
-            >
-            <label for="<?= $block->getId() . '-option-' . $optionId ?>"><?= $optionLabel ?></label>
-            </input>
-        <?php endforeach; ?>
-    </div>
-    <?php if ($note = $block->getNote()): ?>
-        <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
-    <?php endif ?>
+<?php if ($block->displayLabel()): ?>
+    <label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
+<?php endif ?>
+<div class="control">
+    <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
+        <input
+            type="checkbox"
+            name="<?= $block->getName() ?><?= $block->displayLabel() ? '[]' : '' ?>"
+            id="<?= $block->getId() . '-option-' . $optionId ?>"
+            value="<?= $optionId ?>"
+            <?php if ($block->isSelected($optionId)): ?>checked<?php endif ?>
+            data-validate=<?= $block->getDataValidateJson() ?>
+        >
+        <label for="<?= $block->getId() . '-option-' . $optionId ?>"><?= $optionLabel ?></label>
+        </input>
+    <?php endforeach; ?>
 </div>
+<?php if ($note = $block->getNote()): ?>
+    <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
+<?php endif ?>

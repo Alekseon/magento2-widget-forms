@@ -13,11 +13,27 @@ define([
 
         defaults: {
             template: 'Alekseon_WidgetForms/widget-form',
+            currentTab: 0
+        },
+
+        openTab: function (form, tabIndex) {
+            var tab = $(form).find('.form-tab-' + this.currentTab);
+            tab.hide();
+
+            setTimeout(() => {
+                this.currentTab = tabIndex;
+                $(form).find('.form-tab-' + this.currentTab).show();
+            }, "100");
         },
 
         submitForm: function (form) {
             if (!this.validateForm(form)) {
                 return;
+            }
+
+            if (this.tabs[this.currentTab + 1] !== undefined) {
+               this.openTab(form, this.currentTab + 1);
+               return;
             }
 
             var self = this;
@@ -39,6 +55,7 @@ define([
                     content: response.message
                 });
                 form.reset();
+                self.openTab(form, 0);
                 self.onSuccess();
             }).fail(function (error) {
                 var message = $.mage.__('Unexpected error.');

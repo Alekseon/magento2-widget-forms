@@ -4,22 +4,20 @@
  * http://www.alekseon.com/
  */
 ?>
-<div class="field <?= $block->isRequired() ? 'required' : '' ?>">
-    <label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
-    <div class="control">
-        <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
-            <input
-                type="radio"
-                name="<?= $block->getName() ?>"
-                id="<?= $block->getId() . '-option-' . $optionId ?>"
-                value="<?= $optionId ?>"
-                data-validate=<?= $block->getDataValidateJson() ?>
-            >
-                <label for="<?= $block->getId() . '-option-' . $optionId ?>"><?= $optionLabel ?></label>
-            </input>
-        <?php endforeach; ?>
-    </div>
-    <?php if ($note = $block->getNote()): ?>
-        <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
-    <?php endif ?>
+<label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
+<div class="control">
+    <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
+        <input
+            type="radio"
+            name="<?= $block->getName() ?>"
+            id="<?= $block->getId() . '-option-' . $optionId ?>"
+            value="<?= $optionId ?>"
+            data-validate=<?= $block->getDataValidateJson() ?>
+        >
+            <label for="<?= $block->getId() . '-option-' . $optionId ?>"><?= $optionLabel ?></label>
+        </input>
+    <?php endforeach; ?>
 </div>
+<?php if ($note = $block->getNote()): ?>
+    <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
+<?php endif ?>

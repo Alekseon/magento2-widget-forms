@@ -4,19 +4,17 @@
  * http://www.alekseon.com/
  */
 ?>
-<div class="field <?= $block->isRequired() ? 'required' : '' ?>">
-    <label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
-    <div class="control">
-        <input
-            name="<?= $block->getName() ?>"
-            id="<?= $block->getId() ?>"
-            title="<?= $block->getLabel() ?>"
-            type="date"
-            placeholder="<?=$block->getPlaceholder() ?>"
-            data-validate=<?= $block->getDataValidateJson() ?>
-        />
-    </div>
-    <?php if ($note = $block->getNote()): ?>
-        <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
-    <?php endif ?>
+<label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
+<div class="control">
+    <input
+        name="<?= $block->getName() ?>"
+        id="<?= $block->getId() ?>"
+        title="<?= $block->getLabel() ?>"
+        type="date"
+        placeholder="<?=$block->getPlaceholder() ?>"
+        data-validate=<?= $block->getDataValidateJson() ?>
+    />
 </div>
+<?php if ($note = $block->getNote()): ?>
+    <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
+<?php endif ?>
