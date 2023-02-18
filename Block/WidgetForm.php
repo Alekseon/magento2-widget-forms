@@ -172,7 +172,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
         if ($this->tabCodes === null) {
             $formTabs = $this->getForm()->getFormTabs();
             foreach ($formTabs as $tab) {
-                $this->tabCodes[$tab['code']] = $tab['code'];
+                $this->tabCodes[$tab->getId()] = $tab->getId();
             }
             if (empty($this->tabCodes)) {
                 $this->tabCodes[1] = 1; // backward compatible, to be sure there is alwyas at least one tab
