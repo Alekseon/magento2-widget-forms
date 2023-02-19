@@ -18,11 +18,11 @@ define([
 
         openTab: function (form, tabIndex) {
             var tab = $(form).find('.form-tab-' + this.currentTab);
-            tab.hide();
+            tab.slideUp();
 
             setTimeout(() => {
                 this.currentTab = tabIndex;
-                $(form).find('.form-tab-' + this.currentTab).show();
+                $(form).find('.form-tab-' + this.currentTab).slideDown();
             }, "100");
         },
 

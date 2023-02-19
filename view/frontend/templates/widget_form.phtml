@@ -19,7 +19,6 @@
                             "formId": "<?= $block->getForm()->getId() ?>",
                             "title": "<?= $block->getFormTitle() ?>",
                             "description": "<?= $block->getFormDescription() ?>",
-                            "actionToolbarHtml": <?= json_encode($block->getActtionToolbarHtml()) ?>,
                             "formSubmitUrl": "<?= $block->getUrl('Alekseon_WidgetForms/form/submit', ['form_id' => $block->getForm()->getId()]) ?>",
                             "children": <?= json_encode($block->getUiComponentChildren()) ?>,
                             "tabs": <?= json_encode($block->getFormTabsHtml()) ?>

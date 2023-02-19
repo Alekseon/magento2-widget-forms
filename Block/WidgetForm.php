@@ -4,6 +4,8 @@
  * http://www.alekseon.com/
  */
 namespace Alekseon\WidgetForms\Block;
+use Magento\Framework\DataObject;
+
 /**
  * Class WidgetForm
  * @package Alekseon\WidgetForms\Block
@@ -41,7 +43,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     /**
      * @var
      */
-    protected $tabCodes;
+    protected $tabs;
 
     /**
      * WidgetForm constructor.
@@ -110,7 +112,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
             'form_' . $form->getId() . '_additional.info',
             \Alekseon\WidgetForms\Block\Form\AdditionalInfo::class,
             [
-                'tab_code' => array_key_last($this->getTabCodes())
+                'tab_code' => array_key_last($this->getTabs())
             ]
         );
 
@@ -123,12 +125,32 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
             ]
         );
 
-        $this->addChild(
-            'form_'. $form->getId() . '_action',
-            \Alekseon\WidgetForms\Block\Form\Action::class,
-        );
+        $tabs = $this->getTabs();
+        foreach ($tabs as $tabCode => $tab) {
+            $this->addChild(
+                'form_' . $form->getId() . '_action_' . $tabCode,
+                \Alekseon\WidgetForms\Block\Form\Action::class,
+            )->setSubmitButtonLabel($this->getSubmitButtonLabel($tab));
+        }
 
         return parent::_toHtml();
+    }
+
+    /**
+     * @return \Magento\Framework\Phrase
+     */
+    protected function getSubmitButtonLabel($tab)
+    {
+        if (!$tab->getIsLastTab()) {
+            return __('Next');
+        }
+
+        $form = $this->getForm();
+        if ($form && $form->getSubmitButtonLabel()) {
+            return $form->getSubmitButtonLabel();
+        }
+
+        return __('Submit');
     }
 
     /**
@@ -140,9 +162,9 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     public function addFormField($fieldBlockAlias, $block, $data = [])
     {
         $tabCode = $data['tab_code'] ?? '';
-        $tabCodes = $this->getTabCodes();
-        if (!isset($tabCodes[$tabCode])) {
-            $tabCode = array_key_first($tabCodes);
+        $tabs = $this->getTabs();
+        if (!isset($tabs[$tabCode])) {
+            $tabCode = array_key_first($tabs);
         }
         if (!isset($this->formFields[$tabCode][$fieldBlockAlias])) {
             $this->addChild($fieldBlockAlias, $block, $data);
@@ -167,18 +189,27 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
      * @return mixed
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getTabCodes()
+    public function getTabs()
     {
-        if ($this->tabCodes === null) {
-            $formTabs = $this->getForm()->getFormTabs();
-            foreach ($formTabs as $tab) {
-                $this->tabCodes[$tab->getId()] = $tab->getId();
+        if ($this->tabs === null) {
+            $this->tabs = [];
+
+            if ($this->getForm()->getEnableMultpipleSteps()) {
+                $formTabs = $this->getForm()->getFormTabs();
+                foreach ($formTabs as $tab) {
+                    $this->tabs[$tab->getId()] = $tab;
+                }
             }
-            if (empty($this->tabCodes)) {
-                $this->tabCodes[1] = 1; // backward compatible, to be sure there is alwyas at least one tab
+
+            if (empty($this->tabs)) {
+                // backward compatible, to be sure there is alwyas at least one tab
+                $tab = new DataObject();
+                $tab->setId(1);
+                $tab->setIsLastTab(true);
+                $this->tabs[1] = $tab;
             }
         }
-        return $this->tabCodes;
+        return $this->tabs;
     }
 
     /**
@@ -187,10 +218,10 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
      */
     public function getFormTabsHtml()
     {
-        $tabCodes = $this->getTabCodes();
+        $tabs = $this->getTabs();
         $formTabsHtml = [];
         $tabsCounter = 0;
-        foreach ($tabCodes as $tabCode) {
+        foreach ($tabs as $tabCode => $tab) {
             $formFields = $this->formFields[$tabCode] ?? [];
             if (!isset($formTabsHtml[$tabCode])) {
                 $formTabsHtml[$tabCode]['is_last'] = 0;
@@ -202,8 +233,12 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
             foreach ($formFields as $field) {
                 $formTabsHtml[$tabCode]['fields'][] = [
                     'html' => $this->getChildHtml($field),
+
                 ];
             }
+
+            $formTabsHtml[$tabCode]['actionHtml'] = $this->getActionToolbarHtml($tab);
+
             $tabsCounter ++;
         }
 
@@ -214,10 +249,10 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     /**
      * @return string
      */
-    public function getActtionToolbarHtml()
+    public function getActionToolbarHtml($tab)
     {
         $form = $this->getForm();
-        return $this->getChildHtml('form_'. $form->getId() . '_action');
+        return $this->getChildHtml('form_'. $form->getId() . '_action_' . $tab->getId());
     }
 
     /**
