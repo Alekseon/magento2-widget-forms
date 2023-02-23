@@ -49,9 +49,9 @@ Alekseon_WidgetForms is also available as a [Compatibility module](https://gitla
 For issues, please use the [issue tracker](https://github.com/Alekseon/widget-forms/issues).  
   
 Issues keep this project alive and strong, so let us know if you find anything!  
-  
+  <!--
 We're planning on pumping out a ton of new features, which you can follow on our [project page](https://github.com/Alekseon/widget-forms/projects/1).  
-  
+  -->
 ### Development / Contribution  
   
 If you want to contribute please follow the below instructions:  
