@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - default values for select
 - fix widget html code
 
+## [102.1.6] - 2023-02-27
+### Fixed
+- fix for backward compatibility
+
 ## [102.1.5] - 2022-11-22
 ### Added
 - class "widget-form-fields-container" for div container
