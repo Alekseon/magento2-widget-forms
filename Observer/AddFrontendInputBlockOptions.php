@@ -32,7 +32,11 @@ class AddFrontendInputBlockOptions implements ObserverInterface
         $attribute->setFrontendInputBlock($attribute->getAttributeExtraParam('frontend_input_block'));
 
         $frontendInputTypeConfig = $attribute->getFrontendInputTypeConfig();
-        $frontendBlocks = $frontendInputTypeConfig->getFrontendBlocks();
+        if ($frontendInputTypeConfig) {
+            $frontendBlocks = $frontendInputTypeConfig->getFrontendBlocks();
+        } else {
+            $frontendBlocks = [];
+        }
 
         if (is_array($frontendBlocks) && count($frontendBlocks) > 1 ) {
 

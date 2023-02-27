@@ -23,13 +23,15 @@ class AddFormFieldsetWarningPlugin
 
         if ($form->getCanUseForWidget()) {
             $frontendInputTypeConfig = $attribute->getFrontendInputTypeConfig();
-            $frontendBlocks = $frontendInputTypeConfig->getFrontendBlocks();
+            if ($frontendInputTypeConfig) {
+                $frontendBlocks = $frontendInputTypeConfig->getFrontendBlocks();
 
-            if (!isset($frontendBlocks['default'])) {
-                $formFieldSettings['warnings'][] = __(
-                    'Frontend input %1 is not supported by form widgets.',
-                    $frontendInputTypeConfig->getLabel()
-                );
+                if (!isset($frontendBlocks['default'])) {
+                    $formFieldSettings['warnings'][] = __(
+                        'Frontend input %1 is not supported by form widgets.',
+                        $frontendInputTypeConfig->getLabel()
+                    );
+                }
             }
         }
 
