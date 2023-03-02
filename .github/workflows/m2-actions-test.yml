@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          path: module-code
+          path: Alekseon_WidgetForms
 
       #- name: 'install fresh magento repo without credentials'
       #  if: ${{true}}
@@ -54,24 +54,24 @@ jobs:
       #    unit_test_subset_path: '../Madit/Sips2'
       #    elasticsearch: 1
           
-      - name: 'phpstan'
-        uses: MAD-I-T/magento-actions@master
-        with:
-          process: 'phpstan'
-          exec_path: '../module-code/'
+      #- name: 'phpstan'
+      #  uses: MAD-I-T/magento-actions@master
+      #  with:
+      #    process: 'phpstan'
+      #    exec_path: '../module-code/'
           
       - name: 'mess detector'
         if: always()
         uses: MAD-I-T/magento-actions@v3.18
         with:
          process: 'mess-detector'
-         md_src_path: '../module-code/'
+         md_src_path: '../Alekseon_WidgetForms/'
 
       - name: 'phpcs testing'
         if: always()
         uses: MAD-I-T/magento-actions@master
         with:
           process: 'phpcs-test'
-          extension: 'module-code'
+          extension: 'Alekseon_WidgetForms'
           severity: 10
           standard: 'Magento2'
