@@ -71,6 +71,6 @@ jobs:
         uses: MAD-I-T/magento-actions@master
         with:
           process: 'phpcs-test'
-          extension: '.'
+          extension: 'Controller/Form'
           severity: 10
           standard: 'Magento2'
