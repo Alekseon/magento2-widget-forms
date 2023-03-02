@@ -22,9 +22,10 @@ jobs:
           - 9200:9200
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
-      #- uses: actions/checkout@v3
-      - run: composer require alekseon/widget-forms
-   
+      - uses: actions/checkout@v3
+        with:
+          path: module-code
+
       #- name: 'install fresh magento repo without credentials'
       #  if: ${{true}}
       #  uses: MAD-I-T/magento-actions@master
@@ -71,6 +72,6 @@ jobs:
         uses: MAD-I-T/magento-actions@master
         with:
           process: 'phpcs-test'
-          extension: 'Controller/Form'
+          extension: 'module-code'
           severity: 10
           standard: 'Magento2'
