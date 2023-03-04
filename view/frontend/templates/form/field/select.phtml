@@ -4,24 +4,24 @@
  * http://www.alekseon.com/
  */
 ?>
-<div class="field <?= $block->isRequired() ? 'required' : '' ?>">
-    <label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
-    <div class="control">
-        <select
-            name="<?= $block->getName() ?>"
-            id="<?= $block->getId() ?>"
-            title="<?= $block->getLabel() ?>"
-            data-validate=<?= $block->getDataValidateJson() ?>
-        >
+<label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
+<div class="control">
+    <select
+        name="<?= $block->getName() ?>"
+        id="<?= $block->getId() ?>"
+        title="<?= $block->getLabel() ?>"
+        data-validate=<?= $block->getDataValidateJson() ?>
+    >
+        <?php if ($block->hasEmptyOption()): ?>
             <option value=""></option>
-            <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
-                <option value="<?= $optionId ?>" <?php if ($block->isSelected($optionId)): ?>selected<?php endif ?>>
-                    <?= $optionLabel ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    <?php if ($note = $block->getNote()): ?>
-        <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
-    <?php endif ?>
+        <?php endif ?>
+        <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
+            <option value="<?= $optionId ?>" <?php if ($block->isSelected($optionId)): ?>selected<?php endif ?>>
+                <?= $optionLabel ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
 </div>
+<?php if ($note = $block->getNote()): ?>
+    <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
+<?php endif ?>

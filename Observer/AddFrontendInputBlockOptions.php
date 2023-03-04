@@ -28,7 +28,6 @@ class AddFrontendInputBlockOptions implements ObserverInterface
         }
 
         $attribute = $fieldSettings['attribute'];
-
         $attribute->setFrontendInputBlock($attribute->getAttributeExtraParam('frontend_input_block'));
 
         $frontendInputTypeConfig = $attribute->getFrontendInputTypeConfig();

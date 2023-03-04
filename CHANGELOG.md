@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [Unreleased]
+
+## [102.2.0] - 2023-03-04
+### Added
+- rating type input (stars)
+### Fixed
+- default values for select
+- fix widget html code
+
 ## [102.1.6] - 2023-02-27
 ### Fixed
 - fix for backward compatibility

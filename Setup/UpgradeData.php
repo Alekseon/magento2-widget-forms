@@ -56,6 +56,10 @@ class UpgradeData implements UpgradeDataInterface
             $this->removeFormSubmitFailureMessage();
             $this->addFormSubmitSuccessTitle();
         }
+
+        if (version_compare($context->getVersion(), '1.0.4', '<')) {
+            $this->addEnableMultipleStepsAttribute();
+        }
     }
 
     /**
@@ -152,5 +156,28 @@ class UpgradeData implements UpgradeDataInterface
         $eavSetup = $this->eavSetupFactory->create();
         $eavSetup->setAttributeRepository($this->formAttributeRepository);
         $eavSetup->deleteAttribute('form_submit_failure_message');
+    }
+
+    /**
+     * @return void
+     */
+    protected function addEnableMultipleStepsAttribute()
+    {
+        $eavSetup = $this->eavSetupFactory->create();
+        $eavSetup->setAttributeRepository($this->formAttributeRepository);
+
+        $eavSetup->createOrUpdateAttribute(
+            'enable_multpiple_steps',
+            [
+                'frontend_input' => 'boolean',
+                'frontend_label' => 'Enable Multiple Steps',
+                'visible_in_grid' => false,
+                'is_required' => true,
+                'sort_order' => 50,
+                'group_code' => 'widget_form_attribute',
+                'scope' => Scopes::SCOPE_GLOBAL,
+                'note' => 'If Yes, display tabs as separated steps',
+            ]
+        );
     }
 }
