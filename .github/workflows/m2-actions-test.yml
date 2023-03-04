@@ -1,0 +1,77 @@
+name: m2-actions-sips2-test
+
+on: [push]
+
+jobs:
+  magento2-build:
+    runs-on: ubuntu-latest
+    container: ubuntu
+    name: 'm2 tests & build'
+    services:
+      mysql:
+        image: docker://mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: magento
+          MYSQL_DATABASE: magento
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      elasticsearch:
+        image: docker://elasticsearch:7.1.0
+        ports:
+          - 9200:9200
+        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: Alekseon_WidgetForms
+
+      #- name: 'install fresh magento repo without credentials'
+      #  if: ${{true}}
+      #  uses: MAD-I-T/magento-actions@master
+      #  with:
+      #    process: 'install-mage-os'
+      #    magento_version: 2.4.5-p1
+      #    no_push: 1
+
+      - name: 'install fresh magento repo'
+        uses: MAD-I-T/magento-actions@v3.16
+        env:
+          COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+        with:
+          process: 'create-project'
+          magento_version: 2.4.5-p1
+          no_push: 1   ## add this arg to not push to the repo ideal for quick test on specific version
+
+      #- name: 'launch magento2 unit test'
+      #  if: always()
+      #  uses: MAD-I-T/magento-actions@master
+      #  env:
+      #    COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      #  with:
+      #    process: 'unit-test'
+      #    unit_test_config: 'dev/tests/unit/phpunit.xml.dist'
+      #    unit_test_subset_path: '../Madit/Sips2'
+      #    elasticsearch: 1
+          
+      #- name: 'phpstan'
+      #  uses: MAD-I-T/magento-actions@master
+      #  with:
+      #    process: 'phpstan'
+      #    exec_path: '../module-code/'
+          
+      - name: 'mess detector'
+        if: always()
+        uses: MAD-I-T/magento-actions@v3.18
+        with:
+         process: 'mess-detector'
+         md_src_path: '../Alekseon_WidgetForms/'
+
+      - name: 'phpcs testing'
+        if: always()
+        uses: MAD-I-T/magento-actions@master
+        with:
+          process: 'phpcs-test'
+          extension: 'Alekseon_WidgetForms'
+          severity: 10
+          standard: 'Magento2'
