@@ -5,28 +5,36 @@
  */
 -->
 <form data-bind="id: formId, submit:submitForm"
-      data-mage-init='{"validation":{}}'
-      autocomplete="off">
-
+      autocomplete="off"
+      afterRender="onElementRender">
     <input type="hidden" name="hideit" />
+    <!-- ko foreach: { data: tabs, as: 'tab'} -->
 
-    <fieldset class="fieldset">
-        <!-- ko if: title -->
-            <legend class="legend">
-                <span data-bind="html: title" />
-            </legend>
-        <!--/ko-->
+        <div data-bind="visible: tab.visible, css: 'form-tab-' + tab.index">
+            <fieldset class="fieldset">
+                <!-- ko if: $parent.title -->
+                <legend class="legend">
+                    <span data-bind="html: $parent.title" />
+                </legend>
+                <!--/ko-->
 
-        <!-- ko if: description -->
-        <div class="field note no-label" data-bind="html: description"></div>
-        <!--/ko-->
+                <!-- ko if: $parent.description -->
+                <div class="field note no-label" data-bind="html: $parent.description"></div>
+                <!--/ko-->
 
-        <div class="widget-form-fields-container fieldset" data-bind="html: formFieldsetHtml" afterRender="onElementRender"></div>
+                <!-- ko foreach: { data: tab.fields, as: 'field'} -->
+                    <div class="field" data-bind="html: field.html"></div>
+                <!-- /ko -->
 
-        <!-- ko foreach: elems() -->
-        <!-- ko template: getTemplate() --><!-- /ko -->
-        <!-- /ko -->
+                <!-- ko if: tab.is_last -->
+                    <!-- ko foreach: $parent.elems() -->
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                    <!-- /ko -->
+                <!--/ko-->
 
-        <div class="actions-toolbar" data-bind="html: actionToolbarHtml" />
-    </fieldset>
+            </fieldset>
+            <div class="actions-toolbar" data-bind="html: tab.actionHtml"></div>
+        </div>
+    <!-- /ko -->
+
 </form>

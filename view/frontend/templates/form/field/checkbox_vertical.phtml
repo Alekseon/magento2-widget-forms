@@ -4,27 +4,25 @@
  * http://www.alekseon.com/
  */
 ?>
-<div class="field <?= $block->isRequired() ? 'required' : '' ?>">
-    <?php if ($block->displayLabel()): ?>
-        <label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
-    <?php endif ?>
-    <div class="control <?= count($block->getOptions()) > 12 ? 'multi-columns' : '' ?>">
-        <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
-            <div>
-                <input
-                    type="checkbox"
-                    name="<?= $block->getName() ?><?= $block->displayLabel() ? '[]' : '' ?>"
-                    id="<?= $block->getId() . '-option-' . $optionId ?>"
-                    value="<?= $optionId ?>"
-                    <?php if ($block->isSelected($optionId)): ?>checked<?php endif ?>
-                    data-validate=<?= $block->getDataValidateJson() ?>
-                >
-                <label for="<?= $block->getId() . '-option-' . $optionId ?>"><?= $optionLabel ?></label>
-                </input>
-            </div>
-        <?php endforeach; ?>
-    </div>
-    <?php if ($note = $block->getNote()): ?>
-        <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
-    <?php endif ?>
+<?php if ($block->displayLabel()): ?>
+    <label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
+<?php endif ?>
+<div class="control <?= count($block->getOptions()) > 12 ? 'multi-columns' : '' ?>">
+    <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
+        <div>
+            <input
+                type="checkbox"
+                name="<?= $block->getName() ?><?= $block->displayLabel() ? '[]' : '' ?>"
+                id="<?= $block->getId() . '-option-' . $optionId ?>"
+                value="<?= $optionId ?>"
+                <?php if ($block->isSelected($optionId)): ?>checked<?php endif ?>
+                data-validate=<?= $block->getDataValidateJson() ?>
+            >
+            <label for="<?= $block->getId() . '-option-' . $optionId ?>"><?= $optionLabel ?></label>
+            </input>
+        </div>
+    <?php endforeach; ?>
 </div>
+<?php if ($note = $block->getNote()): ?>
+    <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
+<?php endif ?>

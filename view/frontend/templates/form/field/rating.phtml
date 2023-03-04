@@ -4,29 +4,28 @@
  * http://www.alekseon.com/
  */
 ?>
-<div class="field">
-    <label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
-    <div class="control">
-            <div class="field choice review-field-rating">
-                <div class="control review-control-vote">
-                    <?php for ($i=6; $i>0; $i --): ?>
-                        <input
-                            type="radio"
-                            name="<?= $block->getName() ?>"
-                            id="rate_<?= $block->getId() ?>_<?= $i ?>"
-                            value="<?= $i ?>"
-                            class="radio"
-                            data-validate=<?= $block->getDataValidateJson() ?>
-                        />
-                        <label
-                            class="rating-<?= $i ?>"
-                            for="rate_<?= $block->getId() ?>_<?= $i ?>"
-                            title="<?= __('Rate: ') . $i ?>"
-                            id="rate_<?= $block->getId() ?>_<?= $i ?>_label">
-                            <span><?= __('Rate: ') . $i ?></span>
-                        </label>
-                    <?php endfor; ?>
-                </div>
-            </div>
+<label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
+<div class="control">
+    <div class="field choice review-field-rating">
+        <div class="control review-control-vote">
+            <?php for ($i=6; $i>0; $i --): ?>
+                <input
+                    type="radio"
+                    name="<?= $block->getName() ?>"
+                    id="rate_<?= $block->getId() ?>_<?= $i ?>"
+                    value="<?= $i ?>"
+                    class="radio"
+                    data-validate=<?= $block->getDataValidateJson() ?>
+                />
+                <label
+                    class="rating-<?= $i ?>"
+                    for="rate_<?= $block->getId() ?>_<?= $i ?>"
+                    title="<?= __('Rate: ') . $i ?>"
+                    id="rate_<?= $block->getId() ?>_<?= $i ?>_label">
+                    <span><?= __('Rate: ') . $i ?></span>
+                </label>
+            <?php endfor; ?>
+        </div>
     </div>
 </div>
+

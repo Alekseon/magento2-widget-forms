@@ -4,6 +4,8 @@
  * http://www.alekseon.com/
  */
 namespace Alekseon\WidgetForms\Block;
+use Magento\Framework\DataObject;
+
 /**
  * Class WidgetForm
  * @package Alekseon\WidgetForms\Block
@@ -38,6 +40,10 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
      * @var array
      */
     protected $formFields = [];
+    /**
+     * @var
+     */
+    protected $tabs;
 
     /**
      * WidgetForm constructor.
@@ -94,18 +100,23 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
                 unset($frontendBlock['class']);
                 $frontendBlock['field'] = $field;
                 $frontendBlock['form'] = $form;
+                $frontendBlock['tab_code'] = $field->getGroupCode();
 
-                $block = $this->addFormField(
-                    'form_'. $form->getId() . '_field_' . $field->getAttributeCode(),
+                $fieldBlockAlias = 'form_' . $form->getId() . '_field_' . $field->getAttributeCode();
+                $this->addFormField(
+                    $fieldBlockAlias,
                     $class,
-                    $frontendBlock
+                    $frontendBlock,
                 );
             }
         }
 
         $additionalInfoBlock = $this->addFormField(
             'form_' . $form->getId() . '_additional.info',
-            \Alekseon\WidgetForms\Block\Form\AdditionalInfo::class
+            \Alekseon\WidgetForms\Block\Form\AdditionalInfo::class,
+            [
+                'tab_code' => array_key_last($this->getTabs())
+            ]
         );
 
         $this->eventManager->dispatch(
@@ -117,13 +128,32 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
             ]
         );
 
-        $this->addChild(
-            'form_'. $form->getId() . '_action',
-            \Alekseon\WidgetForms\Block\Form\Action::class,
-            []
-        );
+        $tabs = $this->getTabs();
+        foreach ($tabs as $tabCode => $tab) {
+            $this->addChild(
+                'form_' . $form->getId() . '_action_' . $tabCode,
+                \Alekseon\WidgetForms\Block\Form\Action::class,
+            )->setSubmitButtonLabel($this->getSubmitButtonLabel($tab));
+        }
 
         return parent::_toHtml();
+    }
+
+    /**
+     * @return \Magento\Framework\Phrase
+     */
+    protected function getSubmitButtonLabel($tab)
+    {
+        if (!$tab->getIsLastTab()) {
+            return __('Next');
+        }
+
+        $form = $this->getForm();
+        if ($form && $form->getSubmitButtonLabel()) {
+            return $form->getSubmitButtonLabel();
+        }
+
+        return __('Submit');
     }
 
     /**
@@ -132,13 +162,18 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
      * @param array $data
      * @return $this
      */
-    public function addFormField($alias, $block, $data = [])
+    public function addFormField($fieldBlockAlias, $block, $data = [])
     {
-        if (!isset($this->formFields[$alias])) {
-            $this->addChild($alias, $block, $data);
-            $this->formFields[$alias] = $alias;
+        $tabCode = $data['tab_code'] ?? '';
+        $tabs = $this->getTabs();
+        if (!isset($tabs[$tabCode])) {
+            $tabCode = array_key_first($tabs);
         }
-        return $this->getChildBlock($this->formFields[$alias]);
+        if (!isset($this->formFields[$tabCode][$fieldBlockAlias])) {
+            $this->addChild($fieldBlockAlias, $block, $data);
+            $this->formFields[$tabCode][$fieldBlockAlias] = $fieldBlockAlias;
+        }
+        return $this->getChildBlock($this->formFields[$tabCode][$fieldBlockAlias]);
     }
 
     /**
@@ -154,26 +189,73 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     }
 
     /**
-     * @return string
+     * @return mixed
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getFormFieldsHtml()
+    public function getTabs()
     {
+        if ($this->tabs === null) {
+            $this->tabs = [];
 
-        $html = '';
-        foreach ($this->formFields as $field) {
-            $html .= $this->getChildHtml($field);
+            if ($this->getForm()->getEnableMultpipleSteps()) {
+                $formTabs = $this->getForm()->getFormTabs();
+                foreach ($formTabs as $tab) {
+                    $this->tabs[$tab->getId()] = $tab;
+                }
+            }
+
+            if (empty($this->tabs)) {
+                // backward compatible, to be sure there is alwyas at least one tab
+                $tab = new DataObject();
+                $tab->setId(1);
+                $tab->setIsLastTab(true);
+                $this->tabs[1] = $tab;
+            }
+        }
+        return $this->tabs;
+    }
+
+    /**
+     * @return void
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function getFormTabsHtml()
+    {
+        $tabs = $this->getTabs();
+        $formTabsHtml = [];
+        $tabsCounter = 0;
+        foreach ($tabs as $tabCode => $tab) {
+            $formFields = $this->formFields[$tabCode] ?? [];
+            if (!isset($formTabsHtml[$tabCode])) {
+                $formTabsHtml[$tabCode]['is_last'] = 0;
+                $formTabsHtml[$tabCode]['fields'] = [];
+                $formTabsHtml[$tabCode]['code'] = $tabCode;
+                $formTabsHtml[$tabCode]['index'] = $tabsCounter;
+                $formTabsHtml[$tabCode]['visible'] = $tabsCounter ? false : true;
+            }
+            foreach ($formFields as $field) {
+                $formTabsHtml[$tabCode]['fields'][] = [
+                    'html' => $this->getChildHtml($field),
+
+                ];
+            }
+
+            $formTabsHtml[$tabCode]['actionHtml'] = $this->getActionToolbarHtml($tab);
+
+            $tabsCounter ++;
         }
 
-        return $html;
+        $formTabsHtml[$tabCode]['is_last'] = 1;
+        return array_values($formTabsHtml);
     }
 
     /**
      * @return string
      */
-    public function getActtionToolbarHtml()
+    public function getActionToolbarHtml($tab)
     {
         $form = $this->getForm();
-        return $this->getChildHtml('form_'. $form->getId() . '_action');
+        return $this->getChildHtml('form_'. $form->getId() . '_action_' . $tab->getId());
     }
 
     /**
