@@ -23,7 +23,7 @@ define([
             setTimeout(() => {
                 this.currentTab = tabIndex;
                 $(form).find('.form-tab-' + this.currentTab).slideDown();
-            }, "100");
+            }, "400");
         },
 
         submitForm: function (form) {
