@@ -7,14 +7,14 @@
 <form data-bind="id: formId, submit:submitForm"
       autocomplete="off"
       afterRender="onElementRender">
-    <input type="hidden" name="hideit" />
+    <input type="hidden" name="hideit">
     <!-- ko foreach: { data: tabs, as: 'tab'} -->
 
         <div data-bind="visible: tab.visible, css: 'form-tab-' + tab.index">
             <fieldset class="fieldset">
                 <!-- ko if: $parent.title -->
                 <legend class="legend">
-                    <span data-bind="html: $parent.title" />
+                    <span data-bind="html: $parent.title"></span>
                 </legend>
                 <!--/ko-->
 
@@ -23,7 +23,7 @@
                 <!--/ko-->
 
                 <!-- ko foreach: { data: tab.fields, as: 'field'} -->
-                    <div class="field" data-bind="html: field.html"></div>
+                    <div class="field" data-bind="html: field.html, css: field.field_class"></div>
                 <!-- /ko -->
 
                 <!-- ko if: tab.is_last -->

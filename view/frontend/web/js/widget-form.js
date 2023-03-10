@@ -23,7 +23,7 @@ define([
             setTimeout(() => {
                 this.currentTab = tabIndex;
                 $(form).find('.form-tab-' + this.currentTab).slideDown();
-            }, "400");
+            }, "100");
         },
 
         submitForm: function (form) {
@@ -55,7 +55,9 @@ define([
                     content: response.message
                 });
                 form.reset();
-                self.openTab(form, 0);
+                if (self.currentTab != 0) {
+                    self.openTab(form, 0);
+                }
                 self.onSuccess();
             }).fail(function (error) {
                 var message = $.mage.__('Unexpected error.');
