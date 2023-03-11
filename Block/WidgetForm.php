@@ -10,7 +10,8 @@ use Magento\Framework\DataObject;
  * Class WidgetForm
  * @package Alekseon\WidgetForms\Block
  */
-class WidgetForm extends \Magento\Framework\View\Element\Template implements \Magento\Widget\Block\BlockInterface
+class WidgetForm extends \Magento\Framework\View\Element\Template
+    implements \Magento\Widget\Block\BlockInterface, \Magento\Framework\DataObject\IdentityInterface
 {
     /**
      * @var string
@@ -65,7 +66,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     }
 
     /**
-     * @return \Magento\Framework\View\Element\Template
+     * @return string
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     protected function _toHtml()
@@ -226,7 +227,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     }
 
     /**
-     * @return void
+     * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getFormTabsHtml()
@@ -348,5 +349,22 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
         );
 
         return $dataObject->getUiComponentChildren();
+    }
+
+    /**
+     * @return int
+     */
+    public function getCacheLifetime()
+    {
+        return 86400;
+    }
+
+    /**
+     * @return string[]
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function getIdentities()
+    {
+        return $this->getForm()->getIdentities();
     }
 }
