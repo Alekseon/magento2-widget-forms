@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - "*" for required fields
+- cache tags
 ### Fixed
 - select default value on radio button input
 - stop opening first tab after submit if there is only one tab

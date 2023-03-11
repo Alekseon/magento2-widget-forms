@@ -245,10 +245,13 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
                 $formTabsHtml[$tabCode]['visible'] = $tabsCounter ? false : true;
             }
             foreach ($formFields as $field) {
-                $formTabsHtml[$tabCode]['fields'][] = [
-                    'html' => $this->getChildHtml($field['block']),
-                    'field_class' => $field['field_class'],
-                ];
+                $fieldHtml = $this->getChildHtml($field['block']);
+                if ($fieldHtml) {
+                    $formTabsHtml[$tabCode]['fields'][] = [
+                        'html' => $this->getChildHtml($field['block']),
+                        'field_class' => $field['field_class'],
+                    ];
+                }
             }
 
             $formTabsHtml[$tabCode]['actionHtml'] = $this->getActionToolbarHtml($tab);
