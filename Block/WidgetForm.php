@@ -363,11 +363,26 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * @return array
+     */
+    public function getCacheKeyInfo()
+    {
+        $cacheKeyInfo = parent::getCacheKeyInfo();
+        if ($this->getForm()) {
+            $cacheKeyInfo['widget_data'] =  serialize($this->getData());
+        }
+        return $cacheKeyInfo;
+    }
+
+    /**
      * @return string[]
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getIdentities()
     {
-        return $this->getForm()->getIdentities();
+        if ($this->getForm()) {
+            return $this->getForm()->getIdentities();
+        }
+        return  [];
     }
 }
