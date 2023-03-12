@@ -4,21 +4,16 @@
  * http://www.alekseon.com/
  */
 ?>
-<div class="control" style="margin-bottom: 47px">
-    <label
-        class="label custom-file-upload"
-        for="<?= $block->getId() ?>">
-        <i class="fa fa-cloud-upload"></i>
-        <?= $block->getLabel() ?>
-        <input
-            name="<?= $block->getName() ?>"
-            id="<?= $block->getId() ?>"
-            title="<?= $block->getLabel() ?>"
-            type="file"
-            placeholder="<?=$block->getPlaceholder() ?>"
-            data-validate=<?= $block->getDataValidateJson() ?>
-        />
-    </label>
+<label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
+<div class="control">
+    <input
+        name="<?= $block->getName() ?>"
+        id="<?= $block->getId() ?>"
+        title="<?= $block->getLabel() ?>"
+        type="file"
+        placeholder="<?=$block->getPlaceholder() ?>"
+        data-validate=<?= $block->getDataValidateJson() ?>
+    />
 </div>
 <?php if ($note = $block->getNote()): ?>
     <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>

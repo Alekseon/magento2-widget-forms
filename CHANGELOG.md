@@ -11,7 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Removed
 
 ## [102.2.2] - 2023-03-12
+### Fixed
 - fix for cache issue
+- removed gap and fix label displaye in image input template
 
 ## [102.2.1] - 2023-03-12
 ### Added
