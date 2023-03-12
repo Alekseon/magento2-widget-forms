@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
-## [Unreleased]
+## [102.2.1] - 2023-03-12
 ### Added
 - "*" for required fields
 - cache tags
