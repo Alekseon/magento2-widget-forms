@@ -20,12 +20,10 @@ class RegisterCurrentCmsPage implements ObserverInterface
     protected $registry;
 
     /**
-     * CurrentProduct constructor.
-     * @param array $data
+     * @param \Magento\Framework\Registry $registry
      */
     public function __construct(
-        \Magento\Framework\Registry $registry,
-        array $data = []
+        \Magento\Framework\Registry $registry
     )
     {
         $this->registry = $registry;

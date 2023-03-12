@@ -10,7 +10,8 @@ use Magento\Framework\DataObject;
  * Class WidgetForm
  * @package Alekseon\WidgetForms\Block
  */
-class WidgetForm extends \Magento\Framework\View\Element\Template implements \Magento\Widget\Block\BlockInterface
+class WidgetForm extends \Magento\Framework\View\Element\Template
+    implements \Magento\Widget\Block\BlockInterface, \Magento\Framework\DataObject\IdentityInterface
 {
     /**
      * @var string
@@ -65,7 +66,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     }
 
     /**
-     * @return \Magento\Framework\View\Element\Template
+     * @return string
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     protected function _toHtml()
@@ -100,6 +101,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
                 unset($frontendBlock['class']);
                 $frontendBlock['field'] = $field;
                 $frontendBlock['form'] = $form;
+                $frontendBlock['is_required'] = $field->getIsRequired();
                 $frontendBlock['tab_code'] = $field->getGroupCode();
 
                 $fieldBlockAlias = 'form_' . $form->getId() . '_field_' . $field->getAttributeCode();
@@ -165,15 +167,24 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     public function addFormField($fieldBlockAlias, $block, $data = [])
     {
         $tabCode = $data['tab_code'] ?? '';
+        $fieldClass = '';
+        $isRequired = $data['is_required'] ?? false;
+        if ($isRequired) {
+            $fieldClass = 'required';
+        }
+
         $tabs = $this->getTabs();
         if (!isset($tabs[$tabCode])) {
             $tabCode = array_key_first($tabs);
         }
         if (!isset($this->formFields[$tabCode][$fieldBlockAlias])) {
             $this->addChild($fieldBlockAlias, $block, $data);
-            $this->formFields[$tabCode][$fieldBlockAlias] = $fieldBlockAlias;
+            $this->formFields[$tabCode][$fieldBlockAlias] = [
+                'block' => $fieldBlockAlias,
+                'field_class' => $fieldClass,
+            ];
         }
-        return $this->getChildBlock($this->formFields[$tabCode][$fieldBlockAlias]);
+        return $this->getChildBlock($this->formFields[$tabCode][$fieldBlockAlias]['block']);
     }
 
     /**
@@ -216,7 +227,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     }
 
     /**
-     * @return void
+     * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getFormTabsHtml()
@@ -234,10 +245,13 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
                 $formTabsHtml[$tabCode]['visible'] = $tabsCounter ? false : true;
             }
             foreach ($formFields as $field) {
-                $formTabsHtml[$tabCode]['fields'][] = [
-                    'html' => $this->getChildHtml($field),
-
-                ];
+                $fieldHtml = $this->getChildHtml($field['block']);
+                if ($fieldHtml) {
+                    $formTabsHtml[$tabCode]['fields'][] = [
+                        'html' => $this->getChildHtml($field['block']),
+                        'field_class' => $field['field_class'],
+                    ];
+                }
             }
 
             $formTabsHtml[$tabCode]['actionHtml'] = $this->getActionToolbarHtml($tab);
@@ -300,7 +314,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
     }
 
     /**
-     * @return bool
+     * @return string|bool
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getFormDescription()
@@ -338,5 +352,22 @@ class WidgetForm extends \Magento\Framework\View\Element\Template implements \Ma
         );
 
         return $dataObject->getUiComponentChildren();
+    }
+
+    /**
+     * @return int
+     */
+    public function getCacheLifetime()
+    {
+        return 86400;
+    }
+
+    /**
+     * @return string[]
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function getIdentities()
+    {
+        return $this->getForm()->getIdentities();
     }
 }

@@ -55,7 +55,9 @@ define([
                     content: response.message
                 });
                 form.reset();
-                self.openTab(form, 0);
+                if (self.currentTab != 0) {
+                    self.openTab(form, 0);
+                }
                 self.onSuccess();
             }).fail(function (error) {
                 var message = $.mage.__('Unexpected error.');
