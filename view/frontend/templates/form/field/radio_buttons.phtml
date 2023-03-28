@@ -5,7 +5,7 @@
  */
 ?>
 <label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
-<div class="control">
+<div class="control radio-container">
     <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
         <input
             type="radio"

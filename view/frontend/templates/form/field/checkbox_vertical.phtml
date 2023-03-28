@@ -9,7 +9,7 @@
 <?php endif ?>
 <div class="control <?= count($block->getOptions()) > 12 ? 'multi-columns' : '' ?>">
     <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
-        <div>
+        <div class="checkbox-container">
             <input
                 type="checkbox"
                 name="<?= $block->getName() ?><?= $block->displayLabel() ? '[]' : '' ?>"

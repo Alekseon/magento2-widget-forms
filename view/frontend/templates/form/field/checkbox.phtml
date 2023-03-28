@@ -7,7 +7,7 @@
 <?php if ($block->displayLabel()): ?>
     <label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
 <?php endif ?>
-<div class="control">
+<div class="control checkbox-container">
     <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
         <input
             type="checkbox"
