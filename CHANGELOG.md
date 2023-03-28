@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.2.3] - 2023-03-28
+### Added
+- field containers css classes (for hyva)
+
 ## [102.2.2] - 2023-03-12
 ### Fixed
 - fix for cache issue
