@@ -146,16 +146,17 @@ class Submit implements HttpPostActionInterface
     }
 
     /**
-     *
+     * @return void
+     * @throws LocalizedException
      */
     protected function validateData()
     {
         if (!$this->formKeyValidator->validate($this->request)) {
-            throw new \Exception(__('Incorrect Form Key'));
+            throw new LocalizedException(__('Invalid Form Key. Please refresh the page.'));
         }
 
         if ($this->request->getParam('hideit')) {
-            throw new \Exception(__('Interrupted Data'));
+            throw new LocalizedException(__('Interrupted Data'));
         }
     }
 
