@@ -8,14 +8,23 @@ declare(strict_types=1);
 namespace Alekseon\WidgetForms\Controller\Form;
 
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use Magento\Framework\Exception\LocalizedException;
 
 /**
  * Class Submit
  * @package Alekseon\WidgetForms\Controller
  */
-class Submit extends \Magento\Framework\App\Action\Action
+class Submit implements HttpPostActionInterface
 {
+    /**
+     * @var \Magento\Framework\App\RequestInterface
+     */
+    protected $request;
+    /**
+     * @var \Magento\Framework\Event\ManagerInterface
+     */
+    protected $eventManager;
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
@@ -49,12 +58,13 @@ class Submit extends \Magento\Framework\App\Action\Action
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Psr\Log\LoggerInterface $logger
     ) {
+        $this->request = $context->getRequest();
+        $this->eventManager = $context->getEventManager();
         $this->formRecordFactory = $formRecordFactory;
         $this->jsonFactory = $jsonFactory;
         $this->formRepository = $formRepository;
         $this->formKeyValidator = $formKeyValidator;
         $this->logger = $logger;
-        parent::__construct($context);
     }
 
     /**
@@ -67,7 +77,7 @@ class Submit extends \Magento\Framework\App\Action\Action
         try {
             $form = $this->getForm();
             $this->validateData();
-            $post = $this->getRequest()->getPost();
+            $post = $this->request->getPost();
             $formRecord = $this->formRecordFactory->create();
             $formRecord->getResource()->setCurrentForm($form);
             $formRecord->setStoreId($form->getStoreId());
@@ -84,7 +94,7 @@ class Submit extends \Magento\Framework\App\Action\Action
             }
 
             $formRecord->getResource()->save($formRecord);
-            $this->_eventManager->dispatch('alekseon_widget_form_after_submit', ['form_record' => $formRecord]);
+            $this->eventManager->dispatch('alekseon_widget_form_after_submit', ['form_record' => $formRecord]);
             $resultJson->setData(
                 [
                     'title' => $this->getSuccessTitle($formRecord),
@@ -140,11 +150,11 @@ class Submit extends \Magento\Framework\App\Action\Action
      */
     protected function validateData()
     {
-        if (!$this->formKeyValidator->validate($this->getRequest())) {
+        if (!$this->formKeyValidator->validate($this->request)) {
             throw new \Exception(__('Incorrect Form Key'));
         }
 
-        if ($this->getRequest()->getParam('hideit')) {
+        if ($this->request->getParam('hideit')) {
             throw new \Exception(__('Interrupted Data'));
         }
     }
@@ -154,7 +164,7 @@ class Submit extends \Magento\Framework\App\Action\Action
      */
     public function getForm()
     {
-        $formId = $this->getRequest()->getParam('form_id');
+        $formId = $this->request->getParam('form_id');
         $form = $this->formRepository->getById($formId);
         return $form;
     }
