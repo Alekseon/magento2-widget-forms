@@ -3,25 +3,30 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+
+/**
+ * @var $block \Alekseon\WidgetForms\Block\WidgetForm
+ * @var $escaper \Magento\Framework\Escaper
+ */
 ?>
 <?php if ($block->getForm()): ?>
-    <div class="alekseon-widget-form-wrapper" id="widget-form-wrapper-<?= $block->getForm()->getId() ?>"
-         data-bind="scope: 'widgetForm-<?= $block->getForm()->getId() ?>'">
+    <div class="alekseon-widget-form-wrapper" id="widget-form-wrapper-<?= $escaper->escapeHtmlAttr($block->getForm()->getId()) ?>"
+         data-bind="scope: 'widgetForm-<?= $escaper->escapeHtmlAttr($block->getForm()->getId()) ?>'">
          <!-- ko template: getTemplate() --><!-- /ko -->
     </div>
     <script type="text/x-magento-init">
         {
-            "#widget-form-wrapper-<?= $block->getForm()->getId() ?>": {
+            "#widget-form-wrapper-<?= $escaper->escapeHtml($block->getForm()->getId()) ?>": {
                 "Magento_Ui/js/core/app": {
                     "components": {
-                        "widgetForm-<?= $block->getForm()->getId() ?>": {
+                        "widgetForm-<?= $escaper->escapeHtml($block->getForm()->getId()) ?>": {
                             "component": "Alekseon_WidgetForms/js/widget-form",
-                            "formId": "<?= $block->getForm()->getId() ?>",
-                            "title": "<?= $block->getFormTitle() ?>",
-                            "description": "<?= $block->getFormDescription() ?>",
-                            "formSubmitUrl": "<?= $block->getUrl('Alekseon_WidgetForms/form/submit', ['form_id' => $block->getForm()->getId()]) ?>",
-                            "children": <?= $block->getUiComponentChildrenJson() ?>,
-                            "tabs": <?= $block->getFormTabsHtmlJson() ?>
+                            "formId": "<?= $escaper->escapeHtml($block->getForm()->getId()) ?>",
+                            "title": "<?= $escaper->escapeHtml($block->getFormTitle()) ?>",
+                            "description": "<?= $escaper->escapeHtml($block->getFormDescription()) ?>",
+                            "formSubmitUrl": "<?= $escaper->escapeUrl($block->getSubmitFormUrl()) ?>",
+                            "children": <?= $escaper->escapeHtml($block->getUiComponentChildrenJson()) ?>,
+                            "tabs": <?= $escaper->escapeHtml($block->getFormTabsHtmlJson()) ?>
                         }
                     }
                 }

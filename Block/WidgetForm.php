@@ -172,7 +172,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      * @param $alias
      * @param $block
      * @param array $data
-     * @return $this
+     * @return $this|bool
      */
     public function addFormField($fieldBlockAlias, $block, $data = [])
     {
@@ -270,6 +270,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         }
 
         $formTabsHtml[$tabCode]['is_last'] = 1;
+
         return $this->jsonHexTag->serialize(array_values($formTabsHtml));
     }
 
@@ -395,5 +396,16 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
             return $this->getForm()->getIdentities();
         }
         return  [];
+    }
+
+    /**
+     * @return string
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function getSubmitFormUrl()
+    {
+        return $this->getUrl('Alekseon_WidgetForms/form/submit', [
+            'form_id' => $this->getForm()->getId()
+        ]);
     }
 }

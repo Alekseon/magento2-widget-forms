@@ -3,9 +3,14 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+
+/**
+ * @var $block \Alekseon\WidgetForms\Block\Form\Action
+ * @var $escaper \Magento\Framework\Escaper
+ */
 ?>
 <div class="primary">
-    <button type="submit" title="<?= $block->getSubmitButtonLabel() ?>" class="action submit primary">
-        <span><?= $block->getSubmitButtonLabel() ?></span>
+    <button type="submit" title="<?= $escaper->escapeHtmlAttr($block->getSubmitButtonLabel()) ?>" class="action submit primary">
+        <span><?= $block->escapeHtml($block->getSubmitButtonLabel()) ?></span>
     </button>
 </div>

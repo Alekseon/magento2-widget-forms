@@ -3,18 +3,23 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+
+/**
+ * @var $block \Alekseon\WidgetForms\Block\Form\Field\Date
+ * @var $escaper \Magento\Framework\Escaper
+ */
 ?>
-<label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
+<label class="label" for="<?= $escaper->escapeHtmlAttr($block->getId()) ?>"><?= $escaper->escapeHtml($block->getLabel()) ?></label>
 <div class="control">
     <input
-        name="<?= $block->getName() ?>"
-        id="<?= $block->getId() ?>"
-        title="<?= $block->getLabel() ?>"
+        name="<?= $escaper->escapeHtmlAttr($block->getName()) ?>"
+        id="<?= $escaper->escapeHtmlAttr($block->getId()) ?>"
+        title="<?= $escaper->escapeHtmlAttr($block->getLabel()) ?>"
         type="date"
-        placeholder="<?=$block->getPlaceholder() ?>"
+        placeholder="<?= $escaper->escapeHtmlAttr($block->getPlaceholder()) ?>"
         data-validate=<?= $block->getDataValidateJson() ?>
     />
 </div>
 <?php if ($note = $block->getNote()): ?>
-    <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
+    <p id="<?= $escaper->escapeHtmlAttr($block->getId()) ?>_note" class="note"><?= $escaper->escapeHtml($note) ?></p>
 <?php endif ?>
