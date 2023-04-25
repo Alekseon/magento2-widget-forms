@@ -19,6 +19,7 @@ class RemoveAttributesFromGeneralTabPlugin
      * @param $formObject
      * @param array $groups
      * @return array
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function beforeAddAllAttributeFields($generalTabBlock, $generalFieldset, $formObject, $groups = [])
     {

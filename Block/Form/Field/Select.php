@@ -50,9 +50,9 @@ class Select extends \Alekseon\WidgetForms\Block\Form\Field\AbstractField
             }
 
             $options = $this->getOptions();
-            foreach ($options as $id => $label) {
-                if (in_array($id, $defaultValue)) {
-                    $this->selectedOptions[$id] = $id;
+            foreach (array_keys($options) as $optId) {
+                if (in_array($optId, $defaultValue)) {
+                    $this->selectedOptions[$optId] = $optId;
                 }
             }
         }
