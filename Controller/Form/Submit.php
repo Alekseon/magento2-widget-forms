@@ -3,6 +3,8 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\WidgetForms\Controller\Form;
 
 use Magento\Framework\App\Action\Context;
@@ -83,7 +85,6 @@ class Submit extends \Magento\Framework\App\Action\Action
 
             $formRecord->getResource()->save($formRecord);
             $this->_eventManager->dispatch('alekseon_widget_form_after_submit', ['form_record' => $formRecord]);
-            $resultJson->setHttpResponseCode(200);
             $resultJson->setData(
                 [
                     'title' => $this->getSuccessTitle($formRecord),

@@ -20,8 +20,8 @@
                             "title": "<?= $block->getFormTitle() ?>",
                             "description": "<?= $block->getFormDescription() ?>",
                             "formSubmitUrl": "<?= $block->getUrl('Alekseon_WidgetForms/form/submit', ['form_id' => $block->getForm()->getId()]) ?>",
-                            "children": <?= json_encode($block->getUiComponentChildren()) ?>,
-                            "tabs": <?= json_encode($block->getFormTabsHtml()) ?>
+                            "children": <?= $block->getUiComponentChildrenJson() ?>,
+                            "tabs": <?= $block->getFormTabsHtmlJson() ?>
                         }
                     }
                 }
