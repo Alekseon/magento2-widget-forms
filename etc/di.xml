@@ -147,6 +147,6 @@
         </arguments>
     </type>
     <type name="Alekseon\CustomFormsBuilder\Model\FormRecord\Attribute">
-        <plugin name="Alekseon_WidgetForms::NewsletterEmailValidatorPlugin" type="Alekseon\WidgetForms\Plugin\NewsletterEmailValidatorPlugin"/>
+        <plugin name="Alekseon_WidgetForms::NewsletterEmailValidatorPlugin" type="Alekseon\WidgetForms\Plugin\NewsletterEmailValidatorPlugin" sortOrder="100" />
     </type>
 </config>
