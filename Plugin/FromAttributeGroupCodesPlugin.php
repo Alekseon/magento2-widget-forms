@@ -16,7 +16,7 @@ class FromAttributeGroupCodesPlugin
     /**
      * @var \Alekseon\CustomFormsBuilder\Model\FormRepository
      */
-    protected $formRepository;
+    private $formRepository;
 
     /**
      * FromAttributeGroupCodesPlugin constructor.

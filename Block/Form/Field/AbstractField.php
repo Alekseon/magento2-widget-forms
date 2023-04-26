@@ -18,11 +18,11 @@ class AbstractField extends \Magento\Framework\View\Element\Template
     /**
      * @var
      */
-    protected $dataValidateParams;
+    private $dataValidateParams;
     /**
      * @var
      */
-    protected $validationClass;
+    private $validationClass;
 
     /**
      * @return bool
@@ -59,7 +59,7 @@ class AbstractField extends \Magento\Framework\View\Element\Template
     /**
      * @return array
      */
-    protected function getDataValidateParams()
+    public function getDataValidateParams()
     {
         if ($this->dataValidateParams === null) {
             $this->validationClass = '';

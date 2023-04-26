@@ -17,7 +17,7 @@ class Select extends \Alekseon\WidgetForms\Block\Form\Field\AbstractField
     /**
      * @var
      */
-    protected $selectedOptions;
+    private $selectedOptions;
 
     /**
      * @return array

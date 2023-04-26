@@ -23,7 +23,7 @@ class CustomerEmail extends AbstractProvider
     /**
      * @var \Magento\Customer\Model\Session
      */
-    protected $customerSession;
+    private $customerSession;
 
     /**
      * CustomerEmail constructor.

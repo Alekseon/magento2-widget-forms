@@ -18,7 +18,7 @@ class CurrentProduct extends AbstractProvider
     /**
      * @var \Magento\Catalog\Helper\Data
      */
-    protected $catalogHelper;
+    private $catalogHelper;
 
     /**
      * @param \Magento\Catalog\Helper\Data $catalogHelper

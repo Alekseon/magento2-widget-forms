@@ -16,11 +16,11 @@ class AvailableForms implements \Magento\Framework\Option\ArrayInterface
     /**
      * @var
      */
-    protected $options;
+    private $options;
     /**
      * @var \Alekseon\WidgetForms\Model\ResourceModel\Form\CollectionFactory
      */
-    protected $formCollectionFactory;
+    private $formCollectionFactory;
 
     /**
      * AvailableForms constructor.

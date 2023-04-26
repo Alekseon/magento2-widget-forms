@@ -18,8 +18,6 @@ use Magento\Framework\Data\Form\Element\AbstractElement;
 class NewsletterSettings extends \Alekseon\AlekseonEav\Block\Adminhtml\Entity\Edit\Form implements
     \Magento\Backend\Block\Widget\Tab\TabInterface
 {
-    protected $dataObject;
-
     /**
      * {@inheritdoc}
      */
@@ -57,10 +55,7 @@ class NewsletterSettings extends \Alekseon\AlekseonEav\Block\Adminhtml\Entity\Ed
      */
     public function getDataObject()
     {
-        if (null === $this->dataObject) {
-            return $this->_coreRegistry->registry('current_form');
-        }
-        return $this->dataObject;
+        return $this->_coreRegistry->registry('current_form');
     }
 
     /**

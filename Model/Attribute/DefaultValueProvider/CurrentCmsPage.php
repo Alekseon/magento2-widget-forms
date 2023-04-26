@@ -18,7 +18,7 @@ class CurrentCmsPage extends AbstractProvider
     /**
      * @var \Magento\Cms\Model\Page
      */
-    protected $cmsPage;
+    private $cmsPage;
 
     /**
      * CurrentProduct constructor.

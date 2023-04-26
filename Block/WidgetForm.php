@@ -24,35 +24,35 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     /**
      * @var \Alekseon\CustomFormsBuilder\Model\FormRepository
      */
-    protected $formRepository;
+    private $formRepository;
     /**
      * @var
      */
-    protected $form;
+    private $form;
     /**
      * @var
      */
-    protected $formFieldsCollection;
+    private $formFieldsCollection;
     /**
      * @var \Magento\Framework\Data\Form\FormKey
      */
-    protected $formKey;
+    private $formKey;
     /**
      * @var \Magento\Framework\EntityManager\EventManager
      */
-    protected $eventManager;
+    private $eventManager;
     /**
      * @var JsonHexTag
      */
-    protected $jsonHexTag;
+    private $jsonHexTag;
     /**
      * @var array
      */
-    protected $formFields = [];
+    private $formFields = [];
     /**
      * @var
      */
-    protected $tabs;
+    private $tabs;
 
     /**
      * WidgetForm constructor.
@@ -154,7 +154,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     /**
      * @return \Magento\Framework\Phrase
      */
-    protected function getSubmitButtonLabel($tab)
+    public function getSubmitButtonLabel($tab)
     {
         if (!$tab->getIsLastTab()) {
             return __('Next');
@@ -200,7 +200,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     /**
      * @return |null
      */
-    protected function getFormFieldsCollection()
+    public function getFormFieldsCollection()
     {
         if ($this->formFieldsCollection === null) {
             $form = $this->getForm();

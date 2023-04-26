@@ -20,35 +20,35 @@ class Submit implements HttpPostActionInterface
     /**
      * @var \Magento\Framework\App\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \Magento\Framework\App\ResponseInterface
      */
-    protected $response;
+    private $response;
     /**
      * @var \Magento\Framework\Event\ManagerInterface
      */
-    protected $eventManager;
+    private $eventManager;
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $jsonFactory;
+    private $jsonFactory;
     /**
      * @var \Alekseon\CustomFormsBuilder\Model\FormRepository
      */
-    protected $formRepository;
+    private $formRepository;
     /**
      * @var \Alekseon\CustomFormsBuilder\Model\FormRecordFactory
      */
-    protected $formRecordFactory;
+    private $formRecordFactory;
     /**
      * @var \Magento\Framework\Data\Form\FormKey\Validator
      */
-    protected $formKeyValidator;
+    private $formKeyValidator;
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    protected $logger;
+    private $logger;
 
     /**
      * Submit constructor.
@@ -151,7 +151,7 @@ class Submit implements HttpPostActionInterface
      * @return void
      * @throws LocalizedException
      */
-    protected function validateData()
+    public function validateData()
     {
         if (!$this->formKeyValidator->validate($this->getRequest())) {
             throw new LocalizedException(__('Invalid Form Key. Please refresh the page.'));

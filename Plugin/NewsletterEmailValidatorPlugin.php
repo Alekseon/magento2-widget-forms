@@ -21,11 +21,11 @@ class NewsletterEmailValidatorPlugin
     /**
      * @var FormRepository
      */
-    protected $formRepository;
+    private $formRepository;
     /**
      * @var EmailFactory
      */
-    protected $emailValidatorFactory;
+    private $emailValidatorFactory;
 
     /**
      * NewsletterEmailValidatorPlugin constructor.

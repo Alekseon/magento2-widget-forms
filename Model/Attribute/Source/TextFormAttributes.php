@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace Alekseon\WidgetForms\Model\Attribute\Source;
 
-use Alekseon\CustomFormsBuilder\Model\Form;
-
 /**
  * Class TextFormAttributes
  * @package Alekseon\WidgetForms\Model\Attribute\Source
