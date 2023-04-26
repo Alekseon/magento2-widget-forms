@@ -98,22 +98,23 @@ class Submit implements HttpPostActionInterface
             $this->eventManager->dispatch('alekseon_widget_form_after_submit', ['form_record' => $formRecord]);
             $resultJson->setData(
                 [
+                    'errors' => false,
                     'title' => $this->getSuccessTitle($formRecord),
                     'message' => $this->getSuccessMessage($formRecord),
                 ]
             );
         } catch (LocalizedException $e) {
-            $resultJson->setHttpResponseCode(500);
             $resultJson->setData(
                 [
+                    'errors' => true,
                     'message' => $e->getMessage()
                 ]
             );
         } catch (\Exception $e) {
             $this->logger->error('Widget Form Error during submit action: ' . $e->getMessage());
-            $resultJson->setHttpResponseCode(500);
             $resultJson->setData(
                 [
+                    'errors' => true,
                     'message' => __('We are unable to process your request. Please, try again later.'),
                 ]
             );
