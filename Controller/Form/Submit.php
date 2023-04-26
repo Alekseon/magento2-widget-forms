@@ -90,11 +90,7 @@ class Submit implements HttpPostActionInterface
             $formFields = $form->getFieldsCollection();
             foreach ($formFields as $field) {
                 $fieldCode = $field->getAttributeCode();
-                if (isset($post[$fieldCode])) {
-                    $value = $post[$fieldCode];
-                } else {
-                    $value = $field->getDefaultValue();
-                }
+                $value = $post[$fieldCode] ?? $field->getDefaultValue();
                 $formRecord->setData($fieldCode, $value);
             }
 
