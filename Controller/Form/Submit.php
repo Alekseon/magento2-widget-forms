@@ -22,6 +22,10 @@ class Submit implements HttpPostActionInterface
      */
     protected $request;
     /**
+     * @var \Magento\Framework\App\ResponseInterface
+     */
+    protected $response;
+    /**
      * @var \Magento\Framework\Event\ManagerInterface
      */
     protected $eventManager;
@@ -59,6 +63,7 @@ class Submit implements HttpPostActionInterface
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->request = $context->getRequest();
+        $this->response = $context->getResponse();
         $this->eventManager = $context->getEventManager();
         $this->formRecordFactory = $formRecordFactory;
         $this->jsonFactory = $jsonFactory;
@@ -77,7 +82,7 @@ class Submit implements HttpPostActionInterface
         try {
             $form = $this->getForm();
             $this->validateData();
-            $post = $this->request->getPost();
+            $post = $this->getRequest()->getPost();
             $formRecord = $this->formRecordFactory->create();
             $formRecord->getResource()->setCurrentForm($form);
             $formRecord->setStoreId($form->getStoreId());
@@ -151,11 +156,11 @@ class Submit implements HttpPostActionInterface
      */
     protected function validateData()
     {
-        if (!$this->formKeyValidator->validate($this->request)) {
+        if (!$this->formKeyValidator->validate($this->getRequest())) {
             throw new LocalizedException(__('Invalid Form Key. Please refresh the page.'));
         }
 
-        if ($this->request->getParam('hideit')) {
+        if ($this->getRequest()->getParam('hideit')) {
             throw new LocalizedException(__('Interrupted Data'));
         }
     }
@@ -165,8 +170,24 @@ class Submit implements HttpPostActionInterface
      */
     public function getForm()
     {
-        $formId = $this->request->getParam('form_id');
+        $formId = $this->getRequest()->getParam('form_id');
         $form = $this->formRepository->getById($formId);
         return $form;
+    }
+
+    /**
+     * @return \Magento\Framework\App\RequestInterface
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @return \Magento\Framework\App\ResponseInterface
+     */
+    public function getResponse()
+    {
+        return $this->response;
     }
 }
