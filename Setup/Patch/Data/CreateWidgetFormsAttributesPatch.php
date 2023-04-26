@@ -62,6 +62,19 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
          */
         $eavSetup->deleteAttribute('form_submit_failure_message');
 
+        $this->createWidgetFormAttributes($eavSetup);
+        $this->createNewsletterAttributes($eavSetup);
+        $this->createMultistepAttribites($eavSetup);
+
+        $this->moduleDataSetup->getConnection()->endSetup();
+    }
+
+    /**
+     * @param $eavSetup
+     * @return void
+     */
+    private function createWidgetFormAttributes($eavSetup)
+    {
         $eavSetup->createAttribute(
             'can_use_for_widget',
             [
@@ -100,6 +113,36 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
             ]
         );
 
+        $eavSetup->createOrUpdateAttribute(
+            'form_submit_success_message',
+            [
+                'frontend_input' => 'textarea',
+                'frontend_label' => 'Form Submit Success Message',
+                'visible_in_grid' => false,
+                'is_required' => false,
+                'sort_order' => 30,
+                'group_code' => 'widget_form_attribute',
+                'scope' => Scopes::SCOPE_STORE,
+                'is_wysiwyg_enabled' => true,
+            ]
+        );
+
+        $eavSetup->createOrUpdateAttribute(
+            'form_submit_success_title',
+            [
+                'frontend_input' => 'text',
+                'frontend_label' => 'Form Submit Success Title',
+                'visible_in_grid' => false,
+                'is_required' => false,
+                'sort_order' => 29,
+                'group_code' => 'widget_form_attribute',
+                'scope' => Scopes::SCOPE_STORE,
+            ]
+        );
+    }
+
+    private function createNewsletterAttributes($eavSetup)
+    {
         $eavSetup->createAttribute(
             'subscribe_to_newsletter',
             [
@@ -127,34 +170,15 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
                 'group_code' => 'newsletter',
             ]
         );
+    }
 
-        $eavSetup->createOrUpdateAttribute(
-            'form_submit_success_message',
-            [
-                'frontend_input' => 'textarea',
-                'frontend_label' => 'Form Submit Success Message',
-                'visible_in_grid' => false,
-                'is_required' => false,
-                'sort_order' => 30,
-                'group_code' => 'widget_form_attribute',
-                'scope' => Scopes::SCOPE_STORE,
-                'is_wysiwyg_enabled' => true,
-            ]
-        );
-
-        $eavSetup->createOrUpdateAttribute(
-            'form_submit_success_title',
-            [
-                'frontend_input' => 'text',
-                'frontend_label' => 'Form Submit Success Title',
-                'visible_in_grid' => false,
-                'is_required' => false,
-                'sort_order' => 29,
-                'group_code' => 'widget_form_attribute',
-                'scope' => Scopes::SCOPE_STORE,
-            ]
-        );
-
+    /**
+     * @param $eavSetup
+     * @return void
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    private function createMultistepAttribites($eavSetup)
+    {
         $enableMultipleStepsAttribute = $eavSetup->createOrUpdateAttribute(
             'enable_multiple_steps',
             [
@@ -182,8 +206,6 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
 
             $eavSetup->deleteAttribute('enable_multpiple_steps');
         }
-
-        $this->moduleDataSetup->getConnection()->endSetup();
     }
 
     /**
