@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - added email validation for newsletter email input in admin
 ### Fixed
-- code quality fixes
+- code quality fixes (https://github.com/Alekseon/magento2-widget-forms/issues/17)
 
 ## [102.2.3] - 2023-03-28
 ### Added
