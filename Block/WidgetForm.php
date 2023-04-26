@@ -218,7 +218,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         if ($this->tabs === null) {
             $this->tabs = [];
 
-            if ($this->getForm()->getEnableMultpipleSteps()) {
+            if ($this->getForm()->getEnableMultipleSteps()) {
                 $formTabs = $this->getForm()->getFormTabs();
                 foreach ($formTabs as $tab) {
                     $this->tabs[$tab->getId()] = $tab;
