@@ -16,20 +16,20 @@ use Alekseon\AlekseonEav\Model\Attribute\DefaultValueProvider\AbstractProvider;
 class CurrentCmsPage extends AbstractProvider
 {
     /**
-     * @var \Magento\Framework\Registry
+     * @var \Magento\Cms\Model\Page
      */
-    protected $registry;
+    protected $cmsPage;
 
     /**
      * CurrentProduct constructor.
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\Registry $registry,
+        \Magento\Cms\Model\Page $cmsPage,
         array $data = []
     )
     {
-        $this->registry = $registry;
+        $this->cmsPage = $cmsPage;
         parent::__construct($data);
     }
 
@@ -50,21 +50,12 @@ class CurrentCmsPage extends AbstractProvider
     }
 
     /**
-     * @return mixed|null
-     */
-    protected function getCurrentCmsPage()
-    {
-        return $this->registry->registry('current_cms_page_for_widget_forms');
-    }
-
-    /**
      * @return string
      */
     public function getValue()
     {
-        $cmsPage = $this->getCurrentCmsPage();
-        if ($cmsPage) {
-            return $cmsPage->getIdentifier();
+        if ($this->cmsPage) {
+            return $this->cmsPage->getIdentifier();
         }
 
         return '';
