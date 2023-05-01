@@ -181,7 +181,7 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
      */
     private function createMultistepAttribites($eavSetup)
     {
-        $enableMultipleStepsAttribute = $eavSetup->createOrUpdateAttribute(
+        $eavSetup->createOrUpdateAttribute(
             'enable_multiple_steps',
             [
                 'frontend_input' => 'boolean',
@@ -203,7 +203,7 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
 
             foreach ($formsWithEnabledSteps as $form) {
                 $form->setEnableMultipleSteps(1);
-                $form->saveAttributeValue($form, $enableMultipleStepsAttribute);
+                $form->saveAttributeValue('enable_multiple_steps');
             }
 
             $eavSetup->deleteAttribute('enable_multpiple_steps');
