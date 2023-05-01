@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.2.4] - 2023-05-01
+### Added
+- added email validation for newsletter email input in admin
+### Fixed
+- code quality fixes (https://github.com/Alekseon/magento2-widget-forms/issues/17)
+
 ## [102.2.3] - 2023-03-28
 ### Added
 - field containers css classes (for hyva)

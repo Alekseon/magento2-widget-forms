@@ -3,24 +3,29 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+
+/**
+ * @var $block \Alekseon\WidgetForms\Block\Form\Field\Checkbox
+ * @var $escaper \Magento\Framework\Escaper
+ */
 ?>
 <?php if ($block->displayLabel()): ?>
-    <label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
+    <label class="label" for="<?= $escaper->escapeHtmlAttr($block->getId()) ?>"><?= $escaper->escapeHtml($block->getLabel()) ?></label>
 <?php endif ?>
 <div class="control checkbox-container">
     <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
         <input
             type="checkbox"
-            name="<?= $block->getName() ?><?= $block->displayLabel() ? '[]' : '' ?>"
-            id="<?= $block->getId() . '-option-' . $optionId ?>"
-            value="<?= $optionId ?>"
+            name="<?= $escaper->escapeHtmlAttr($block->getName()) ?><?= $block->displayLabel() ? '[]' : '' ?>"
+            id="<?= $escaper->escapeHtmlAttr($block->getId() . '-option-' . $optionId) ?>"
+            value="<?= $escaper->escapeHtmlAttr($optionId) ?>"
             <?php if ($block->isSelected($optionId)): ?>checked<?php endif ?>
             data-validate=<?= $block->getDataValidateJson() ?>
         >
-        <label for="<?= $block->getId() . '-option-' . $optionId ?>"><?= $optionLabel ?></label>
+            <label for="<?= $escaper->escapeHtmlAttr($block->getId() . '-option-' . $optionId) ?>"><?= $escaper->escapeHtml($optionLabel) ?></label>
         </input>
     <?php endforeach; ?>
 </div>
 <?php if ($note = $block->getNote()): ?>
-    <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
+    <p id="<?= $escaper->escapeHtmlAttr($block->getId()) ?>_note" class="note"><?= $escaper->escapeHtml($note) ?></p>
 <?php endif ?>

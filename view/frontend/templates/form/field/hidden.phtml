@@ -3,10 +3,15 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+
+/**
+ * @var $block \Alekseon\WidgetForms\Block\Form\Field\Text
+ * @var $escaper \Magento\Framework\Escaper
+ */
 ?>
 <input
-    name="<?= $block->getName() ?>"
-    id="<?= $block->getId() ?>"
+    name="<?= $escaper->escapeHtmlAttr($block->getName()) ?>"
+    id="<?= $escaper->escapeHtmlAttr($block->getId()) ?>"
     type="hidden"
-    value="<?= $block->getDefaultValue() ?>"
+    value="<?= $escaper->escapeHtmlAttr($block->getDefaultValue()) ?>"
 />

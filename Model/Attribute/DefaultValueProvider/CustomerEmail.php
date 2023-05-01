@@ -3,6 +3,8 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\WidgetForms\Model\Attribute\DefaultValueProvider;
 
 use Alekseon\AlekseonEav\Model\Attribute;
@@ -21,7 +23,7 @@ class CustomerEmail extends AbstractProvider
     /**
      * @var \Magento\Customer\Model\Session
      */
-    protected $customerSession;
+    private $customerSession;
 
     /**
      * CustomerEmail constructor.

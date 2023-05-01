@@ -3,6 +3,8 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\WidgetForms\Plugin;
 
 use Alekseon\AlekseonEav\Model\Attribute\InputValidator\Email;
@@ -19,11 +21,11 @@ class NewsletterEmailValidatorPlugin
     /**
      * @var FormRepository
      */
-    protected $formRepository;
+    private $formRepository;
     /**
      * @var EmailFactory
      */
-    protected $emailValidatorFactory;
+    private $emailValidatorFactory;
 
     /**
      * NewsletterEmailValidatorPlugin constructor.

@@ -50,27 +50,26 @@ define([
                 dataType: 'json',
                 showLoader: true
             }).done(function (response) {
-                alert({
-                    title: response.title,
-                    content: response.message
-                });
-                form.reset();
-                if (self.currentTab != 0) {
-                    self.openTab(form, 0);
+                if (response.errors) {
+                    alert({
+                        title: $.mage.__('Error'),
+                        content: response.message
+                    });
+                } else {
+                    alert({
+                        title: response.title,
+                        content: response.message
+                    });
+                    form.reset();
+                    if (self.currentTab != 0) {
+                        self.openTab(form, 0);
+                    }
+                    self.onSuccess();
                 }
-                self.onSuccess();
             }).fail(function (error) {
-                var message = $.mage.__('Unexpected error.');
-                if (error.status) {
-                    message += ' ' + $.mage.__('Error Code') + ': ' + error.status;
-                }
-                if (error.responseJSON) {
-                    message = error.responseJSON.message;
-                }
-
                 alert({
                     title: $.mage.__('Error'),
-                    content: message
+                    content: $.mage.__('Unexpected error.')
                 });
             }).complete(function() {
                 self.onComplete();

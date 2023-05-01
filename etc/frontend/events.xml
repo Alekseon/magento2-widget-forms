@@ -9,7 +9,4 @@
     <event name="alekseon_widget_form_after_submit">
         <observer name="Alekseon_WidgetForms::SubscribeToNewsletter" instance="Alekseon\WidgetForms\Observer\SubscribeToNewsletter" />
     </event>
-    <event name="cms_page_render">
-        <observer name="Alekseon_WidgetForms::RegisterCurrentCmsPage" instance="Alekseon\WidgetForms\Observer\RegisterCurrentCmsPage" />
-    </event>
 </config>

@@ -3,6 +3,8 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\WidgetForms\Plugin;
 
 /**
@@ -14,7 +16,7 @@ class FromAttributeGroupCodesPlugin
     /**
      * @var \Alekseon\CustomFormsBuilder\Model\FormRepository
      */
-    protected $formRepository;
+    private $formRepository;
 
     /**
      * FromAttributeGroupCodesPlugin constructor.
@@ -36,10 +38,7 @@ class FromAttributeGroupCodesPlugin
     public function afterGetCanUseGroup($attribute, $result)
     {
         $form = $this->formRepository->getById($attribute->getFormId());
-        if ($form->getCanUseForWidget()) {
-            return true;
-        }
-        return $result;
+        return $form->getCanUseForWidget() || $result;
     }
 
     /**

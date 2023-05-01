@@ -3,25 +3,30 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+
+/**
+ * @var $block \Alekseon\WidgetForms\Block\Form\Field\Select
+ * @var $escaper \Magento\Framework\Escaper
+ */
 ?>
-<label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
+<label class="label" for="<?= $escaper->escapeHtmlAttr($block->getId()) ?>"><?= $escaper->escapeHtml($block->getLabel()) ?></label>
 <div class="control">
     <select
-        name="<?= $block->getName() ?>"
-        id="<?= $block->getId() ?>"
-        title="<?= $block->getLabel() ?>"
+        name="<?= $escaper->escapeHtml($block->getName()) ?>"
+        id="<?= $escaper->escapeHtml($block->getId()) ?>"
+        title="<?= $escaper->escapeHtml($block->getLabel()) ?>"
         data-validate=<?= $block->getDataValidateJson() ?>
     >
         <?php if ($block->hasEmptyOption()): ?>
             <option value=""></option>
         <?php endif ?>
         <?php foreach ($block->getOptions() as $optionId => $optionLabel): ?>
-            <option value="<?= $optionId ?>" <?php if ($block->isSelected($optionId)): ?>selected<?php endif ?>>
-                <?= $optionLabel ?>
+            <option value="<?= $escaper->escapeHtmlAttr($optionId) ?>" <?php if ($block->isSelected($optionId)): ?>selected<?php endif ?>>
+                <?= $escaper->escapeHtml($optionLabel) ?>
             </option>
         <?php endforeach; ?>
     </select>
 </div>
 <?php if ($note = $block->getNote()): ?>
-    <p id="<?= $block->getId() ?>_note" class="note"><?= $note ?></p>
+    <p id="<?= $escaper->escapeHtmlAttr($block->getId()) ?>_note" class="note"><?= $escaper->escapeHtml($note) ?></p>
 <?php endif ?>

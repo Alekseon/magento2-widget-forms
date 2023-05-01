@@ -3,6 +3,8 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\WidgetForms\Block\Form\Field;
 
 use Magento\Framework\View\Element\Template;
@@ -16,11 +18,11 @@ class AbstractField extends \Magento\Framework\View\Element\Template
     /**
      * @var
      */
-    protected $dataValidateParams;
+    private $dataValidateParams;
     /**
      * @var
      */
-    protected $validationClass;
+    private $validationClass;
 
     /**
      * @return bool
@@ -57,7 +59,7 @@ class AbstractField extends \Magento\Framework\View\Element\Template
     /**
      * @return array
      */
-    protected function getDataValidateParams()
+    public function getDataValidateParams()
     {
         if ($this->dataValidateParams === null) {
             $this->validationClass = '';

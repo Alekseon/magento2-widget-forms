@@ -3,8 +3,12 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\WidgetForms\Block;
+
 use Magento\Framework\DataObject;
+use Magento\Framework\Serialize\Serializer\JsonHexTag;
 
 /**
  * Class WidgetForm
@@ -20,31 +24,35 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     /**
      * @var \Alekseon\CustomFormsBuilder\Model\FormRepository
      */
-    protected $formRepository;
+    private $formRepository;
     /**
      * @var
      */
-    protected $form;
+    private $form;
     /**
      * @var
      */
-    protected $formFieldsCollection;
+    private $formFieldsCollection;
     /**
      * @var \Magento\Framework\Data\Form\FormKey
      */
-    protected $formKey;
+    private $formKey;
     /**
      * @var \Magento\Framework\EntityManager\EventManager
      */
-    protected $eventManager;
+    private $eventManager;
+    /**
+     * @var JsonHexTag
+     */
+    private $jsonHexTag;
     /**
      * @var array
      */
-    protected $formFields = [];
+    private $formFields = [];
     /**
      * @var
      */
-    protected $tabs;
+    private $tabs;
 
     /**
      * WidgetForm constructor.
@@ -57,11 +65,13 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         \Alekseon\CustomFormsBuilder\Model\FormRepository $formRepository,
         \Magento\Framework\Data\Form\FormKey $formKey,
         \Magento\Framework\EntityManager\EventManager $eventManager,
+        JsonHexTag $jsonHexTag,
         array $data = []
     ) {
         $this->formRepository = $formRepository;
         $this->formKey = $formKey;
         $this->eventManager = $eventManager;
+        $this->jsonHexTag = $jsonHexTag;
         parent::__construct($context, $data);
     }
 
@@ -144,7 +154,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     /**
      * @return \Magento\Framework\Phrase
      */
-    protected function getSubmitButtonLabel($tab)
+    public function getSubmitButtonLabel($tab)
     {
         if (!$tab->getIsLastTab()) {
             return __('Next');
@@ -162,7 +172,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      * @param $alias
      * @param $block
      * @param array $data
-     * @return $this
+     * @return $this|bool
      */
     public function addFormField($fieldBlockAlias, $block, $data = [])
     {
@@ -190,7 +200,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     /**
      * @return |null
      */
-    protected function getFormFieldsCollection()
+    public function getFormFieldsCollection()
     {
         if ($this->formFieldsCollection === null) {
             $form = $this->getForm();
@@ -208,7 +218,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         if ($this->tabs === null) {
             $this->tabs = [];
 
-            if ($this->getForm()->getEnableMultpipleSteps()) {
+            if ($this->getForm()->getEnableMultipleSteps()) {
                 $formTabs = $this->getForm()->getFormTabs();
                 foreach ($formTabs as $tab) {
                     $this->tabs[$tab->getId()] = $tab;
@@ -227,10 +237,10 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return array
+     * @return bool|string
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getFormTabsHtml()
+    public function getFormTabsHtmlJson()
     {
         $tabs = $this->getTabs();
         $formTabsHtml = [];
@@ -260,7 +270,8 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         }
 
         $formTabsHtml[$tabCode]['is_last'] = 1;
-        return array_values($formTabsHtml);
+
+        return $this->jsonHexTag->serialize(array_values($formTabsHtml));
     }
 
     /**
@@ -335,9 +346,10 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return array
+     * @return bool|string
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getUiComponentChildren()
+    public function getUiComponentChildrenJson()
     {
         $dataObject = new \Magento\Framework\DataObject();
         $dataObject->setUiComponentChildren([]);
@@ -351,7 +363,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
             ]
         );
 
-        return $dataObject->getUiComponentChildren();
+        return $this->jsonHexTag->serialize($dataObject->getUiComponentChildren());
     }
 
     /**
@@ -369,7 +381,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     {
         $cacheKeyInfo = parent::getCacheKeyInfo();
         if ($this->getForm()) {
-            $cacheKeyInfo['widget_data'] =  serialize($this->getData());
+            $cacheKeyInfo['widget_data'] =  $this->serialize();
         }
         return $cacheKeyInfo;
     }
@@ -384,5 +396,16 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
             return $this->getForm()->getIdentities();
         }
         return  [];
+    }
+
+    /**
+     * @return string
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function getSubmitFormUrl()
+    {
+        return $this->getUrl('Alekseon_WidgetForms/form/submit', [
+            'form_id' => $this->getForm()->getId()
+        ]);
     }
 }

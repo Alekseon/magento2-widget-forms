@@ -3,6 +3,8 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\WidgetForms\Block\Form\Field;
 
 /**
@@ -15,7 +17,7 @@ class Select extends \Alekseon\WidgetForms\Block\Form\Field\AbstractField
     /**
      * @var
      */
-    protected $selectedOptions;
+    private $selectedOptions;
 
     /**
      * @return array
@@ -48,9 +50,9 @@ class Select extends \Alekseon\WidgetForms\Block\Form\Field\AbstractField
             }
 
             $options = $this->getOptions();
-            foreach ($options as $id => $label) {
-                if (in_array($id, $defaultValue)) {
-                    $this->selectedOptions[$id] = $id;
+            foreach (array_keys($options) as $optId) {
+                if (in_array($optId, $defaultValue)) {
+                    $this->selectedOptions[$optId] = $optId;
                 }
             }
         }

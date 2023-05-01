@@ -3,6 +3,8 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\WidgetForms\Plugin;
 
 /**
@@ -17,6 +19,7 @@ class RemoveAttributesFromGeneralTabPlugin
      * @param $formObject
      * @param array $groups
      * @return array
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function beforeAddAllAttributeFields($generalTabBlock, $generalFieldset, $formObject, $groups = [])
     {

@@ -3,6 +3,8 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\WidgetForms\Observer;
 
 use Magento\Customer\Api\AccountManagementInterface;
@@ -21,19 +23,19 @@ class SubscribeToNewsletter implements ObserverInterface
     /**
      * @var SubscriptionManagerInterface
      */
-    protected $subscriptionManager;
+    private $subscriptionManager;
     /**
      * @var StoreManager
      */
-    protected $storeManager;
+    private $storeManager;
     /**
      * @var \Magento\Customer\Model\Session
      */
-    protected $customerSession;
+    private $customerSession;
     /**
      * @var AccountManagementInterface
      */
-    protected $customerAccountManagement;
+    private $customerAccountManagement;
 
     /**
      * SubscribeToNewsletter constructor.
@@ -79,7 +81,7 @@ class SubscribeToNewsletter implements ObserverInterface
     /**
      * @return false | int
      */
-    protected function getCurrentCustomerId()
+    private function getCurrentCustomerId()
     {
         if ($this->customerSession->isLoggedIn()) {
             return $this->customerSession->getCustomerDataObject()->getId();
@@ -91,7 +93,7 @@ class SubscribeToNewsletter implements ObserverInterface
     /**
      * @param $email
      */
-    protected function validateEmailAvailable($email)
+    private function validateEmailAvailable($email)
     {
         $websiteId = $this->storeManager->getStore()->getWebsiteId();
         if ($this->customerSession->isLoggedIn()

@@ -3,6 +3,8 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\WidgetForms\Model\Config\Source;
 
 /**
@@ -14,11 +16,11 @@ class AvailableForms implements \Magento\Framework\Option\ArrayInterface
     /**
      * @var
      */
-    protected $options;
+    private $options;
     /**
      * @var \Alekseon\WidgetForms\Model\ResourceModel\Form\CollectionFactory
      */
-    protected $formCollectionFactory;
+    private $formCollectionFactory;
 
     /**
      * AvailableForms constructor.

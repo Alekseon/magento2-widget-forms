@@ -3,26 +3,31 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+
+/**
+ * @var $block \Alekseon\WidgetForms\Block\Form\Field\Rating
+ * @var $escaper \Magento\Framework\Escaper
+ */
 ?>
-<label class="label" for="<?= $block->getId() ?>"><?= $block->getLabel() ?></label>
+<label class="label" for="<?= $escaper->escapeHtmlAttr($block->getId()) ?>"><?= $escaper->escapeHtml($block->getLabel()) ?></label>
 <div class="control">
     <div class="field choice review-field-rating">
         <div class="control review-control-vote">
             <?php for ($i=6; $i>0; $i --): ?>
                 <input
                     type="radio"
-                    name="<?= $block->getName() ?>"
-                    id="rate_<?= $block->getId() ?>_<?= $i ?>"
-                    value="<?= $i ?>"
+                    name="<?= $escaper->escapeHtml($block->getName()) ?>"
+                    id="rate_<?= $escaper->escapeHtmlAttr($block->getId() . '_' . $i) ?>"
+                    value="<?= $escaper->escapeHtmlAttr($i) ?>"
                     class="radio"
                     data-validate=<?= $block->getDataValidateJson() ?>
                 />
                 <label
-                    class="rating-<?= $i ?>"
-                    for="rate_<?= $block->getId() ?>_<?= $i ?>"
-                    title="<?= __('Rate: ') . $i ?>"
-                    id="rate_<?= $block->getId() ?>_<?= $i ?>_label">
-                    <span><?= __('Rate: ') . $i ?></span>
+                    class="rating-<?= $escaper->escapeHtmlAttr($i) ?>"
+                    for="rate_<?= $escaper->escapeHtmlAttr($block->getId() . '_' . $i) ?>"
+                    title="<?= $escaper->escapeHtmlAttr(__('Rate: ') . $i) ?>"
+                    id="rate_<?= $escaper->escapeHtmlAttr($block->getId() . '_' . $i) ?>_label">
+                    <span><?= $escaper->escapeHtml(__('Rate: ') . $i) ?></span>
                 </label>
             <?php endfor; ?>
         </div>

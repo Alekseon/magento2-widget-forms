@@ -3,6 +3,8 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\WidgetForms\Model\Attribute\DefaultValueProvider;
 
 use Alekseon\AlekseonEav\Model\Attribute\DefaultValueProvider\AbstractProvider;
@@ -14,20 +16,20 @@ use Alekseon\AlekseonEav\Model\Attribute\DefaultValueProvider\AbstractProvider;
 class CurrentProduct extends AbstractProvider
 {
     /**
-     * @var \Magento\Framework\Registry
+     * @var \Magento\Catalog\Helper\Data
      */
-    protected $registry;
+    private $catalogHelper;
 
     /**
-     * CurrentProduct constructor.
+     * @param \Magento\Catalog\Helper\Data $catalogHelper
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\Registry $registry,
+        \Magento\Catalog\Helper\Data $catalogHelper,
         array $data = []
     )
     {
-        $this->registry = $registry;
+        $this->catalogHelper = $catalogHelper;
         parent::__construct($data);
     }
 
@@ -48,19 +50,11 @@ class CurrentProduct extends AbstractProvider
     }
 
     /**
-     * @return mixed|null
-     */
-    protected function getCurrentProduct()
-    {
-        return $this->registry->registry('current_product');
-    }
-
-    /**
      * @return string
      */
     public function getValue()
     {
-        $product = $this->getCurrentProduct();
+        $product = $this->catalogHelper->getProduct();
         if ($product) {
             return $product->getSku();
         }
