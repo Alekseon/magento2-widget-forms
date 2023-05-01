@@ -25,8 +25,8 @@
                             "title": "<?= $escaper->escapeHtml($block->getFormTitle()) ?>",
                             "description": "<?= $escaper->escapeHtml($block->getFormDescription()) ?>",
                             "formSubmitUrl": "<?= $escaper->escapeUrl($block->getSubmitFormUrl()) ?>",
-                            "children": <?= $escaper->escapeHtml($block->getUiComponentChildrenJson()) ?>,
-                            "tabs": <?= $escaper->escapeHtml($block->getFormTabsHtmlJson()) ?>
+                            "children": <?= $block->getUiComponentChildrenJson() ?>,
+                            "tabs": <?= $block->getFormTabsHtmlJson() ?>
                         }
                     }
                 }
