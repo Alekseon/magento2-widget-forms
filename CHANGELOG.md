@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
-## [Unreleased]
+## [102.2.4] - 2023-05-01
 ### Added
 - added email validation for newsletter email input in admin
 ### Fixed
