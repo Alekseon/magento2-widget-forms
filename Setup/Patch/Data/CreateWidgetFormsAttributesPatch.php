@@ -69,6 +69,7 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
         $this->createMultistepAttribites($eavSetup);
 
         $this->moduleDataSetup->getConnection()->endSetup();
+        return $this;
     }
 
     /**
