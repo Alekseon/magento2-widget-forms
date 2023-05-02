@@ -245,6 +245,8 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         $tabs = $this->getTabs();
         $formTabsHtml = [];
         $tabsCounter = 0;
+        $lastTabCode = false;
+
         foreach ($tabs as $tabCode => $tab) {
             $formFields = $this->formFields[$tabCode] ?? [];
             if (!isset($formTabsHtml[$tabCode])) {
@@ -265,11 +267,13 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
             }
 
             $formTabsHtml[$tabCode]['actionHtml'] = $this->getActionToolbarHtml($tab);
-
+            $lastTabCode = $tabCode;
             $tabsCounter ++;
         }
 
-        $formTabsHtml[$tabCode]['is_last'] = 1;
+        if ($lastTabCode) {
+            $formTabsHtml[$lastTabCode]['is_last'] = 1;
+        }
 
         return $this->jsonHexTag->serialize(array_values($formTabsHtml));
     }
