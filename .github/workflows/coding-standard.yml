@@ -26,4 +26,4 @@ jobs:
       - uses: actions/checkout@v2
       - uses: extdn/github-actions-m2/magento-phpstan@master
         with:
-          composer_name: alekseon/widget-forms-statistics
+          composer_name: alekseon/widget-forms

@@ -2,7 +2,7 @@ name: M2 Integration Tests
 on:
   push:
     branches:
-      - github-actions-test
+      - master
   pull_request:
 
 jobs:
@@ -32,5 +32,5 @@ jobs:
         uses: extdn/github-actions-m2/magento-integration-tests/7.4@master
         with:
           module_name: Alekseon_WidgetForms
-          composer_name: alekseon/widget-forms-statistics
+          composer_name: alekseon/widget-forms
           ce_version: '2.4.0'
