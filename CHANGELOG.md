@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.2.7] - 2023-05-02
+### Changed
+- changes for tests in github actions
+
 ## [102.2.6] - 2023-05-01
 ### Added
 - added email validation for newsletter email input in admin
