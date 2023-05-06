@@ -125,6 +125,7 @@ class Submit implements HttpPostActionInterface
 
     /**
      * @param $form
+     * @return string
      */
     public function getSuccessMessage($formRecord)
     {
@@ -137,6 +138,7 @@ class Submit implements HttpPostActionInterface
 
     /**
      * @param $form
+     * @return string
      */
     public function getSuccessTitle($formRecord)
     {
