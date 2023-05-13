@@ -7,12 +7,12 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <type name="Alekseon\CustomFormsBuilder\Model\FormRecord\Attribute">
-        <plugin name="Alekseon_WidgetForms::FromAttributeGroupCodesPlugin" type="Alekseon\WidgetForms\Plugin\FromAttributeGroupCodesPlugin"/>
+        <plugin name="Alekseon_WidgetForms::FromAttributeGroupCodesPlugin" type="Alekseon\WidgetForms\Plugin\FromAttributeGroupCodesPlugin" sortOrder="100" />
     </type>
     <type name="Alekseon\CustomFormsBuilder\Block\Adminhtml\Form\Edit\Tab\Fields\Form">
-        <plugin name="Alekseon_WidgetForms::AddFormFieldsetWarningPlugin" type="Alekseon\WidgetForms\Plugin\AddFormFieldsetWarningPlugin"/>
+        <plugin name="Alekseon_WidgetForms::AddFormFieldsetWarningPlugin" type="Alekseon\WidgetForms\Plugin\AddFormFieldsetWarningPlugin" sortOrder="100" />
     </type>
     <type name="Alekseon\CustomFormsBuilder\Block\Adminhtml\Form\Edit\Tab\General">
-        <plugin name="Alekseon_WidgetForms::RemoveAttributesFromGeneralTabPlugin" type="Alekseon\WidgetForms\Plugin\RemoveAttributesFromGeneralTabPlugin"/>
+        <plugin name="Alekseon_WidgetForms::RemoveAttributesFromGeneralTabPlugin" type="Alekseon\WidgetForms\Plugin\RemoveAttributesFromGeneralTabPlugin" sortOrder="100" />
     </type>
 </config>
