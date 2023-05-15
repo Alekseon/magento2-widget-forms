@@ -129,11 +129,11 @@ class Submit implements HttpPostActionInterface
      */
     public function getSuccessMessage($formRecord)
     {
-        $successMessage = (string) $formRecord->getForm()->getFormSubmitSuccessMessage();
+        $successMessage = $formRecord->getForm()->getFormSubmitSuccessMessage();
         if (!$successMessage) {
             $successMessage = __('Thank You!');
         }
-        return $successMessage;
+        return (string) $successMessage;
     }
 
     /**
@@ -142,11 +142,11 @@ class Submit implements HttpPostActionInterface
      */
     public function getSuccessTitle($formRecord)
     {
-        $successTitle = (string) $formRecord->getForm()->getFormSubmitSuccessTitle();
+        $successTitle = $formRecord->getForm()->getFormSubmitSuccessTitle();
         if (!$successTitle) {
             $successTitle = __('Success');
         }
-        return $successTitle;
+        return (string) $successTitle;
     }
 
     /**
