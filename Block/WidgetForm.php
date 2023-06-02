@@ -89,38 +89,14 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         $fields = $this->getFormFieldsCollection();
 
         foreach ($fields as $field) {
-            $frontendInputTypeConfig = $field->getFrontendInputTypeConfig();
-            if (!$frontendInputTypeConfig) {
-                continue;
-            }
-            $frontendBlocks = $frontendInputTypeConfig->getFrontendBlocks();
-            $frontendBlock = [];
-            $frontendInputBlock = $field->getAttributeExtraParam('frontend_input_block');
-
-            if (isset($frontendBlocks['default'])) {
-                $frontendBlock = $frontendBlocks['default'];
-            }
-
-            if (isset($frontendBlocks[$frontendInputBlock])) {
-                $frontendBlock = array_merge($frontendBlock, $frontendBlocks[$frontendInputBlock]);
-            }
-
-            if (isset($frontendBlock['class'])) {
-
-                $class = $frontendBlock['class'];
-                unset($frontendBlock['class']);
-                $frontendBlock['field'] = $field;
-                $frontendBlock['form'] = $form;
-                $frontendBlock['is_required'] = $field->getIsRequired();
-                $frontendBlock['tab_code'] = $field->getGroupCode();
-
-                $fieldBlockAlias = 'form_' . $form->getId() . '_field_' . $field->getAttributeCode();
-                $this->addFormField(
-                    $fieldBlockAlias,
-                    $class,
-                    $frontendBlock,
-                );
-            }
+            $fieldBlockAlias = 'form_' . $form->getId() . '_field_' . $field->getAttributeCode();
+            $this->addFormField(
+                $fieldBlockAlias,
+                \Alekseon\CustomFormsFrontend\Block\Form\Field::class,
+                [
+                    'attribute' => $field
+                ]
+            );
         }
 
         $additionalInfoBlock = $this->addFormField(
@@ -176,19 +152,17 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      */
     public function addFormField($fieldBlockAlias, $block, $data = [])
     {
-        $tabCode = $data['tab_code'] ?? '';
-        $fieldClass = '';
-        $isRequired = $data['is_required'] ?? false;
-        if ($isRequired) {
-            $fieldClass = 'required';
-        }
+        $attribute = $data['attribute'] ?? false;
+        $tabCode = $attribute ? $attribute->getGroupCode() : '';
 
         $tabs = $this->getTabs();
         if (!isset($tabs[$tabCode])) {
             $tabCode = array_key_first($tabs);
         }
         if (!isset($this->formFields[$tabCode][$fieldBlockAlias])) {
-            $this->addChild($fieldBlockAlias, $block, $data);
+            $childBlock = $this->addChild($fieldBlockAlias, $block, $data);
+            $fieldClass = $childBlock->getIsRequred() ? 'required' : '';
+
             $this->formFields[$tabCode][$fieldBlockAlias] = [
                 'block' => $fieldBlockAlias,
                 'field_class' => $fieldClass,
