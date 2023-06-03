@@ -2,7 +2,7 @@
     "name": "alekseon/widget-forms",
     "description": "N/A",
     "require": {
-		"alekseon/custom-forms-builder": "^102.3.2",
+		"alekseon/custom-forms-frontend": "^100.0.7",
         "alekseon/widget-forms-re-captcha": "100.*"
     },
     "type": "magento2-module",
