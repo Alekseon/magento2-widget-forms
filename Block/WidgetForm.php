@@ -194,8 +194,11 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
             if ($this->getForm()->getEnableMultipleSteps()) {
                 $formTabs = $this->getForm()->getFormTabs();
+                $tabsCounter = 1;
                 foreach ($formTabs as $tab) {
+                    $tab->setTabSequenceNumber($tabsCounter);
                     $this->tabs[$tab->getId()] = $tab;
+                    $tabsCounter ++;
                 }
             }
 
@@ -241,6 +244,10 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
             }
 
             $formTabsHtml[$tabCode]['actionHtml'] = $this->getActionToolbarHtml($tab);
+            $formTabsHtml[$tabCode]['beforeFieldsHtml'] = $this->getBeforeFieldsHtml($tab);
+            $formTabsHtml[$tabCode]['beforeActionsHtml'] = $this->getBeforeActionsHtml($tab);
+            $formTabsHtml[$tabCode]['afterActionsHtml'] = $this->getAfterActionsHtml($tab);
+
             $lastTabCode = $tabCode;
             $tabsCounter ++;
         }
@@ -250,6 +257,33 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         }
 
         return $this->jsonHexTag->serialize(array_values($formTabsHtml));
+    }
+
+    /**
+     * @return string
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function getBeforeFieldsHtml($tab)
+    {
+        return '';
+    }
+
+    /**
+     * @return string
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function getBeforeActionsHtml($tab)
+    {
+        return '';
+    }
+
+    /**
+     * @return string
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function getAfterActionsHtml($tab)
+    {
+        return '';
     }
 
     /**
@@ -385,5 +419,16 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         return $this->getUrl('Alekseon_WidgetForms/form/submit', [
             'form_id' => $this->getForm()->getId()
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormWrapperClass()
+    {
+        $identifier = $this->getForm()->getIdentifier();
+        if ($identifier) {
+            return 'alekseon-widget-' . $identifier . '-form--wrapper';
+        }
     }
 }
