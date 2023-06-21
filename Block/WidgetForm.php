@@ -430,5 +430,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         if ($identifier) {
             return 'alekseon-widget-' . $identifier . '-form--wrapper';
         }
+        return '';
     }
 }
