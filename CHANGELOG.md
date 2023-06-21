@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.3.0] - 2023-06-21
+### Changed
+- frontend inputs moved from Alekseon_WidgetForms to Alekseon_CustonFormsFrontend
+### Added
+- form wrapper class
+
 ## [102.2.7] - 2023-05-02
 ### Changed
 - changes for tests in github actions
