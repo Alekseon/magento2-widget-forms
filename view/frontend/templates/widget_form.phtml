@@ -10,7 +10,7 @@
  */
 ?>
 <?php if ($block->getForm()): ?>
-    <div class="alekseon-widget-form-wrapper" id="widget-form-wrapper-<?= $escaper->escapeHtmlAttr($block->getForm()->getId()) ?>"
+    <div class="alekseon-widget-form-wrapper <?= $block->getFormWrapperClass() ?>" id="widget-form-wrapper-<?= $escaper->escapeHtmlAttr($block->getForm()->getId()) ?>"
          data-bind="scope: 'widgetForm-<?= $escaper->escapeHtmlAttr($block->getForm()->getId()) ?>'">
          <!-- ko template: getTemplate() --><!-- /ko -->
     </div>

@@ -22,6 +22,8 @@
                 <div class="field note no-label" data-bind="html: $parent.description"></div>
                 <!--/ko-->
 
+                <div data-bind="html: tab.beforeFieldsHtml"></div>
+
                 <!-- ko foreach: { data: tab.fields, as: 'field'} -->
                     <div class="field" data-bind="html: field.html, css: field.field_class"></div>
                 <!-- /ko -->
@@ -33,8 +35,9 @@
                 <!--/ko-->
 
             </fieldset>
+            <div data-bind="html: tab.beforeActionsHtml"></div>
             <div class="actions-toolbar" data-bind="html: tab.actionHtml"></div>
+            <div data-bind="html: tab.afterActionsHtml"></div>
         </div>
     <!-- /ko -->
-
 </form>

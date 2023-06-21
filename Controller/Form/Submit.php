@@ -133,7 +133,7 @@ class Submit implements HttpPostActionInterface
         if (!$successMessage) {
             $successMessage = __('Thank You!');
         }
-        return $successMessage;
+        return (string) $successMessage;
     }
 
     /**
@@ -146,7 +146,7 @@ class Submit implements HttpPostActionInterface
         if (!$successTitle) {
             $successTitle = __('Success');
         }
-        return $successTitle;
+        return (string) $successTitle;
     }
 
     /**
