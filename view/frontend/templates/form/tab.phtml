@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
+
+/**
+ * @var \Alekseon\WidgetForms\Block\Form\Tab $block
+ *  @var $escaper \Magento\Framework\Escaper
+ */
+?>
+<fieldset class="fieldset form-tab-<?= $block->getTab()->getTabSequenceNumber() ?>" <?php if (!$block->getTab()->getIsFirstTab()): ?>style="display: none"<?php endif ?>>
+    <?php if ($block->getParentBlock()->getFormTitle()): ?>
+        <legend class="legend"><?= $escaper->escapeHtmlAttr($block->getParentBlock()->getFormTitle()) ?></legend>
+    <?php endif ?>
+    <?php if ($block->getParentBlock()->getFormDescription()): ?>
+        <div class="field note no-label"><?= $escaper->escapeHtmlAttr($block->getParentBlock()->getFormDescription()) ?></div>
+    <?php endif ?>
+    <?= $block->getChildHtml() ?>
+    <?= $block->getSubmitButtonHtml() ?>
+</fieldset>

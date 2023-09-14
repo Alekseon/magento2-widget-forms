@@ -3,91 +3,97 @@
  * http://www.alekseon.com/
  */
 define([
-    'uiComponent',
     'jquery',
     'Magento_Ui/js/modal/alert'
-], function (Component, $, alert) {
+], function ($, alert) {
     'use strict';
+    var form = {
+        init: function (config) {
+            let form = {};
+            this.currentTab = 1;
+            this.tabs = config.tabs;
 
-    return Component.extend({
+            form.form = $('#' + config.formId)[0];
+            form.formSubmitUrl = config.formSubmitUrl;
+            form.successMessage = config.successMessage;
 
-        defaults: {
-            template: 'Alekseon_WidgetForms/widget-form',
-            currentTab: 0
+            let self = this;
+
+            $(form.form).submit(function (event) {
+                self.submitFormAction(form);
+                event.preventDefault(event);
+            });
         },
 
         openTab: function (form, tabIndex) {
-            var tab = $(form).find('.form-tab-' + this.currentTab);
+            var tab = $(form.form).find('.form-tab-' + this.currentTab);
+            console.log('.form-tab-' + this.currentTab);
+            console.log(tab);
             tab.slideUp();
 
             setTimeout(() => {
                 this.currentTab = tabIndex;
-                $(form).find('.form-tab-' + this.currentTab).slideDown();
+
+                $(form.form).find('.form-tab-' + this.currentTab).slideDown();
             }, "100");
         },
 
-        submitForm: function (form) {
-            if (!this.validateForm(form)) {
-                return;
+        submitFormAction: function (form) {
+            if ($(form.form).validation && !$(form.form).validation('isValid')) {
+                 return false;
             }
 
             if (this.tabs[this.currentTab + 1] !== undefined) {
-               this.openTab(form, this.currentTab + 1);
-               return;
+                this.openTab(form, this.currentTab + 1);
+                return;
             }
 
-            var self = this;
-
-            const formData = new FormData(form);
-            formData.append("form_key", $.mage.cookies.get("form_key"))
+            let self = this;
 
             $.ajax({
-                url: this.formSubmitUrl,
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                showLoader: true
-            }).done(function (response) {
-                if (response.errors) {
-                    alert({
-                        title: $.mage.__('Error'),
-                        content: response.message
-                    });
-                } else {
-                    alert({
-                        title: response.title,
-                        content: response.message
-                    });
-                    form.reset();
-                    if (self.currentTab != 0) {
-                        self.openTab(form, 0);
+                url: form.formSubmitUrl,
+                    type: 'POST',
+                    data: $(form.form).serializeArray(),
+                    dataType: 'json',
+                    showLoader: true
+                }).done(function (response) {
+                    if (response.errors) {
+                        self.onError(form, response);
+                    } else {
+                        self.onSuccess(form);
                     }
-                    self.onSuccess();
-                }
             }).fail(function (error) {
-                alert({
-                    title: $.mage.__('Error'),
-                    content: $.mage.__('Unexpected error.')
-                });
+                self.onError(form, error.responseJSON);
             }).complete(function() {
-                self.onComplete();
+                self.onComplete(form);
             });
         },
 
-        onComplete: function() {
+        onComplete: function(form) {
         },
 
-        onSuccess: function() {
+        onError: function(form, response) {
+            alert({
+                title: $.mage.__('Error'),
+                content: response.message
+            });
         },
 
-        onElementRender: function (element) {
-            $(element).trigger('contentUpdated');
-        },
-
-        validateForm: function (form) {
-            return $(form).validation() && $(form).validation('isValid');
+        onSuccess: function(form) {
+            alert({
+                title: $.mage.__('Success'),
+                content: form.successMessage
+            });
+            form.form.reset();
+            if (this.currentTab !== 1) {
+                this.openTab(form, 1);
+            }
         }
-    });
+    };
+
+    return function (config) {
+        $(document).ready(function () {
+            form.init(config);
+        });
+    };
 });

@@ -10,27 +10,22 @@
  */
 ?>
 <?php if ($block->getForm()): ?>
-    <div class="alekseon-widget-form-wrapper <?= $block->getFormWrapperClass() ?>" id="widget-form-wrapper-<?= $escaper->escapeHtmlAttr($block->getForm()->getId()) ?>"
-         data-bind="scope: 'widgetForm-<?= $escaper->escapeHtmlAttr($block->getForm()->getId()) ?>'">
-         <!-- ko template: getTemplate() --><!-- /ko -->
+    <div class="alekseon-widget-form-wrapper <?= $block->getFormWrapperClass() ?>" id="widget-form-wrapper-<?= $escaper->escapeHtmlAttr($block->getForm()->getId()) ?>">
+        <form id="custom_form_<?= $block->getForm()->getId() ?>" data-mage-init='{"validation":{}}' autocomplete="off">
+            <input type="hidden" name="hideit" id="hideit" />
+            <input type="hidden" name="form_key" id="form_key" value="<?= $block->getFormKey()?>" />
+            <?= $this->getChildHtml() ?>
+        </form>
     </div>
     <script type="text/x-magento-init">
-        {
-            "#widget-form-wrapper-<?= $escaper->escapeHtml($block->getForm()->getId()) ?>": {
-                "Magento_Ui/js/core/app": {
-                    "components": {
-                        "widgetForm-<?= $escaper->escapeHtml($block->getForm()->getId()) ?>": {
-                            "component": "Alekseon_WidgetForms/js/widget-form",
-                            "formId": "<?= $escaper->escapeHtml($block->getForm()->getId()) ?>",
-                            "title": "<?= $escaper->escapeHtml($block->getFormTitle()) ?>",
-                            "description": "<?= $escaper->escapeHtml($block->getFormDescription()) ?>",
-                            "formSubmitUrl": "<?= $escaper->escapeUrl($block->getSubmitFormUrl()) ?>",
-                            "children": <?= $block->getUiComponentChildrenJson() ?>,
-                            "tabs": <?= $block->getFormTabsHtmlJson() ?>
-                        }
-                    }
-                }
+    {
+        "*": {
+            "Alekseon_WidgetForms/js/widget-form": {
+                "formId": "custom_form_<?= $block->getForm()->getId() ?>",
+                "formSubmitUrl": "<?= $block->getUrl('Alekseon_WidgetForms/form/submit', ['form_id' => $block->getForm()->getId()]) ?>",
+                "tabs": <?= $block->getTabsJson() ?>
             }
         }
+    }
     </script>
 <?php endif ?>
