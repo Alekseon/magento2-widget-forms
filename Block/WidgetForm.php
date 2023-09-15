@@ -284,10 +284,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      */
     public function getIdentities()
     {
-        if ($this->getForm()) {
-            return $this->getForm()->getIdentities();
-        }
-        return  [];
+        return $this->getForm() ? $this->getForm()->getIdentities() : [];
     }
 
     /**
@@ -306,9 +303,8 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      */
     public function getFormWrapperClass()
     {
-        $identifier = $this->getForm()->getIdentifier();
-        if ($identifier) {
-            return 'alekseon-widget-' . $identifier . '-form--wrapper';
-        }
+        return $this->getForm()->getIdentifier()
+            ? 'alekseon-widget-' . $this->getForm()->getIdentifier() . '-form--wrapper'
+            : '';
     }
 }
