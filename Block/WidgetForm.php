@@ -15,7 +15,6 @@ use Magento\Framework\Serialize\Serializer\JsonHexTag;
 use Magento\Framework\EntityManager\EventManager;
 use Magento\Framework\Data\Form\FormKey;
 use Magento\Framework\Exception;
-use Magento\Tests\NamingConvention\true\string;
 
 /**
  * Class WidgetForm
