@@ -14,7 +14,6 @@ use Magento\Framework\DataObject;
 use Magento\Framework\Serialize\Serializer\JsonHexTag;
 use Magento\Framework\EntityManager\EventManager;
 use Magento\Framework\Data\Form\FormKey;
-use Magento\Framework\Exception;
 
 /**
  * Class WidgetForm
@@ -87,7 +86,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return string
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     protected function _toHtml()
     {
@@ -118,7 +116,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return void
-     * @throws Exception\NoSuchEntityException
      */
     private function addFields()
     {
@@ -140,7 +137,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return \Alekseon\CustomFormsBuilder\Model\ResourceModel\FormRecord\Attribute\Collection
-     * @throws Exception\NoSuchEntityException
      */
     private function getFormFieldsCollection()
     {
@@ -153,7 +149,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return void
-     * @throws Exception\NoSuchEntityException
      */
     private function addTabs()
     {
@@ -210,7 +205,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return \Alekseon\CustomFormsBuilder\Model\Form|false
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getForm()
     {
@@ -218,11 +212,15 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
             $identifier = $this->getData('form_identifier');
             $form = false;
             if ($identifier) {
-                $form = $this->formRepository->getByIdentifier($identifier, null);
+                try {
+                    $form = $this->formRepository->getByIdentifier($identifier, null, true);
+                } catch (\Exception $e) {}
             } else {
                 $formId = (int)$this->getData('form_id');
                 if ($formId) {
-                    $form = $this->formRepository->getById($formId, null, true);
+                    try {
+                        $form = $this->formRepository->getById($formId, null, true);
+                    } catch (\Exception $e) {}
                 }
             }
 
@@ -238,7 +236,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return false|string
-     * @throws Exception\NoSuchEntityException
      */
     public function getFormTitle()
     {
@@ -251,7 +248,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return false|string
-     * @throws Exception\NoSuchEntityException
      */
     public function getFormDescription()
     {
@@ -264,7 +260,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return string
-     * @throws Exception\LocalizedException
      */
     public function getFormKey()
     {
@@ -281,7 +276,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return array
-     * @throws Exception\NoSuchEntityException
      */
     public function getCacheKeyInfo(): array
     {
@@ -294,7 +288,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return string[]
-     * @throws Exception\NoSuchEntityException
      */
     public function getIdentities(): array
     {
@@ -303,7 +296,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return string
-     * @throws Exception\NoSuchEntityException
      */
     public function getSubmitFormUrl()
     {
@@ -314,7 +306,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return string
-     * @throws Exception\NoSuchEntityException
      */
     public function getFormWrapperClass(): string
     {
