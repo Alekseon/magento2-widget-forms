@@ -9,8 +9,13 @@ namespace Alekseon\WidgetForms\Block;
 
 use Alekseon\CustomFormsBuilder\Model\Form\Attribute;
 use Alekseon\CustomFormsBuilder\Model\FormTab;
+use Alekseon\CustomFormsBuilder\Model\FormRepository;
 use Magento\Framework\DataObject;
 use Magento\Framework\Serialize\Serializer\JsonHexTag;
+use Magento\Framework\EntityManager\EventManager;
+use Magento\Framework\Data\Form\FormKey;
+use Magento\Framework\Exception;
+use Magento\Tests\NamingConvention\true\string;
 
 /**
  * Class WidgetForm
@@ -27,7 +32,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      */
     protected $_template = 'Alekseon_WidgetForms::widget_form.phtml';
     /**
-     * @var \Alekseon\CustomFormsBuilder\Model\FormRepository
+     * @var FormRepository
      */
     private $formRepository;
     /**
@@ -39,17 +44,20 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      */
     private $formFieldsCollection;
     /**
-     * @var \Magento\Framework\Data\Form\FormKey
+     * @var FormKey
      */
     private $formKey;
     /**
-     * @var \Magento\Framework\EntityManager\EventManager
+     * @var EventManager
      */
     private $eventManager;
     /**
-     * @var
+     * @var array|null
      */
     private $tabBlocks;
+    /**
+     * @var array|null
+     */
     private $tabSequence;
     /**
      * @var JsonHexTag
@@ -58,16 +66,16 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Alekseon\CustomFormsBuilder\Model\FormRepository $formRepository
-     * @param \Magento\Framework\Data\Form\FormKey $formKey
-     * @param \Magento\Framework\EntityManager\EventManager $eventManager
+     * @param FormRepository $formRepository
+     * @param FormKey $formKey
+     * @param EventManager $eventManager
      * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
-        \Alekseon\CustomFormsBuilder\Model\FormRepository $formRepository,
-        \Magento\Framework\Data\Form\FormKey $formKey,
-        \Magento\Framework\EntityManager\EventManager $eventManager,
+        FormRepository $formRepository,
+        FormKey $formKey,
+        EventManager $eventManager,
         JsonHexTag $jsonHexTag,
         array $data = []
     ) {
@@ -111,7 +119,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return void
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws Exception\NoSuchEntityException
      */
     private function addFields()
     {
@@ -133,9 +141,9 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return \Alekseon\CustomFormsBuilder\Model\ResourceModel\FormRecord\Attribute\Collection
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws Exception\NoSuchEntityException
      */
-    public function getFormFieldsCollection()
+    private function getFormFieldsCollection()
     {
         if ($this->formFieldsCollection === null) {
             $form = $this->getForm();
@@ -146,7 +154,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return void
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws Exception\NoSuchEntityException
      */
     private function addTabs()
     {
@@ -230,8 +238,8 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return mixed
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return false|string
+     * @throws Exception\NoSuchEntityException
      */
     public function getFormTitle()
     {
@@ -243,8 +251,8 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return false|string|null
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return false|string
+     * @throws Exception\NoSuchEntityException
      */
     public function getFormDescription()
     {
@@ -257,7 +265,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return string
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws Exception\LocalizedException
      */
     public function getFormKey()
     {
@@ -274,7 +282,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return array
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws Exception\NoSuchEntityException
      */
     public function getCacheKeyInfo(): array
     {
@@ -287,7 +295,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return string[]
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws Exception\NoSuchEntityException
      */
     public function getIdentities(): array
     {
@@ -296,7 +304,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return string
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws Exception\NoSuchEntityException
      */
     public function getSubmitFormUrl()
     {
@@ -307,7 +315,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return string
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws Exception\NoSuchEntityException
      */
     public function getFormWrapperClass(): string
     {
