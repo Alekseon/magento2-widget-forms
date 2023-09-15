@@ -7,12 +7,17 @@ declare(strict_types=1);
 
 namespace Alekseon\WidgetForms\Block;
 
+use Alekseon\CustomFormsBuilder\Model\Form\Attribute;
+use Alekseon\CustomFormsBuilder\Model\FormTab;
 use Magento\Framework\DataObject;
 use Magento\Framework\Serialize\Serializer\JsonHexTag;
 
 /**
  * Class WidgetForm
  * @package Alekseon\WidgetForms\Block
+ *
+ * @method bool getHideTitle()
+ * @method bool getHideDescription()
  */
 class WidgetForm extends \Magento\Framework\View\Element\Template
     implements \Magento\Widget\Block\BlockInterface, \Magento\Framework\DataObject\IdentityInterface
@@ -44,9 +49,10 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     /**
      * @var
      */
-    private $tabs;
+    private $tabBlocks;
+    private $tabSequence;
     /**
-     * @var
+     * @var JsonHexTag
      */
     private $jsonHexTag;
 
@@ -103,14 +109,19 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         return parent::_toHtml();
     }
 
+    /**
+     * @return void
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
     private function addFields()
     {
         $fields = $this->getFormFieldsCollection();
+        /** @var Attribute $attribute */
         foreach ($fields as $attribute) {
             $tabCode = $attribute ? $attribute->getGroupCode() : '';
-            $tab = $this->tabs[$tabCode] ?? reset($this->tabs);
+            $tabBlock = $this->tabBlocks[$tabCode] ?? reset($this->tabBlocks);
             $fieldBlockAlias = 'form_' . $this->getForm()->getId() . '_field_' . $attribute->getAttributeCode();
-            $tab->getBlock()->addChild(
+            $tabBlock->addChild(
                 $fieldBlockAlias,
                 \Alekseon\CustomFormsFrontend\Block\Form\Field::class,
                 [
@@ -121,7 +132,8 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return |null
+     * @return \Alekseon\CustomFormsBuilder\Model\ResourceModel\FormRecord\Attribute\Collection
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getFormFieldsCollection()
     {
@@ -138,17 +150,15 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      */
     private function addTabs()
     {
-        if ($this->tabs == null) {
-            $this->tabs = [];
+        if ($this->tabBlocks == null) {
+            $this->tabBlocks = [];
             $tabs = [];
-            $tabsCounter = 1;
 
             if ($this->getForm()->getEnableMultipleSteps()) {
                 $formTabs = $this->getForm()->getFormTabs();
+                /** @var FormTab $tab */
                 foreach ($formTabs as $tab) {
-                    $tab->setTabSequenceNumber($tabsCounter);
                     $tabs[$tab->getId()] = $tab;
-                    $tabsCounter++;
                 }
             }
 
@@ -156,7 +166,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
                 // backward compatible, to be sure there is always at least one tab
                 $tab = new DataObject();
                 $tab->setId(1);
-                $tab->setTabSequenceNumber(1);
                 $tabs[1] = $tab;
             }
 
@@ -166,18 +175,20 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
             $lastTab = reset($tabs);
             $lastTab->setILastTab(true);
 
+            $tabsCounter = 0;
             foreach ($tabs as $tabCode => $tab) {
+                $tabsCounter ++;
                 $fieldBlockAlias = 'form_' . $this->getForm()->getId() . '_tab_' . $tabCode;
-                $tabBlock = $this->addChild(
+                $this->tabBlocks[$tabCode] = $this->addChild(
                     $fieldBlockAlias,
                     \Alekseon\WidgetForms\Block\Form\Tab::class,
                     [
                         'form' => $this->getForm(),
-                        'tab' => $tab
+                        'tab' => $tab,
+                        'class' => 'form-tab-' . $tabsCounter,
                     ]
                 );
-                $tab->setBlock($tabBlock);
-                $this->tabs[$tabCode] = $tab;
+                $this->tabSequence[$tabsCounter] = $tabCode;
             }
         }
     }
@@ -187,17 +198,11 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      */
     public function getTabsJson()
     {
-        $tabs = [];
-        foreach ($this->tabs as $tab) {
-            $tabs[$tab->getTabSequenceNumber()] = [
-                'id' => $tab->getId()
-            ];
-        }
-        return $this->jsonHexTag->serialize($tabs);
+        return $this->jsonHexTag->serialize($this->tabSequence);
     }
 
     /**
-     * @return false|mixed
+     * @return \Alekseon\CustomFormsBuilder\Model\Form|false
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getForm()
@@ -238,7 +243,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return string|bool
+     * @return false|string|null
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getFormDescription()
@@ -252,6 +257,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return string
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getFormKey()
     {
@@ -261,15 +267,16 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     /**
      * @return int
      */
-    public function getCacheLifetime()
+    public function getCacheLifetime(): int
     {
         return 86400;
     }
 
     /**
      * @return array
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getCacheKeyInfo()
+    public function getCacheKeyInfo(): array
     {
         $cacheKeyInfo = parent::getCacheKeyInfo();
         if ($this->getForm()) {
@@ -282,7 +289,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      * @return string[]
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getIdentities()
+    public function getIdentities(): array
     {
         return $this->getForm() ? $this->getForm()->getIdentities() : [];
     }
@@ -300,8 +307,9 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return string
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getFormWrapperClass()
+    public function getFormWrapperClass(): string
     {
         return $this->getForm()->getIdentifier()
             ? 'alekseon-widget-' . $this->getForm()->getIdentifier() . '-form--wrapper'
