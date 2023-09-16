@@ -10,9 +10,9 @@ define([
     var form = {
         init: function (config) {
             let form = {};
-            this.currentTab = 1;
-            this.tabs = config.tabs;
 
+            form.currentTab = 1;
+            form.tabs = config.tabs;
             form.form = $('#' + config.formId)[0];
             form.formSubmitUrl = config.formSubmitUrl;
             form.successMessage = config.successMessage;
@@ -26,15 +26,13 @@ define([
         },
 
         openTab: function (form, tabIndex) {
-            var tab = $(form.form).find('.form-tab-' + this.currentTab);
-            console.log('.form-tab-' + this.currentTab);
-            console.log(tab);
+            var tab = $(form.form).find('.form-tab-' + form.currentTab);
             tab.slideUp();
 
             setTimeout(() => {
-                this.currentTab = tabIndex;
+                form.currentTab = tabIndex;
 
-                $(form.form).find('.form-tab-' + this.currentTab).slideDown();
+                $(form.form).find('.form-tab-' + form.currentTab).slideDown();
             }, "100");
         },
 
@@ -43,8 +41,8 @@ define([
                  return false;
             }
 
-            if (this.tabs[this.currentTab + 1] !== undefined) {
-                this.openTab(form, this.currentTab + 1);
+            if (form.tabs[form.currentTab + 1] !== undefined) {
+                this.openTab(form, form.currentTab + 1);
                 return;
             }
 

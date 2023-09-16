@@ -10,6 +10,7 @@ namespace Alekseon\WidgetForms\Block;
 use Alekseon\CustomFormsBuilder\Model\Form\Attribute;
 use Alekseon\CustomFormsBuilder\Model\FormTab;
 use Alekseon\CustomFormsBuilder\Model\FormRepository;
+use Alekseon\WidgetForms\Block\Form\Tab;
 use Magento\Framework\DataObject;
 use Magento\Framework\Serialize\Serializer\JsonHexTag;
 use Magento\Framework\EntityManager\EventManager;
@@ -97,54 +98,15 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         $this->addTabs();
         $this->addFields();
 
-        $additionalInfoBlock = $this->addChild(
-            'form_' . $form->getId() . '_additional.info',
-            \Alekseon\WidgetForms\Block\Form\AdditionalInfo::class
-        );
-
         $this->eventManager->dispatch(
             'alekseon_widget_form_prepare_layout',
             [
                 'widget_block' => $this,
                 'form' => $this->getForm(),
-                'additional_info_block' => $additionalInfoBlock,
             ]
         );
 
         return parent::_toHtml();
-    }
-
-    /**
-     * @return void
-     */
-    private function addFields()
-    {
-        $fields = $this->getFormFieldsCollection();
-        /** @var Attribute $attribute */
-        foreach ($fields as $attribute) {
-            $tabCode = $attribute ? $attribute->getGroupCode() : '';
-            $tabBlock = $this->tabBlocks[$tabCode] ?? reset($this->tabBlocks);
-            $fieldBlockAlias = 'form_' . $this->getForm()->getId() . '_field_' . $attribute->getAttributeCode();
-            $tabBlock->addChild(
-                $fieldBlockAlias,
-                \Alekseon\CustomFormsFrontend\Block\Form\Field::class,
-                [
-                    'attribute' => $attribute
-                ]
-            );
-        }
-    }
-
-    /**
-     * @return \Alekseon\CustomFormsBuilder\Model\ResourceModel\FormRecord\Attribute\Collection
-     */
-    private function getFormFieldsCollection()
-    {
-        if ($this->formFieldsCollection === null) {
-            $form = $this->getForm();
-            $this->formFieldsCollection = $form->getFieldsCollection();
-        }
-        return $this->formFieldsCollection;
     }
 
     /**
@@ -193,6 +155,58 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
                 $this->tabSequence[$tabsCounter] = $tabCode;
             }
         }
+    }
+
+    /**
+     * @return void
+     */
+    private function addFields()
+    {
+        $fields = $this->getFormFieldsCollection();
+        /** @var Attribute $attribute */
+        foreach ($fields as $attribute) {
+            $tabCode = $attribute ? $attribute->getGroupCode() : '';
+            /** @var Tab $tabBlock */
+            $tabBlock = $this->tabBlocks[$tabCode] ?? reset($this->tabBlocks);
+            $fieldBlockAlias = 'form_field_' . $attribute->getAttributeCode();
+            $tabBlock->addChild(
+                $fieldBlockAlias,
+                \Alekseon\CustomFormsFrontend\Block\Form\Field::class,
+                [
+                    'attribute' => $attribute
+                ]
+            );
+        }
+    }
+
+    /**
+     * @return \Alekseon\CustomFormsBuilder\Model\ResourceModel\FormRecord\Attribute\Collection
+     */
+    private function getFormFieldsCollection()
+    {
+        if ($this->formFieldsCollection === null) {
+            $form = $this->getForm();
+            $this->formFieldsCollection = $form->getFieldsCollection();
+        }
+        return $this->formFieldsCollection;
+    }
+
+    /**
+     * @param $tabSequenceNumber
+     * @return false|mixed
+     */
+    public function getTabBlock($tabSequenceNumber)
+    {
+        $tabCode = $this->tabSequence[$tabSequenceNumber] ?? false;
+        return $tabCode ? $this->tabBlocks[$tabCode] : false;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getTabsCounter()
+    {
+        return count($this->tabSequence);
     }
 
     /**
