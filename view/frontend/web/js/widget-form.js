@@ -26,13 +26,14 @@ define([
         },
 
         openTab: function (form, tabIndex) {
-            var tab = $(form.form).find('.form-tab-' + form.currentTab);
-            tab.slideUp();
+            $(form.form).find('#form-tab-fieldset-' + form.currentTab).slideUp();
+            $(form.form).find('#form-tab-actions-' + form.currentTab).hide();
 
             setTimeout(() => {
                 form.currentTab = tabIndex;
 
-                $(form.form).find('.form-tab-' + form.currentTab).slideDown();
+                $(form.form).find('#form-tab-fieldset-' + form.currentTab).slideDown();
+                $(form.form).find('#form-tab-actions-' + form.currentTab).show();
             }, "100");
         },
 
@@ -83,7 +84,7 @@ define([
                 content: form.successMessage
             });
             form.form.reset();
-            if (this.currentTab !== 1) {
+            if (form.currentTab !== 1) {
                 this.openTab(form, 1);
             }
         }

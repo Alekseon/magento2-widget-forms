@@ -136,20 +136,20 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
             $firstTab = reset($tabs);
             $firstTab->setIsFirstTab(true);
 
-            $lastTab = reset($tabs);
-            $lastTab->setILastTab(true);
+            $lastTab = end($tabs);
+            $lastTab->setIsLastTab(true);
 
             $tabsCounter = 0;
             foreach ($tabs as $tabCode => $tab) {
                 $tabsCounter ++;
                 $fieldBlockAlias = 'form_' . $this->getForm()->getId() . '_tab_' . $tabCode;
+                $tab->setTabSequenceNumber($tabsCounter);
                 $this->tabBlocks[$tabCode] = $this->addChild(
                     $fieldBlockAlias,
                     \Alekseon\WidgetForms\Block\Form\Tab::class,
                     [
                         'form' => $this->getForm(),
                         'tab' => $tab,
-                        'class' => 'form-tab-' . $tabsCounter,
                     ]
                 );
                 $this->tabSequence[$tabsCounter] = $tabCode;

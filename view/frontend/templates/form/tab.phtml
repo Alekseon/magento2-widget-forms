@@ -9,7 +9,11 @@
  *  @var $escaper \Magento\Framework\Escaper
  */
 ?>
-<fieldset class="fieldset <?= $escaper->escapeHtmlAttr($block->getClass()) ?>" <?php if (!$block->getTab()->getIsFirstTab()): ?>style="display: none"<?php endif ?>>
+<fieldset
+    class="fieldset"
+    id="form-tab-fieldset-<?= $escaper->escapeHtmlAttr($block->getTab()->getTabSequenceNumber()) ?>"
+    <?php if (!$block->getTab()->getIsFirstTab()): ?>style="display: none"<?php endif ?>
+>
     <?php if ($block->getParentBlock()->getFormTitle()): ?>
         <legend class="legend"><?= $escaper->escapeHtmlAttr($block->getParentBlock()->getFormTitle()) ?></legend>
     <?php endif ?>
@@ -17,5 +21,9 @@
         <div class="field note no-label"><?= $escaper->escapeHtmlAttr($block->getParentBlock()->getFormDescription()) ?></div>
     <?php endif ?>
     <?= $block->getChildHtml() ?>
-    <?= $block->getSubmitButtonHtml() ?>
 </fieldset>
+<div class="actions-toolbar"
+     id="form-tab-actions-<?= $escaper->escapeHtmlAttr($block->getTab()->getTabSequenceNumber()) ?>"
+     <?php if (!$block->getTab()->getIsFirstTab()): ?>style="display: none"<?php endif ?>>
+    <?= $block->getSubmitButtonHtml() ?>
+</div>
