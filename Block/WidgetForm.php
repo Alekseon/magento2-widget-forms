@@ -128,9 +128,9 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
             if (empty($tabs)) {
                 // backward compatible, to be sure there is always at least one tab
-                $tab = new DataObject();
+                $tab = $this->getForm()->addFormTab();
                 $tab->setId(1);
-                $tabs[1] = $tab;
+                $tabs[$tab->getId()] = $tab;
             }
 
             $firstTab = reset($tabs);
@@ -140,6 +140,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
             $lastTab->setIsLastTab(true);
 
             $tabsCounter = 0;
+            /** @var FormTab $tab */
             foreach ($tabs as $tabCode => $tab) {
                 $tabsCounter ++;
                 $fieldBlockAlias = 'form_' . $this->getForm()->getId() . '_tab_' . $tabCode;
