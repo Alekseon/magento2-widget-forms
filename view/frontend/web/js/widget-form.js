@@ -3,96 +3,96 @@
  * http://www.alekseon.com/
  */
 define([
+    'uiComponent',
     'jquery',
     'Magento_Ui/js/modal/alert'
-], function ($, alert) {
+], function (Component, $, alert) {
     'use strict';
-    var form = {
-        init: function (config) {
-            let form = {};
 
-            form.currentTab = 1;
-            form.tabs = config.tabs;
-            form.form = $('#' + config.formId)[0];
-            form.formSubmitUrl = config.formSubmitUrl;
-            form.successMessage = config.successMessage;
+    $.widget('mage.alekseonWidgetForm', {
 
+        options: {
+            currentTab: 1,
+            tabs: [],
+            form: null,
+            formSubmitUrl: 'formSubmitUrl',
+            successMessage: '',
+            formId: ''
+        },
+
+        _create: function () {
             let self = this;
-
-            $(form.form).submit(function (event) {
-                self.submitFormAction(form);
+            this.options.form = $('#' + this.options.formId)[0];
+            $(this.options.form).submit(function (event) {
+                self.submitFormAction();
                 event.preventDefault(event);
             });
         },
 
         openTab: function (form, tabIndex) {
-            $(form.form).find('#form-tab-fieldset-' + form.currentTab).slideUp();
-            $(form.form).find('#form-tab-actions-' + form.currentTab).hide();
+            $(this.options.form).find('#form-tab-fieldset-' + this.options.currentTab).slideUp();
+            $(this.options.form).find('#form-tab-actions-' + this.options.currentTab).hide();
 
             setTimeout(() => {
-                form.currentTab = tabIndex;
+                this.options.currentTab = tabIndex;
 
-                $(form.form).find('#form-tab-fieldset-' + form.currentTab).slideDown();
-                $(form.form).find('#form-tab-actions-' + form.currentTab).show();
+                $(this.options.form).find('#form-tab-fieldset-' + this.options.currentTab).slideDown();
+                $(this.options.form).find('#form-tab-actions-' + this.options.currentTab).show();
             }, "100");
         },
 
-        submitFormAction: function (form) {
-            if ($(form.form).validation && !$(form.form).validation('isValid')) {
-                 return false;
+        submitFormAction: function () {
+            if ($(this.options.form).validation && !$(this.options.form).validation('isValid')) {
+                return false;
             }
 
-            if (form.tabs[form.currentTab + 1] !== undefined) {
-                this.openTab(form, form.currentTab + 1);
+            if (this.options.tabs[this.options.currentTab + 1] !== undefined) {
+                this.openTab(this.options, this.options.currentTab + 1);
                 return;
             }
 
             let self = this;
 
             $.ajax({
-                url: form.formSubmitUrl,
-                    type: 'POST',
-                    data: $(form.form).serializeArray(),
-                    dataType: 'json',
-                    showLoader: true
-                }).done(function (response) {
-                    if (response.errors) {
-                        self.onError(form, response);
-                    } else {
-                        self.onSuccess(form);
-                    }
+                url: this.options.formSubmitUrl,
+                type: 'POST',
+                data: $(this.options.form).serializeArray(),
+                dataType: 'json',
+                showLoader: true
+            }).done(function (response) {
+                if (response.errors) {
+                    self.onError(response);
+                } else {
+                    self.onSuccess();
+                }
             }).fail(function (error) {
-                self.onError(form, error.responseJSON);
+                self.onError(error.responseJSON);
             }).complete(function() {
-                self.onComplete(form);
+                self.onComplete();
             });
         },
 
-        onComplete: function(form) {
+        onComplete: function() {
         },
 
-        onError: function(form, response) {
+        onError: function(response) {
             alert({
                 title: $.mage.__('Error'),
                 content: response.message
             });
         },
 
-        onSuccess: function(form) {
+        onSuccess: function() {
             alert({
                 title: $.mage.__('Success'),
-                content: form.successMessage
+                content: this.options.form.successMessage
             });
-            form.form.reset();
-            if (form.currentTab !== 1) {
-                this.openTab(form, 1);
+            this.options.form.reset();
+            if (this.options.currentTab !== 1) {
+                this.openTab(this.options.form, 1);
             }
         }
-    };
+    });
 
-    return function (config) {
-        $(document).ready(function () {
-            form.init(config);
-        });
-    };
+    return $.mage.alekseonWidgetForm;
 });
