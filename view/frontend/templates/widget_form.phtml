@@ -17,17 +17,15 @@
             <?= $this->getChildHtml() ?>
         </form>
     </div>
-
-    <script type="text/javascript">
-        require([
-            "Alekseon_WidgetForms/js/widget-form"
-        ],function(widgetForm) {
-            var options = {
+    <script type="text/x-magento-init">
+    {
+        "#alekseon-widget-form-<?= $block->getForm()->getId() ?>": {
+            "Alekseon_WidgetForms/js/widget-form": {
                 "formId": "alekseon-widget-form-<?= $block->getForm()->getId() ?>",
                 "formSubmitUrl": "<?= $block->getUrl('Alekseon_WidgetForms/form/submit', ['form_id' => $block->getForm()->getId()]) ?>",
                 "tabs": <?= $block->getTabsJson() ?>
-            };
-            widgetForm(options);
-        });
+            }
+        }
+    }
     </script>
 <?php endif ?>

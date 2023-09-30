@@ -3,10 +3,9 @@
  * http://www.alekseon.com/
  */
 define([
-    'uiComponent',
     'jquery',
     'Magento_Ui/js/modal/alert'
-], function (Component, $, alert) {
+], function ($, alert) {
     'use strict';
 
     $.widget('mage.alekseonWidgetForm', {
