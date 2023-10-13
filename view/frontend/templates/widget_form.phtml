@@ -11,7 +11,11 @@
 ?>
 <?php if ($block->getForm()): ?>
     <div class="alekseon-widget-form-wrapper <?= $escaper->escapeHtmlAttr($block->getFormWrapperClass()) ?>" id="widget-form-wrapper-<?= $escaper->escapeHtmlAttr($block->getForm()->getId()) ?>">
-        <form id="alekseon-widget-form-<?= $block->getForm()->getId() ?>" data-mage-init='{"validation":{}}' autocomplete="off">
+        <form id="alekseon-widget-form-<?= $block->getForm()->getId() ?>"
+              data-mage-init='{"validation":{}}'
+              autocomplete="off"
+              enctype="multipart/form-data"
+        >
             <input type="hidden" name="hideit" id="hideit" />
             <input type="hidden" name="form_key" id="form_key" value="<?= $block->getFormKey()?>" />
             <?= $this->getChildHtml() ?>

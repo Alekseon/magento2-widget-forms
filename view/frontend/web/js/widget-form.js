@@ -15,7 +15,6 @@ define([
             tabs: [],
             form: null,
             formSubmitUrl: 'formSubmitUrl',
-            successMessage: '',
             formId: ''
         },
 
@@ -51,18 +50,21 @@ define([
             }
 
             let self = this;
+            const formData = new FormData(this.options.form);
 
             $.ajax({
                 url: this.options.formSubmitUrl,
                 type: 'POST',
-                data: $(this.options.form).serializeArray(),
+                data: formData,
+                processData: false,
+                contentType: false,
                 dataType: 'json',
                 showLoader: true
             }).done(function (response) {
                 if (response.errors) {
                     self.onError(response);
                 } else {
-                    self.onSuccess();
+                    self.onSuccess(response);
                 }
             }).fail(function (error) {
                 self.onError(error.responseJSON);
@@ -81,10 +83,10 @@ define([
             });
         },
 
-        onSuccess: function() {
+        onSuccess: function(response) {
             alert({
-                title: $.mage.__('Success'),
-                content: this.options.form.successMessage
+                title: response.title,
+                content: response.message
             });
             this.options.form.reset();
             if (this.options.currentTab !== 1) {
