@@ -7,12 +7,21 @@ declare(strict_types=1);
 
 namespace Alekseon\WidgetForms\Block;
 
+use Alekseon\CustomFormsBuilder\Model\Form\Attribute;
+use Alekseon\CustomFormsBuilder\Model\FormTab;
+use Alekseon\CustomFormsBuilder\Model\FormRepository;
+use Alekseon\WidgetForms\Block\Form\Tab;
 use Magento\Framework\DataObject;
 use Magento\Framework\Serialize\Serializer\JsonHexTag;
+use Magento\Framework\EntityManager\EventManager;
+use Magento\Framework\Data\Form\FormKey;
 
 /**
  * Class WidgetForm
  * @package Alekseon\WidgetForms\Block
+ *
+ * @method bool getHideTitle()
+ * @method bool getHideDescription()
  */
 class WidgetForm extends \Magento\Framework\View\Element\Template
     implements \Magento\Widget\Block\BlockInterface, \Magento\Framework\DataObject\IdentityInterface
@@ -22,7 +31,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      */
     protected $_template = 'Alekseon_WidgetForms::widget_form.phtml';
     /**
-     * @var \Alekseon\CustomFormsBuilder\Model\FormRepository
+     * @var FormRepository
      */
     private $formRepository;
     /**
@@ -34,37 +43,38 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      */
     private $formFieldsCollection;
     /**
-     * @var \Magento\Framework\Data\Form\FormKey
+     * @var FormKey
      */
     private $formKey;
     /**
-     * @var \Magento\Framework\EntityManager\EventManager
+     * @var EventManager
      */
     private $eventManager;
+    /**
+     * @var array|null
+     */
+    private $tabBlocks;
+    /**
+     * @var array|null
+     */
+    private $tabSequence;
     /**
      * @var JsonHexTag
      */
     private $jsonHexTag;
-    /**
-     * @var array
-     */
-    private $formFields = [];
-    /**
-     * @var
-     */
-    private $tabs;
 
     /**
-     * WidgetForm constructor.
      * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Alekseon\CustomFormsBuilder\Model\FormRepository $formRepository
+     * @param FormRepository $formRepository
+     * @param FormKey $formKey
+     * @param EventManager $eventManager
      * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
-        \Alekseon\CustomFormsBuilder\Model\FormRepository $formRepository,
-        \Magento\Framework\Data\Form\FormKey $formKey,
-        \Magento\Framework\EntityManager\EventManager $eventManager,
+        FormRepository $formRepository,
+        FormKey $formKey,
+        EventManager $eventManager,
         JsonHexTag $jsonHexTag,
         array $data = []
     ) {
@@ -77,7 +87,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return string
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     protected function _toHtml()
     {
@@ -86,95 +95,95 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
             return parent::_toHtml();
         }
 
-        $fields = $this->getFormFieldsCollection();
-
-        foreach ($fields as $field) {
-            $fieldBlockAlias = 'form_' . $form->getId() . '_field_' . $field->getAttributeCode();
-            $this->addFormField(
-                $fieldBlockAlias,
-                \Alekseon\CustomFormsFrontend\Block\Form\Field::class,
-                [
-                    'attribute' => $field
-                ]
-            );
-        }
-
-        $additionalInfoBlock = $this->addFormField(
-            'form_' . $form->getId() . '_additional.info',
-            \Alekseon\WidgetForms\Block\Form\AdditionalInfo::class,
-            [
-                'tab_code' => array_key_last($this->getTabs())
-            ]
-        );
+        $this->addTabs();
+        $this->addFields();
 
         $this->eventManager->dispatch(
             'alekseon_widget_form_prepare_layout',
             [
                 'widget_block' => $this,
                 'form' => $this->getForm(),
-                'additional_info_block' => $additionalInfoBlock,
             ]
         );
-
-        $tabs = $this->getTabs();
-        foreach ($tabs as $tabCode => $tab) {
-            $this->addChild(
-                'form_' . $form->getId() . '_action_' . $tabCode,
-                \Alekseon\WidgetForms\Block\Form\Action::class,
-            )->setSubmitButtonLabel($this->getSubmitButtonLabel($tab));
-        }
 
         return parent::_toHtml();
     }
 
     /**
-     * @return \Magento\Framework\Phrase
+     * @return void
      */
-    public function getSubmitButtonLabel($tab)
+    private function addTabs()
     {
-        if (!$tab->getIsLastTab()) {
-            return __('Next');
-        }
+        if ($this->tabBlocks == null) {
+            $this->tabBlocks = [];
+            $tabs = [];
 
-        $form = $this->getForm();
-        if ($form && $form->getSubmitButtonLabel()) {
-            return $form->getSubmitButtonLabel();
-        }
+            if ($this->getForm()->getEnableMultipleSteps()) {
+                $formTabs = $this->getForm()->getFormTabs();
+                /** @var FormTab $tab */
+                foreach ($formTabs as $tab) {
+                    $tabs[$tab->getId()] = $tab;
+                }
+            }
 
-        return __('Submit');
+            if (empty($tabs)) {
+                // backward compatible, to be sure there is always at least one tab
+                $tab = $this->getForm()->addFormTab();
+                $tab->setId(1);
+                $tabs[$tab->getId()] = $tab;
+            }
+
+            $firstTab = reset($tabs);
+            $firstTab->setIsFirstTab(true);
+
+            $lastTab = end($tabs);
+            $lastTab->setIsLastTab(true);
+
+            $tabsCounter = 0;
+            /** @var FormTab $tab */
+            foreach ($tabs as $tabCode => $tab) {
+                $tabsCounter ++;
+                $fieldBlockAlias = 'form_' . $this->getForm()->getId() . '_tab_' . $tabCode;
+                $tab->setTabSequenceNumber($tabsCounter);
+                $this->tabBlocks[$tabCode] = $this->addChild(
+                    $fieldBlockAlias,
+                    \Alekseon\WidgetForms\Block\Form\Tab::class,
+                    [
+                        'form' => $this->getForm(),
+                        'tab' => $tab,
+                    ]
+                );
+                $this->tabSequence[$tabsCounter] = $tabCode;
+            }
+        }
     }
 
     /**
-     * @param $alias
-     * @param $block
-     * @param array $data
-     * @return $this|bool
+     * @return void
      */
-    public function addFormField($fieldBlockAlias, $block, $data = [])
+    private function addFields()
     {
-        $attribute = $data['attribute'] ?? false;
-        $tabCode = $attribute ? $attribute->getGroupCode() : '';
-
-        $tabs = $this->getTabs();
-        if (!isset($tabs[$tabCode])) {
-            $tabCode = array_key_first($tabs);
+        $fields = $this->getFormFieldsCollection();
+        /** @var Attribute $attribute */
+        foreach ($fields as $attribute) {
+            $tabCode = $attribute ? $attribute->getGroupCode() : '';
+            /** @var Tab $tabBlock */
+            $tabBlock = $this->tabBlocks[$tabCode] ?? reset($this->tabBlocks);
+            $fieldBlockAlias = 'form_field_' . $attribute->getAttributeCode();
+            $tabBlock->addChild(
+                $fieldBlockAlias,
+                \Alekseon\CustomFormsFrontend\Block\Form\Field::class,
+                [
+                    'attribute' => $attribute
+                ]
+            );
         }
-        if (!isset($this->formFields[$tabCode][$fieldBlockAlias])) {
-            $childBlock = $this->addChild($fieldBlockAlias, $block, $data);
-            $fieldClass = $childBlock->getIsRequred() ? 'required' : '';
-
-            $this->formFields[$tabCode][$fieldBlockAlias] = [
-                'block' => $fieldBlockAlias,
-                'field_class' => $fieldClass,
-            ];
-        }
-        return $this->getChildBlock($this->formFields[$tabCode][$fieldBlockAlias]['block']);
     }
 
     /**
-     * @return |null
+     * @return \Alekseon\CustomFormsBuilder\Model\ResourceModel\FormRecord\Attribute\Collection
      */
-    public function getFormFieldsCollection()
+    private function getFormFieldsCollection()
     {
         if ($this->formFieldsCollection === null) {
             $form = $this->getForm();
@@ -184,120 +193,33 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return mixed
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     */
-    public function getTabs()
-    {
-        if ($this->tabs === null) {
-            $this->tabs = [];
-
-            if ($this->getForm()->getEnableMultipleSteps()) {
-                $formTabs = $this->getForm()->getFormTabs();
-                $tabsCounter = 1;
-                foreach ($formTabs as $tab) {
-                    $tab->setTabSequenceNumber($tabsCounter);
-                    $this->tabs[$tab->getId()] = $tab;
-                    $tabsCounter ++;
-                }
-            }
-
-            if (empty($this->tabs)) {
-                // backward compatible, to be sure there is alwyas at least one tab
-                $tab = new DataObject();
-                $tab->setId(1);
-                $tab->setIsLastTab(true);
-                $this->tabs[1] = $tab;
-            }
-        }
-        return $this->tabs;
-    }
-
-    /**
-     * @return bool|string
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     */
-    public function getFormTabsHtmlJson()
-    {
-        $tabs = $this->getTabs();
-        $formTabsHtml = [];
-        $tabsCounter = 0;
-        $lastTabCode = false;
-
-        foreach ($tabs as $tabCode => $tab) {
-            $formFields = $this->formFields[$tabCode] ?? [];
-            if (!isset($formTabsHtml[$tabCode])) {
-                $formTabsHtml[$tabCode]['is_last'] = 0;
-                $formTabsHtml[$tabCode]['fields'] = [];
-                $formTabsHtml[$tabCode]['code'] = $tabCode;
-                $formTabsHtml[$tabCode]['index'] = $tabsCounter;
-                $formTabsHtml[$tabCode]['visible'] = $tabsCounter ? false : true;
-            }
-            foreach ($formFields as $field) {
-                $fieldHtml = $this->getChildHtml($field['block']);
-                if ($fieldHtml) {
-                    $formTabsHtml[$tabCode]['fields'][] = [
-                        'html' => $this->getChildHtml($field['block']),
-                        'field_class' => $field['field_class'],
-                    ];
-                }
-            }
-
-            $formTabsHtml[$tabCode]['actionHtml'] = $this->getActionToolbarHtml($tab);
-            $formTabsHtml[$tabCode]['beforeFieldsHtml'] = $this->getBeforeFieldsHtml($tab);
-            $formTabsHtml[$tabCode]['beforeActionsHtml'] = $this->getBeforeActionsHtml($tab);
-            $formTabsHtml[$tabCode]['afterActionsHtml'] = $this->getAfterActionsHtml($tab);
-
-            $lastTabCode = $tabCode;
-            $tabsCounter ++;
-        }
-
-        if ($lastTabCode) {
-            $formTabsHtml[$lastTabCode]['is_last'] = 1;
-        }
-
-        return $this->jsonHexTag->serialize(array_values($formTabsHtml));
-    }
-
-    /**
-     * @return string
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function getBeforeFieldsHtml($tab)
-    {
-        return '';
-    }
-
-    /**
-     * @return string
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function getBeforeActionsHtml($tab)
-    {
-        return '';
-    }
-
-    /**
-     * @return string
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function getAfterActionsHtml($tab)
-    {
-        return '';
-    }
-
-    /**
-     * @return string
-     */
-    public function getActionToolbarHtml($tab)
-    {
-        $form = $this->getForm();
-        return $this->getChildHtml('form_'. $form->getId() . '_action_' . $tab->getId());
-    }
-
-    /**
+     * @param $tabSequenceNumber
      * @return false|mixed
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function getTabBlock($tabSequenceNumber)
+    {
+        $tabCode = $this->tabSequence[$tabSequenceNumber] ?? false;
+        return $tabCode ? $this->tabBlocks[$tabCode] : false;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getTabsCounter()
+    {
+        return count($this->tabSequence);
+    }
+
+    /**
+     * @return false|string
+     */
+    public function getTabsJson()
+    {
+        return $this->jsonHexTag->serialize($this->tabSequence);
+    }
+
+    /**
+     * @return \Alekseon\CustomFormsBuilder\Model\Form|false
      */
     public function getForm()
     {
@@ -305,11 +227,15 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
             $identifier = $this->getData('form_identifier');
             $form = false;
             if ($identifier) {
-                $form = $this->formRepository->getByIdentifier($identifier, null);
+                try {
+                    $form = $this->formRepository->getByIdentifier($identifier, null, true);
+                } catch (\Exception $e) {}
             } else {
                 $formId = (int)$this->getData('form_id');
                 if ($formId) {
-                    $form = $this->formRepository->getById($formId, null, true);
+                    try {
+                        $form = $this->formRepository->getById($formId, null, true);
+                    } catch (\Exception $e) {}
                 }
             }
 
@@ -324,8 +250,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return mixed
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return false|string
      */
     public function getFormTitle()
     {
@@ -337,8 +262,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return string|bool
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return false|string
      */
     public function getFormDescription()
     {
@@ -358,30 +282,9 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return bool|string
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     */
-    public function getUiComponentChildrenJson()
-    {
-        $dataObject = new \Magento\Framework\DataObject();
-        $dataObject->setUiComponentChildren([]);
-
-        $this->eventManager->dispatch(
-            'alekseon_widget_form_ui_component_children',
-            [
-                'widget_block' => $this,
-                'form' => $this->getForm(),
-                'data_object' => $dataObject,
-            ]
-        );
-
-        return $this->jsonHexTag->serialize($dataObject->getUiComponentChildren());
-    }
-
-    /**
      * @return int
      */
-    public function getCacheLifetime()
+    public function getCacheLifetime(): int
     {
         return 86400;
     }
@@ -389,7 +292,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     /**
      * @return array
      */
-    public function getCacheKeyInfo()
+    public function getCacheKeyInfo(): array
     {
         $cacheKeyInfo = parent::getCacheKeyInfo();
         if ($this->getForm()) {
@@ -400,19 +303,14 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
     /**
      * @return string[]
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getIdentities()
+    public function getIdentities(): array
     {
-        if ($this->getForm()) {
-            return $this->getForm()->getIdentities();
-        }
-        return  [];
+        return $this->getForm() ? $this->getForm()->getIdentities() : [];
     }
 
     /**
      * @return string
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getSubmitFormUrl()
     {
@@ -424,12 +322,10 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     /**
      * @return string
      */
-    public function getFormWrapperClass()
+    public function getFormWrapperClass(): string
     {
-        $identifier = $this->getForm()->getIdentifier();
-        if ($identifier) {
-            return 'alekseon-widget-' . $identifier . '-form--wrapper';
-        }
-        return '';
+        return $this->getForm()->getIdentifier()
+            ? 'alekseon-widget-' . $this->getForm()->getIdentifier() . '-form--wrapper'
+            : '';
     }
 }
