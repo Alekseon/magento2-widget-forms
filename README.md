@@ -15,6 +15,11 @@
 
 <a target="_blank" href="https://widget-forms.alekseon.com/">https://widget-forms.alekseon.com/</a>
 
+## Examples of usage
+
+- <a href="https://github.com/Alekseon/magento2-widget-forms/wiki/Ask-About-Product">Ask About Product</a><br>
+- <a href="https://github.com/Alekseon/magento2-widget-forms/wiki/Multi-step-Survey">Multi-step Survey</a> (soon)<br>
+
 ## Installation  
   
 In your Magento2 root directory, you may install this package via composer:  

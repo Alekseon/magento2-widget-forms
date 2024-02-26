@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.4.1] - 2024-02-26
+### Fixed
+- fix ajax error: "complete is not a function"
+
+## [102.4.0] - 2023-12-03
+### Changed
+- refactoring - removed UI component on frontend
+
 ## [102.3.0] - 2023-06-21
 ### Changed
 - frontend inputs moved from Alekseon_WidgetForms to Alekseon_CustonFormsFrontend
