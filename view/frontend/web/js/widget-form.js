@@ -68,7 +68,7 @@ define([
                 }
             }).fail(function (error) {
                 self.onError(error.responseJSON);
-            }).complete(function() {
+            }).always(function() {
                 self.onComplete();
             });
         },
