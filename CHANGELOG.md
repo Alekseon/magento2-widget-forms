@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.4.2] - 2024-06-24
+### Changed
+- Translate labels (https://github.com/Alekseon/AlekseonEav/issues/45)
+
 ## [102.4.1] - 2024-02-26
 ### Fixed
 - fix ajax error: "complete is not a function"

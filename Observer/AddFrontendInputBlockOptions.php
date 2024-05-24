@@ -45,7 +45,7 @@ class AddFrontendInputBlockOptions implements ObserverInterface
             foreach ($frontendBlocks as $code => $data) {
                 $options[] = [
                     'value' => $code,
-                    'label' => $data['label'],
+                    'label' => __($data['label']),
                 ];
             }
 
