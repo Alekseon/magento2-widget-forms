@@ -84,10 +84,14 @@ define([
         },
 
         onSuccess: function(response) {
-            alert({
-                title: response.title,
-                content: response.message
-            });
+            if(response.html_content) {
+                this.options.form.parentElement.innerHTML = response.html_content;
+            } else {
+                alert({
+                    title: response.title,
+                    content: response.message
+                });
+            }
             this.options.form.reset();
             if (this.options.currentTab !== 1) {
                 this.openTab(this.options.form, 1);

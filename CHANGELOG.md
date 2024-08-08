@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.4.3] - 2024-08-08
+### Added
+- added success display mode option
+
 ## [102.4.2] - 2024-06-24
 ### Changed
 - Translate labels (https://github.com/Alekseon/AlekseonEav/issues/45)

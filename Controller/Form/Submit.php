@@ -49,6 +49,10 @@ class Submit implements HttpPostActionInterface
      * @var \Psr\Log\LoggerInterface
      */
     private $logger;
+    /**
+     * @var \Magento\Cms\Api\BlockRepositoryInterface
+     */
+    private $blockRepository;
 
     /**
      * Submit constructor.
@@ -60,6 +64,7 @@ class Submit implements HttpPostActionInterface
         \Alekseon\CustomFormsBuilder\Model\FormRepository $formRepository,
         \Alekseon\CustomFormsBuilder\Model\FormRecordFactory $formRecordFactory,
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
+        \Magento\Cms\Api\BlockRepositoryInterface $blockRepository,
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->request = $context->getRequest();
@@ -67,6 +72,7 @@ class Submit implements HttpPostActionInterface
         $this->eventManager = $context->getEventManager();
         $this->formRecordFactory = $formRecordFactory;
         $this->jsonFactory = $jsonFactory;
+        $this->blockRepository = $blockRepository;
         $this->formRepository = $formRepository;
         $this->formKeyValidator = $formKeyValidator;
         $this->logger = $logger;
@@ -101,6 +107,7 @@ class Submit implements HttpPostActionInterface
                     'errors' => false,
                     'title' => $this->getSuccessTitle($formRecord),
                     'message' => $this->getSuccessMessage($formRecord),
+                    'html_content' => $this->getRequest()->getParam('success_block_id') ? $this->blockRepository->getById($this->getRequest()->getParam('success_block_id'))->getContent() : ''
                 ]
             );
         } catch (LocalizedException $e) {
