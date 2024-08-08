@@ -10,6 +10,7 @@ namespace Alekseon\WidgetForms\Controller\Form;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Class Submit
@@ -50,9 +51,9 @@ class Submit implements HttpPostActionInterface
      */
     private $logger;
     /**
-     * @var \Magento\Cms\Api\BlockRepositoryInterface
+     * @var \Magento\Cms\Api\GetBlockByIdentifierInterface
      */
-    private $blockRepository;
+    private $blockByIdentifier;
 
     /**
      * Submit constructor.
@@ -64,7 +65,7 @@ class Submit implements HttpPostActionInterface
         \Alekseon\CustomFormsBuilder\Model\FormRepository $formRepository,
         \Alekseon\CustomFormsBuilder\Model\FormRecordFactory $formRecordFactory,
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
-        \Magento\Cms\Api\BlockRepositoryInterface $blockRepository,
+        \Magento\Cms\Api\GetBlockByIdentifierInterface $blockByIdentifier,
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->request = $context->getRequest();
@@ -72,7 +73,7 @@ class Submit implements HttpPostActionInterface
         $this->eventManager = $context->getEventManager();
         $this->formRecordFactory = $formRecordFactory;
         $this->jsonFactory = $jsonFactory;
-        $this->blockRepository = $blockRepository;
+        $this->blockByIdentifier = $blockByIdentifier;
         $this->formRepository = $formRepository;
         $this->formKeyValidator = $formKeyValidator;
         $this->logger = $logger;
@@ -107,7 +108,7 @@ class Submit implements HttpPostActionInterface
                     'errors' => false,
                     'title' => $this->getSuccessTitle($formRecord),
                     'message' => $this->getSuccessMessage($formRecord),
-                    'html_content' => $this->getRequest()->getParam('success_block_id') ? $this->blockRepository->getById($this->getRequest()->getParam('success_block_id'))->getContent() : ''
+                    'html_content' => $this->getSuccessHtmlContent((int) $form->getStoreId(), $formRecord)
                 ]
             );
         } catch (LocalizedException $e) {
@@ -195,5 +196,26 @@ class Submit implements HttpPostActionInterface
     public function getResponse()
     {
         return $this->response;
+    }
+
+    /**
+     *
+     */
+    public function getSuccessHtmlContent($storeid, $formRecord)
+    {
+        $successDisplayMode = $this->getRequest()->getParam('success_display_mode');
+        $successBlockId = $this->getRequest()->getParam('success_block_id');
+
+        if($successDisplayMode === "form") {
+            try {
+                $successBlock = $this->blockByIdentifier->execute($successBlockId, $storeid);
+                return $successBlock->getContent();
+            }
+            catch(NoSuchEntityException $e) {
+                return '<h2>' . $this->getSuccessTitle($formRecord) . '</h2><p>' . $this->getSuccessMessage($formRecord) . '</p>';
+            }
+        } else {
+            return '';
+        }
     }
 }

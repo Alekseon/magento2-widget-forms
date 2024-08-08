@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
-## [102.4.3] - 2024-08-08
+## [Unreleased]
 ### Added
 - added success display mode option
 

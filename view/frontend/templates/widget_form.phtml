@@ -26,7 +26,7 @@
         "#alekseon-widget-form-<?= $block->getForm()->getId() ?>": {
             "Alekseon_WidgetForms/js/widget-form": {
                 "formId": "alekseon-widget-form-<?= $block->getForm()->getId() ?>",
-                "formSubmitUrl": "<?= $block->getUrl('Alekseon_WidgetForms/form/submit', ['form_id' => $block->getForm()->getId(), 'success_block_id' => $block->getData('success_block')]) ?>",
+                "formSubmitUrl": "<?= $block->getSubmitFormUrl() ?>",
                 "tabs": <?= $block->getTabsJson() ?>
             }
         }
