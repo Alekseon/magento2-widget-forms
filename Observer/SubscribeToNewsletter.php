@@ -65,7 +65,7 @@ class SubscribeToNewsletter implements ObserverInterface
         if ($form->getSubscribeToNewsletter()) {
             $emailField = $form->getNewsletterEmail();
             $email = $formRecord->getData($emailField);
-            $storeId = $this->storeManager->getStore()->getId();
+            $storeId = (int) $this->storeManager->getStore()->getId();
             if ($email) {
                 $this->validateEmailAvailable($email);
                 $customerId = $this->getCurrentCustomerId();
