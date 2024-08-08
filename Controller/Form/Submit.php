@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace Alekseon\WidgetForms\Controller\Form;
 
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
