@@ -3,37 +3,52 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\WidgetForms\Controller\Form;
 
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use Magento\Framework\Exception\LocalizedException;
 
 /**
  * Class Submit
  * @package Alekseon\WidgetForms\Controller
  */
-class Submit extends \Magento\Framework\App\Action\Action
+class Submit implements HttpPostActionInterface
 {
+    /**
+     * @var \Magento\Framework\App\RequestInterface
+     */
+    private $request;
+    /**
+     * @var \Magento\Framework\App\ResponseInterface
+     */
+    private $response;
+    /**
+     * @var \Magento\Framework\Event\ManagerInterface
+     */
+    private $eventManager;
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $jsonFactory;
+    private $jsonFactory;
     /**
      * @var \Alekseon\CustomFormsBuilder\Model\FormRepository
      */
-    protected $formRepository;
+    private $formRepository;
     /**
      * @var \Alekseon\CustomFormsBuilder\Model\FormRecordFactory
      */
-    protected $formRecordFactory;
+    private $formRecordFactory;
     /**
      * @var \Magento\Framework\Data\Form\FormKey\Validator
      */
-    protected $formKeyValidator;
+    private $formKeyValidator;
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    protected $logger;
+    private $logger;
 
     /**
      * Submit constructor.
@@ -47,12 +62,14 @@ class Submit extends \Magento\Framework\App\Action\Action
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Psr\Log\LoggerInterface $logger
     ) {
+        $this->request = $context->getRequest();
+        $this->response = $context->getResponse();
+        $this->eventManager = $context->getEventManager();
         $this->formRecordFactory = $formRecordFactory;
         $this->jsonFactory = $jsonFactory;
         $this->formRepository = $formRepository;
         $this->formKeyValidator = $formKeyValidator;
         $this->logger = $logger;
-        parent::__construct($context);
     }
 
     /**
@@ -68,40 +85,36 @@ class Submit extends \Magento\Framework\App\Action\Action
             $post = $this->getRequest()->getPost();
             $formRecord = $this->formRecordFactory->create();
             $formRecord->getResource()->setCurrentForm($form);
-            $formRecord->setStoreId(\Magento\Store\Model\Store::DEFAULT_STORE_ID);
+            $formRecord->setStoreId($form->getStoreId());
             $formRecord->setFormId($form->getId());
             $formFields = $form->getFieldsCollection();
             foreach ($formFields as $field) {
                 $fieldCode = $field->getAttributeCode();
-                if (isset($post[$fieldCode])) {
-                    $value = $post[$fieldCode];
-                } else {
-                    $value = $field->getDefaultValue();
-                }
+                $value = $post[$fieldCode] ?? $field->getDefaultValue();
                 $formRecord->setData($fieldCode, $value);
             }
 
             $formRecord->getResource()->save($formRecord);
-            $this->_eventManager->dispatch('alekseon_widget_form_after_submit', ['form_record' => $formRecord]);
-            $resultJson->setHttpResponseCode(200);
+            $this->eventManager->dispatch('alekseon_widget_form_after_submit', ['form_record' => $formRecord]);
             $resultJson->setData(
                 [
+                    'errors' => false,
                     'title' => $this->getSuccessTitle($formRecord),
                     'message' => $this->getSuccessMessage($formRecord),
                 ]
             );
         } catch (LocalizedException $e) {
-            $resultJson->setHttpResponseCode(500);
             $resultJson->setData(
                 [
+                    'errors' => true,
                     'message' => $e->getMessage()
                 ]
             );
         } catch (\Exception $e) {
             $this->logger->error('Widget Form Error during submit action: ' . $e->getMessage());
-            $resultJson->setHttpResponseCode(500);
             $resultJson->setData(
                 [
+                    'errors' => true,
                     'message' => __('We are unable to process your request. Please, try again later.'),
                 ]
             );
@@ -112,6 +125,7 @@ class Submit extends \Magento\Framework\App\Action\Action
 
     /**
      * @param $form
+     * @return string
      */
     public function getSuccessMessage($formRecord)
     {
@@ -119,11 +133,12 @@ class Submit extends \Magento\Framework\App\Action\Action
         if (!$successMessage) {
             $successMessage = __('Thank You!');
         }
-        return $successMessage;
+        return (string) $successMessage;
     }
 
     /**
      * @param $form
+     * @return string
      */
     public function getSuccessTitle($formRecord)
     {
@@ -131,20 +146,21 @@ class Submit extends \Magento\Framework\App\Action\Action
         if (!$successTitle) {
             $successTitle = __('Success');
         }
-        return $successTitle;
+        return (string) $successTitle;
     }
 
     /**
-     *
+     * @return void
+     * @throws LocalizedException
      */
-    protected function validateData()
+    public function validateData()
     {
         if (!$this->formKeyValidator->validate($this->getRequest())) {
-            throw new \Exception(__('Incorrect Form Key'));
+            throw new LocalizedException(__('Invalid Form Key. Please refresh the page.'));
         }
 
         if ($this->getRequest()->getParam('hideit')) {
-            throw new \Exception(__('Interrupted Data'));
+            throw new LocalizedException(__('Interrupted Data'));
         }
     }
 
@@ -156,5 +172,21 @@ class Submit extends \Magento\Framework\App\Action\Action
         $formId = $this->getRequest()->getParam('form_id');
         $form = $this->formRepository->getById($formId);
         return $form;
+    }
+
+    /**
+     * @return \Magento\Framework\App\RequestInterface
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @return \Magento\Framework\App\ResponseInterface
+     */
+    public function getResponse()
+    {
+        return $this->response;
     }
 }

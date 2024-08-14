@@ -3,6 +3,8 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\WidgetForms\Observer;
 
 use Magento\Framework\Event\Observer;
@@ -43,7 +45,7 @@ class AddFrontendInputBlockOptions implements ObserverInterface
             foreach ($frontendBlocks as $code => $data) {
                 $options[] = [
                     'value' => $code,
-                    'label' => $data['label'],
+                    'label' => __($data['label']),
                 ];
             }
 

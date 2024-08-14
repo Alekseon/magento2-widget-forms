@@ -3,9 +3,9 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
-namespace Alekseon\WidgetForms\Model\Attribute\Source;
+declare(strict_types=1);
 
-use Alekseon\CustomFormsBuilder\Model\Form;
+namespace Alekseon\WidgetForms\Model\Attribute\Source;
 
 /**
  * Class TextFormAttributes

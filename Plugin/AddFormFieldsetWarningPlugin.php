@@ -3,7 +3,11 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\WidgetForms\Plugin;
+
+use Alekseon\CustomFormsBuilder\Block\Adminhtml\Form\Edit\Tab\Fields\Form;
 
 /**
  * Class AddFormFieldsetWarningPlugin
@@ -12,13 +16,13 @@ namespace Alekseon\WidgetForms\Plugin;
 class AddFormFieldsetWarningPlugin
 {
     /**
-     * @param $attribute
+     * @param Form $subject
      * @param $formFieldSettings
-     * @return mixed
+     * @param $attribute
+     * @return array
      */
-    public function aroundGetFieldSettings($subject, callable $proceed, $attribute)
+    public function afterGetFieldSettings(Form $subject, $formFieldSettings, $attribute)
     {
-        $formFieldSettings = $proceed($attribute);
         $form = $subject->getDataObject();
 
         if ($form->getCanUseForWidget()) {
