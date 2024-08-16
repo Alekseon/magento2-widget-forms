@@ -10,6 +10,7 @@ namespace Alekseon\WidgetForms\Controller\Form;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Class Submit
@@ -85,7 +86,7 @@ class Submit implements HttpPostActionInterface
             $post = $this->getRequest()->getPost();
             $formRecord = $this->formRecordFactory->create();
             $formRecord->getResource()->setCurrentForm($form);
-            $formRecord->setStoreId($form->getStoreId());
+            $formRecord->setStoreId((int) $form->getStoreId());
             $formRecord->setFormId($form->getId());
             $formFields = $form->getFieldsCollection();
             foreach ($formFields as $field) {
