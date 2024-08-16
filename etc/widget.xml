@@ -22,6 +22,30 @@
                        source_model="Magento\Config\Model\Config\Source\Yesno">
                 <label translate="true">Hide Form Description</label>
             </parameter>
+            <parameter name="success_display_mode" xsi:type="select" visible="true">
+                <label translate="true">Success display mode</label>
+                <options>
+                    <option name="popup" value="popup" selected="true">
+                        <label translate="true">Popup</label>
+                    </option>
+                    <option name="form" value="form">
+                        <label translate="true">Inside form</label>
+                    </option>
+                </options>
+            </parameter>
+            <parameter name="success_block" visible="true" xsi:type="block" required="true">
+                <label translate="true">Success Content</label>
+                <depends>
+                    <parameter name="success_display_mode" value="form"/>
+                </depends>
+                <block class="Magento\Cms\Block\Adminhtml\Block\Widget\Chooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string" translate="true">Select Block...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
         </parameters>
     </widget>
 </widgets>
