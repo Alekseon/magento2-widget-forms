@@ -84,8 +84,9 @@ define([
         },
 
         onSuccess: function(response) {
-            if(response.html_content) {
-                this.options.form.parentElement.innerHTML = response.html_content;
+            let successContent = $(this.options.form).find('.alekseon-widget-form-success');
+            if (successContent.length > 0) {
+                this.options.form.parentElement.innerHTML = successContent.text();
             } else {
                 alert({
                     title: response.title,

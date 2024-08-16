@@ -110,6 +110,23 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Get Success Content
+     *
+     * @return string
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getSuccessContent()
+    {
+        if ($this->getData('success_display_mode') !== 'form') {
+            return '';
+        }
+        return $this->getLayout()
+            ->createBlock(\Magento\Cms\Block\Block::class)
+            ->setBlockId($this->getData('success_block'))
+            ->toHtml();
+    }
+
+    /**
      * @return void
      */
     private function addTabs()
@@ -315,7 +332,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     public function getSubmitFormUrl()
     {
         return $this->getUrl('Alekseon_WidgetForms/form/submit', [
-            'form_id' => $this->getForm()->getId()
+            'form_id' => $this->getForm()->getId(),
         ]);
     }
 

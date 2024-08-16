@@ -18,7 +18,10 @@
         >
             <input type="hidden" name="hideit" id="hideit" />
             <input type="hidden" name="form_key" id="form_key" value="<?= $block->getFormKey()?>" />
-            <?= $this->getChildHtml() ?>
+            <?= $block->getChildHtml() ?>
+            <?php if ($successContent = $block->getSuccessContent()): ?>
+                <div class="alekseon-widget-form-success" style="display: none"><?= $successContent ?></div>
+            <?php endif; ?>
         </form>
     </div>
     <script type="text/x-magento-init">
