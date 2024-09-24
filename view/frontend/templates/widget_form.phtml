@@ -19,9 +19,6 @@
             <input type="hidden" name="hideit" id="hideit" />
             <input type="hidden" name="form_key" id="form_key" value="<?= $block->getFormKey()?>" />
             <?= $block->getChildHtml() ?>
-            <?php if ($successContent = $block->getSuccessContent()): ?>
-                <div class="alekseon-widget-form-success" style="display: none"><?= $successContent ?></div>
-            <?php endif; ?>
         </form>
     </div>
     <script type="text/x-magento-init">
@@ -30,7 +27,8 @@
             "Alekseon_WidgetForms/js/widget-form": {
                 "formId": "alekseon-widget-form-<?= $block->getForm()->getId() ?>",
                 "formSubmitUrl": "<?= $block->getSubmitFormUrl() ?>",
-                "tabs": <?= $block->getTabsJson() ?>
+                "tabs": <?= $block->getTabsJson() ?>,
+                "success_mode": "<?= $block->getData('success_display_mode') ?>"
             }
         }
     }
