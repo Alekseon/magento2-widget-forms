@@ -11,7 +11,6 @@ use Alekseon\CustomFormsBuilder\Model\Form\Attribute;
 use Alekseon\CustomFormsBuilder\Model\FormTab;
 use Alekseon\CustomFormsBuilder\Model\FormRepository;
 use Alekseon\WidgetForms\Block\Form\Tab;
-use Magento\Framework\DataObject;
 use Magento\Framework\Serialize\Serializer\JsonHexTag;
 use Magento\Framework\EntityManager\EventManager;
 use Magento\Framework\Data\Form\FormKey;
@@ -107,23 +106,6 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         );
 
         return parent::_toHtml();
-    }
-
-    /**
-     * Get Success Content
-     *
-     * @return string
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    public function getSuccessContent()
-    {
-        if ($this->getData('success_display_mode') !== 'form') {
-            return '';
-        }
-        return $this->getLayout()
-            ->createBlock(\Magento\Cms\Block\Block::class)
-            ->setBlockId($this->getData('success_block'))
-            ->toHtml();
     }
 
     /**

@@ -33,19 +33,6 @@
                     </option>
                 </options>
             </parameter>
-            <parameter name="success_block" visible="true" xsi:type="block" required="true">
-                <label translate="true">Success Content</label>
-                <depends>
-                    <parameter name="success_display_mode" value="form"/>
-                </depends>
-                <block class="Magento\Cms\Block\Adminhtml\Block\Widget\Chooser">
-                    <data>
-                        <item name="button" xsi:type="array">
-                            <item name="open" xsi:type="string" translate="true">Select Block...</item>
-                        </item>
-                    </data>
-                </block>
-            </parameter>
         </parameters>
     </widget>
 </widgets>

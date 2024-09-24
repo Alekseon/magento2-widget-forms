@@ -15,7 +15,8 @@ define([
             tabs: [],
             form: null,
             formSubmitUrl: 'formSubmitUrl',
-            formId: ''
+            formId: '',
+            success_mode: ''
         },
 
         _create: function () {
@@ -84,9 +85,8 @@ define([
         },
 
         onSuccess: function(response) {
-            let successContent = $(this.options.form).find('.alekseon-widget-form-success');
-            if (successContent.length > 0) {
-                this.options.form.parentElement.innerHTML = successContent.text();
+            if (this.options.success_mode === 'form') {
+                this.options.form.parentElement.innerHTML = response.message;
             } else {
                 alert({
                     title: response.title,

@@ -11,6 +11,7 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Widget\Model\Widget;
 
 /**
  * Class Submit
@@ -47,6 +48,10 @@ class Submit implements HttpPostActionInterface
      */
     private $formKeyValidator;
     /**
+     * @var \Magento\Widget\Model\Template\FilterEmulate
+     */
+    private $templateFilter;
+    /**
      * @var \Psr\Log\LoggerInterface
      */
     private $logger;
@@ -61,6 +66,7 @@ class Submit implements HttpPostActionInterface
         \Alekseon\CustomFormsBuilder\Model\FormRepository $formRepository,
         \Alekseon\CustomFormsBuilder\Model\FormRecordFactory $formRecordFactory,
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
+        \Magento\Widget\Model\Template\FilterEmulate $templateFilter,
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->request = $context->getRequest();
@@ -70,6 +76,7 @@ class Submit implements HttpPostActionInterface
         $this->jsonFactory = $jsonFactory;
         $this->formRepository = $formRepository;
         $this->formKeyValidator = $formKeyValidator;
+        $this->templateFilter = $templateFilter;
         $this->logger = $logger;
     }
 
@@ -131,7 +138,9 @@ class Submit implements HttpPostActionInterface
     public function getSuccessMessage($formRecord)
     {
         $successMessage = $formRecord->getForm()->getFormSubmitSuccessMessage();
-        if (!$successMessage) {
+        if ($successMessage) {
+            $successMessage = $this->templateFilter->filter($successMessage);
+        } else {
             $successMessage = __('Thank You!');
         }
         return (string) $successMessage;
