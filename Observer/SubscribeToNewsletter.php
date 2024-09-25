@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Alekseon\WidgetForms\Observer;
 
 use Magento\Customer\Api\AccountManagementInterface;
+use Magento\Framework\EntityManager\EventManager;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Exception\LocalizedException;
@@ -36,25 +37,37 @@ class SubscribeToNewsletter implements ObserverInterface
      * @var AccountManagementInterface
      */
     private $customerAccountManagement;
+    /**
+     * @var EventManager
+     */
+    private $eventManager;
 
     /**
      * SubscribeToNewsletter constructor.
+     *
      * @param SubscriptionManagerInterface $subscriptionManager
+     * @param StoreManager $storeManager
+     * @param \Magento\Customer\Model\Session $customerSession
+     * @param AccountManagementInterface $customerAccountManagement
+     * @param EventManager $eventManager
      */
     public function __construct(
         SubscriptionManagerInterface $subscriptionManager,
         StoreManager $storeManager,
         \Magento\Customer\Model\Session $customerSession,
-        AccountManagementInterface $customerAccountManagement
-    )
-    {
+        AccountManagementInterface $customerAccountManagement,
+        EventManager $eventManager
+    ) {
         $this->subscriptionManager = $subscriptionManager;
         $this->storeManager = $storeManager;
         $this->customerSession = $customerSession;
         $this->customerAccountManagement = $customerAccountManagement;
+        $this->eventManager = $eventManager;
     }
 
     /**
+     * Execute
+     *
      * @param Observer $observer
      */
     public function execute(Observer $observer)
@@ -70,10 +83,17 @@ class SubscribeToNewsletter implements ObserverInterface
                 $this->validateEmailAvailable($email);
                 $customerId = $this->getCurrentCustomerId();
                 if ($customerId) {
-                    $this->subscriptionManager->subscribeCustomer($customerId, $storeId);
+                    $subscriber = $this->subscriptionManager->subscribeCustomer($customerId, $storeId);
                 } else {
-                    $this->subscriptionManager->subscribe($email, $storeId);
+                    $subscriber = $this->subscriptionManager->subscribe($email, $storeId);
                 }
+                $this->eventManager->dispatch(
+                    'alekseon_widget_form_after_subscribe',
+                    [
+                        'form_record' => $formRecord,
+                        'subscriber' => $subscriber,
+                    ]
+                );
             }
         }
     }
