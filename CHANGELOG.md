@@ -10,9 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
-## [102.4.4] - 2024-09-24
+## [102.4.4] - 2024-09-25
 ### Changed
 - removed success cms block from widget configuration and allow cms block in Form Submit Success Message
+### Added
+- alekseon_widget_form_after_subscribe event
 
 ## [102.4.3] - 2024-06-24
 ### Added
