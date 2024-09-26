@@ -86,4 +86,20 @@ class WidgetSettings extends \Alekseon\AlekseonEav\Block\Adminhtml\Entity\Edit\F
         $this->getForm()->addValues($this->getDataObject()->getData());
         return parent::_initFormValues();
     }
+
+
+    /**
+     * @inheritDoc
+     */
+    protected function _addAdditionalFormElementData(AbstractElement $element)
+    {
+        if (in_array($element->getId(), ['form_submit_success_message', 'form_submit_success_title'])) {
+            $element->setNote(
+                '<a href="https://github.com/Alekseon/magento2-widget-forms/wiki/Template-Variables" target="_blank">'
+                . __('Template Variables')
+                . ' </a>'
+                . __( ' are allowed.'));
+        }
+        return parent::_addAdditionalFormElementData($element);
+    }
 }
