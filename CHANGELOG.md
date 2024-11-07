@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.5.0] - 2024-11-07
+### Changed
+- group tabs in tabs_container
+### Added
+- after_form blocks caontainer
+- form object in alekseon_widget_form_after_submit event
+
 ## [102.4.4] - 2024-09-25
 ### Changed
 - removed success cms block from widget configuration and allow cms block in Form Submit Success Message
