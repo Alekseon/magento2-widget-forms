@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.5.1] - 2024-11-14
+### Fixed
+- fix for missing form title and description
+
 ## [102.5.0] - 2024-11-07
 ### Changed
 - group tabs in tabs_container
