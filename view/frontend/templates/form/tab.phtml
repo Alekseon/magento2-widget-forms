@@ -14,11 +14,11 @@
     id="form-tab-fieldset-<?= $escaper->escapeHtmlAttr($block->getTab()->getTabSequenceNumber()) ?>"
     <?php if (!$block->getTab()->getIsFirstTab()): ?>style="display: none"<?php endif ?>
 >
-    <?php if ($block->getParentBlock()->getFormTitle()): ?>
-        <legend class="legend"><?= $escaper->escapeHtmlAttr($block->getParentBlock()->getFormTitle()) ?></legend>
+    <?php if ($block->getWidgetFormBlock()->getFormTitle()): ?>
+        <legend class="legend"><?= $escaper->escapeHtmlAttr($block->getWidgetFormBlock()->getFormTitle()) ?></legend>
     <?php endif ?>
-    <?php if ($block->getParentBlock()->getFormDescription()): ?>
-        <div class="field note no-label"><?= $escaper->escapeHtmlAttr($block->getParentBlock()->getFormDescription()) ?></div>
+    <?php if ($block->getWidgetFormBlock()->getFormDescription()): ?>
+        <div class="field note no-label"><?= $escaper->escapeHtmlAttr($block->getWidgetFormBlock()->getFormDescription()) ?></div>
     <?php endif ?>
     <?= $block->getChildHtml() ?>
 </fieldset>

@@ -54,4 +54,12 @@ class Tab extends \Magento\Framework\View\Element\Template
 
         return __('Submit');
     }
+
+    /**
+     * @return \Alekseon\WidgetForms\Block\WidgetForm
+     */
+    public function getWidgetFormBlock()
+    {
+        return $this->getParentBlock()->getParentBlock();
+    }
 }
