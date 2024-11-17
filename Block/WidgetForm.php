@@ -85,6 +85,9 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         parent::__construct($context, $data);
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function _prepareLayout()
     {
         $form = $this->getForm();
@@ -100,6 +103,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
                 ]
             );
         }
+        return parent::_prepareLayout();
     }
 
     /**
