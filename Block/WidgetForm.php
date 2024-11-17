@@ -84,28 +84,21 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         parent::__construct($context, $data);
     }
 
-    /**
-     * @return string
-     */
-    protected function _toHtml()
+    protected function _prepareLayout()
     {
         $form = $this->getForm();
-        if (!$form) {
-            return parent::_toHtml();
+        if ($form) {
+            $this->addTabs();
+            $this->addFields();
+
+            $this->eventManager->dispatch(
+                'alekseon_widget_form_prepare_layout',
+                [
+                    'widget_block' => $this,
+                    'form' => $this->getForm(),
+                ]
+            );
         }
-
-        $this->addTabs();
-        $this->addFields();
-
-        $this->eventManager->dispatch(
-            'alekseon_widget_form_prepare_layout',
-            [
-                'widget_block' => $this,
-                'form' => $this->getForm(),
-            ]
-        );
-
-        return parent::_toHtml();
     }
 
     /**
