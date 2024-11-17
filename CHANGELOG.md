@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.5.2] - 2024-11-17
+### changed
+- use prepareLayout method instead of toHtml
+
 ## [102.5.1] - 2024-11-14
 ### Fixed
 - fix for missing form title and description
