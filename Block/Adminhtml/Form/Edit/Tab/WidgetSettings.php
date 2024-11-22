@@ -100,6 +100,7 @@ class WidgetSettings extends \Alekseon\AlekseonEav\Block\Adminhtml\Entity\Edit\F
                 . ' </a>'
                 . __( ' are allowed.'));
         }
+
         return parent::_addAdditionalFormElementData($element);
     }
 }

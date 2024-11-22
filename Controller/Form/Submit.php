@@ -103,7 +103,13 @@ class Submit implements HttpPostActionInterface
             }
 
             $formRecord->getResource()->save($formRecord);
-            $this->eventManager->dispatch('alekseon_widget_form_after_submit', ['form_record' => $formRecord]);
+            $this->eventManager->dispatch(
+                'alekseon_widget_form_after_submit',
+                [
+                    'form_record' => $formRecord,
+                    'form' => $form,
+                ]
+            );
             $resultJson->setData(
                 [
                     'errors' => false,

@@ -10,6 +10,7 @@ namespace Alekseon\WidgetForms\Block;
 use Alekseon\CustomFormsBuilder\Model\Form\Attribute;
 use Alekseon\CustomFormsBuilder\Model\FormTab;
 use Alekseon\CustomFormsBuilder\Model\FormRepository;
+use Alekseon\WidgetForms\Block\Form\BlocksContainer;
 use Alekseon\WidgetForms\Block\Form\Tab;
 use Magento\Framework\Serialize\Serializer\JsonHexTag;
 use Magento\Framework\EntityManager\EventManager;
@@ -85,27 +86,42 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
-    protected function _toHtml()
+    protected function _prepareLayout()
     {
         $form = $this->getForm();
-        if (!$form) {
-            return parent::_toHtml();
+        if ($form) {
+            $this->addTabs();
+            $this->addFields();
+
+            $this->eventManager->dispatch(
+                'alekseon_widget_form_prepare_layout',
+                [
+                    'widget_block' => $this,
+                    'form' => $this->getForm(),
+                ]
+            );
         }
+        return parent::_prepareLayout();
+    }
 
-        $this->addTabs();
-        $this->addFields();
-
-        $this->eventManager->dispatch(
-            'alekseon_widget_form_prepare_layout',
-            [
-                'widget_block' => $this,
-                'form' => $this->getForm(),
-            ]
-        );
-
-        return parent::_toHtml();
+    /**
+     * @param string $alias
+     * @return BlocksContainer
+     */
+    public function getBlocksContainer(string $alias)
+    {
+        $containerAlias = 'form_' . $this->getForm()->getId() . '_' . $alias;
+        /** @var BlocksContainer $blocksContainerBlockAlias */
+        $blocksContainer = $this->getChildBlock($containerAlias);
+        if (!$blocksContainer) {
+            $blocksContainer = $this->addChild(
+                $containerAlias,
+                BlocksContainer::class
+            );
+        }
+        return $blocksContainer;
     }
 
     /**
@@ -137,6 +153,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
 
             $lastTab = end($tabs);
             $lastTab->setIsLastTab(true);
+            $tabsContainer = $this->getBlocksContainer('tabs_container');
 
             $tabsCounter = 0;
             /** @var FormTab $tab */
@@ -144,9 +161,9 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
                 $tabsCounter ++;
                 $fieldBlockAlias = 'form_' . $this->getForm()->getId() . '_tab_' . $tabCode;
                 $tab->setTabSequenceNumber($tabsCounter);
-                $this->tabBlocks[$tabCode] = $this->addChild(
+                $this->tabBlocks[$tabCode] = $tabsContainer->addChild(
                     $fieldBlockAlias,
-                    \Alekseon\WidgetForms\Block\Form\Tab::class,
+                    Tab::class,
                     [
                         'form' => $this->getForm(),
                         'tab' => $tab,

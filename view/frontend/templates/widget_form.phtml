@@ -18,8 +18,9 @@
         >
             <input type="hidden" name="hideit" id="hideit" />
             <input type="hidden" name="form_key" id="form_key" value="<?= $block->getFormKey()?>" />
-            <?= $block->getChildHtml() ?>
+            <?= $block->getBlocksContainer('tabs_container')->toHtml() ?>
         </form>
+        <?= $block->getBlocksContainer('after_form')->toHtml() ?>
     </div>
     <script type="text/x-magento-init">
     {
