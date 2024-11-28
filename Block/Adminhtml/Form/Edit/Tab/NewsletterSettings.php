@@ -68,9 +68,12 @@ class NewsletterSettings extends \Alekseon\AlekseonEav\Block\Adminhtml\Entity\Ed
 
         /** @var \Magento\Framework\Data\Form $form */
         $form = $this->_formFactory->create();
-        $newsletterFieldset = $form->addFieldset('newsletter_settings_fieldset', ['legend' => __('Newletter Settings')]);
+        $newsletterFieldset = $form->addFieldset('newsletter_settings_fieldset',
+            [
+                'legend' => __('Newsletter Settings')
+            ]
+        );
         $this->addAllAttributeFields($newsletterFieldset, $dataObject,['included' => ['newsletter']]);
-
         $this->setForm($form);
 
         return parent::_prepareForm();
