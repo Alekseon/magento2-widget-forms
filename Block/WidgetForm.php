@@ -88,13 +88,12 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     /**
      * @inheritDoc
      */
-    protected function _prepareLayout()
+    protected function _toHtml()
     {
         $form = $this->getForm();
         if ($form) {
             $this->addTabs();
             $this->addFields();
-
             $this->eventManager->dispatch(
                 'alekseon_widget_form_prepare_layout',
                 [
@@ -103,7 +102,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
                 ]
             );
         }
-        return parent::_prepareLayout();
+        return parent::_toHtml();
     }
 
     /**
@@ -113,7 +112,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     public function getBlocksContainer(string $alias)
     {
         $containerAlias = 'form_' . $this->getForm()->getId() . '_' . $alias;
-        /** @var BlocksContainer $blocksContainerBlockAlias */
+        /** @var BlocksContainer $blocksContainer */
         $blocksContainer = $this->getChildBlock($containerAlias);
         if (!$blocksContainer) {
             $blocksContainer = $this->addChild(
