@@ -1,0 +1,16 @@
+<?php
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
+
+/**
+ * @var $block \Alekseon\WidgetForms\Block\Success
+ * @var $escaper \Magento\Framework\Escaper
+ */
+
+$form = $block->getForm();
+?>
+<?php if ($block->getForm()): ?>
+    <?= $block->getSuccessMessage(); ?>
+<?php endif ?>

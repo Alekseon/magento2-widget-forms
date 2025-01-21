@@ -31,6 +31,9 @@
                     <option name="form" value="form">
                         <label translate="true">Inside form</label>
                     </option>
+                    <option name="success_page" value="success_page">
+                        <label translate="true">Redirect to Success Page</label>
+                    </option>
                 </options>
             </parameter>
         </parameters>

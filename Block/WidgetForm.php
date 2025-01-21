@@ -343,4 +343,18 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
             ? 'alekseon-widget-' . $this->getForm()->getIdentifier() . '-form--wrapper'
             : '';
     }
+
+    /**
+     * @return string
+     */
+    public function getSuccessFormUrl()
+    {
+        $id = $this->getForm()->getIdentifier();
+        if (!$id) {
+            $id = $this->getForm()->getId();
+        }
+        return $this->getUrl('Alekseon_WidgetForms/form/success', [
+            'form_id' => $id,
+        ]);
+    }
 }

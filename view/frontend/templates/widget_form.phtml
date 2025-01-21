@@ -29,7 +29,8 @@
                 "formId": "alekseon-widget-form-<?= $block->getForm()->getId() ?>",
                 "formSubmitUrl": "<?= $block->getSubmitFormUrl() ?>",
                 "tabs": <?= $block->getTabsJson() ?>,
-                "success_mode": "<?= $block->getData('success_display_mode') ?>"
+                "success_mode": "<?= $block->getData('success_display_mode') ?>",
+                "formSuccessUrl": "<?= $escaper->escapeUrl($block->getSuccessFormUrl()) ?>"
             }
         }
     }
