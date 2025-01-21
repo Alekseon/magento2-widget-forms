@@ -16,7 +16,8 @@ define([
             form: null,
             formSubmitUrl: 'formSubmitUrl',
             formId: '',
-            success_mode: ''
+            success_mode: '',
+            formSuccessUrl: ''
         },
 
         _create: function () {
@@ -87,6 +88,9 @@ define([
         onSuccess: function(response) {
             if (this.options.success_mode === 'form') {
                 this.options.form.parentElement.innerHTML = response.message;
+            } else if (this.success_mode === 'success_page') {
+                window.location.href = this.formSuccessUrl;
+                return;
             } else {
                 alert({
                     title: response.title,
