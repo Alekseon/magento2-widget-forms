@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.5.4] - 2025-01-17
+### Added
+- widget option - Success display mode - redirect to Success Page
+
 ## [102.5.3] - 2024-11-28
 ### changed
 - revert last changes (use prepareLayout) - when widget has been added by admin/content/widgets, widget data was not set yet

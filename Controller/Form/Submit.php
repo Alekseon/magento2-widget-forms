@@ -55,6 +55,10 @@ class Submit implements HttpPostActionInterface
      * @var \Psr\Log\LoggerInterface
      */
     private $logger;
+    /**
+     * @var \Magento\Customer\Model\Session
+     */
+    private $customerSession;
 
     /**
      * Submit constructor.
@@ -67,7 +71,8 @@ class Submit implements HttpPostActionInterface
         \Alekseon\CustomFormsBuilder\Model\FormRecordFactory $formRecordFactory,
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Magento\Widget\Model\Template\FilterEmulate $templateFilter,
-        \Psr\Log\LoggerInterface $logger
+        \Psr\Log\LoggerInterface $logger,
+        \Magento\Customer\Model\Session $customerSession
     ) {
         $this->request = $context->getRequest();
         $this->response = $context->getResponse();
@@ -78,6 +83,7 @@ class Submit implements HttpPostActionInterface
         $this->formKeyValidator = $formKeyValidator;
         $this->templateFilter = $templateFilter;
         $this->logger = $logger;
+        $this->customerSession = $customerSession;
     }
 
     /**
@@ -117,6 +123,7 @@ class Submit implements HttpPostActionInterface
                     'message' => $this->getSuccessMessage($formRecord),
                 ]
             );
+            $this->customerSession->setWidgetFormsSubmitFormId($form->getId());
         } catch (LocalizedException $e) {
             $resultJson->setData(
                 [
