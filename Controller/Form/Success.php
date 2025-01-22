@@ -16,6 +16,7 @@ use Magento\Widget\Model\Widget;
 /**
  * Class Success
  * @package Alekseon\WidgetForms\Controller
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Success implements HttpGetActionInterface
 {
@@ -23,14 +24,6 @@ class Success implements HttpGetActionInterface
      * @var \Magento\Framework\App\RequestInterface
      */
     private $request;
-    /**
-     * @var \Magento\Framework\App\ResponseInterface
-     */
-    private $response;
-    /**
-     * @var \Magento\Framework\Event\ManagerInterface
-     */
-    private $eventManager;
     /**
      * @var \Alekseon\CustomFormsBuilder\Model\FormRepository
      */
@@ -62,11 +55,9 @@ class Success implements HttpGetActionInterface
         \Alekseon\CustomFormsBuilder\Model\FormRepository $formRepository,
         \Magento\Widget\Model\Template\FilterEmulate $templateFilter,
         \Magento\Customer\Model\Session $customerSession,
-        \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory,
+        \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
     ) {
         $this->request = $context->getRequest();
-        $this->response = $context->getResponse();
-        $this->eventManager = $context->getEventManager();
         $this->resultPageFactory = $resultPageFactory;
         $this->formRepository = $formRepository;
         $this->templateFilter = $templateFilter;
@@ -146,12 +137,9 @@ class Success implements HttpGetActionInterface
                 $form = $this->formRepository->getByIdentifier($formId, null, true);
             } catch (\Exception $e) {}
         } else {
-            $formId = (int)$this->getData('form_id');
-            if ($formId) {
-                try {
-                    $form = $this->formRepository->getById($formId, null, true);
-                } catch (\Exception $e) {}
-            }
+            try {
+                $form = $this->formRepository->getById($formId, null, true);
+            } catch (\Exception $e) {}
         }
 
         if ($form && $form->getCanUseForWidget()) {
@@ -167,13 +155,5 @@ class Success implements HttpGetActionInterface
     public function getRequest()
     {
         return $this->request;
-    }
-
-    /**
-     * @return \Magento\Framework\App\ResponseInterface
-     */
-    public function getResponse()
-    {
-        return $this->response;
     }
 }
