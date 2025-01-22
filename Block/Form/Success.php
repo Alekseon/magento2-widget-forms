@@ -53,21 +53,15 @@ class Success extends \Magento\Framework\View\Element\Template
     public function getForm()
     {
         if ($this->form === null) {
-            $identifier = $this->getData('form_identifier');
+            $formId = (int)$this->getData('form_id');
             $form = false;
-            if ($identifier) {
+            if ($formId) {
                 try {
-                    $form = $this->formRepository->getByIdentifier($identifier, null, true);
-                } catch (\Exception $e) {}
-            } else {
-                $formId = (int)$this->getData('form_id');
-                if ($formId) {
-                    try {
-                        $form = $this->formRepository->getById($formId, null, true);
-                    } catch (\Exception $e) {
-                    }
+                    $form = $this->formRepository->getById($formId, null, true);
+                } catch (\Exception $e) {
                 }
             }
+
             $this->form = $form;
         }
 

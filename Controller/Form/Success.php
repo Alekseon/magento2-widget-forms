@@ -24,10 +24,6 @@ class Success implements HttpGetActionInterface
      */
     private $request;
     /**
-     * @var \Magento\Framework\App\ResponseInterface
-     */
-    private $response;
-    /**
      * @var \Alekseon\CustomFormsBuilder\Model\FormRepository
      */
     private $formRepository;
@@ -61,7 +57,6 @@ class Success implements HttpGetActionInterface
         \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
     ) {
         $this->request = $context->getRequest();
-        $this->response = $context->getResponse();
         $this->resultPageFactory = $resultPageFactory;
         $this->formRepository = $formRepository;
         $this->templateFilter = $templateFilter;
@@ -141,12 +136,9 @@ class Success implements HttpGetActionInterface
                 $form = $this->formRepository->getByIdentifier($formId, null, true);
             } catch (\Exception $e) {}
         } else {
-            $formId = (int)$this->getData('form_id');
-            if ($formId) {
-                try {
-                    $form = $this->formRepository->getById($formId, null, true);
-                } catch (\Exception $e) {}
-            }
+            try {
+                $form = $this->formRepository->getById($formId, null, true);
+            } catch (\Exception $e) {}
         }
 
         if ($form && $form->getCanUseForWidget()) {
@@ -162,13 +154,5 @@ class Success implements HttpGetActionInterface
     public function getRequest()
     {
         return $this->request;
-    }
-
-    /**
-     * @return \Magento\Framework\App\ResponseInterface
-     */
-    public function getResponse()
-    {
-        return $this->response;
     }
 }
