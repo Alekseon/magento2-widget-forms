@@ -16,6 +16,7 @@ use Magento\Widget\Model\Widget;
 /**
  * Class Submit
  * @package Alekseon\WidgetForms\Controller
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Submit implements HttpPostActionInterface
 {
