@@ -28,10 +28,6 @@ class Success implements HttpGetActionInterface
      */
     private $response;
     /**
-     * @var \Magento\Framework\Event\ManagerInterface
-     */
-    private $eventManager;
-    /**
      * @var \Alekseon\CustomFormsBuilder\Model\FormRepository
      */
     private $formRepository;
@@ -62,11 +58,10 @@ class Success implements HttpGetActionInterface
         \Alekseon\CustomFormsBuilder\Model\FormRepository $formRepository,
         \Magento\Widget\Model\Template\FilterEmulate $templateFilter,
         \Magento\Customer\Model\Session $customerSession,
-        \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory,
+        \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
     ) {
         $this->request = $context->getRequest();
         $this->response = $context->getResponse();
-        $this->eventManager = $context->getEventManager();
         $this->resultPageFactory = $resultPageFactory;
         $this->formRepository = $formRepository;
         $this->templateFilter = $templateFilter;

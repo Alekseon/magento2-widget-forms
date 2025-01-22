@@ -10,11 +10,6 @@ namespace Alekseon\WidgetForms\Block\Form;
 use Alekseon\CustomFormsBuilder\Model\Form\Attribute;
 use Alekseon\CustomFormsBuilder\Model\FormTab;
 use Alekseon\CustomFormsBuilder\Model\FormRepository;
-use Alekseon\WidgetForms\Block\Form\BlocksContainer;
-use Alekseon\WidgetForms\Block\Form\Tab;
-use Magento\Framework\Serialize\Serializer\JsonHexTag;
-use Magento\Framework\EntityManager\EventManager;
-use Magento\Framework\Data\Form\FormKey;
 
 /**
  * Class WidgetForm
@@ -37,50 +32,18 @@ class Success extends \Magento\Framework\View\Element\Template
      * @var
      */
     private $form;
-    /**
-     * @var
-     */
-    private $formFieldsCollection;
-    /**
-     * @var FormKey
-     */
-    private $formKey;
-    /**
-     * @var EventManager
-     */
-    private $eventManager;
-    /**
-     * @var array|null
-     */
-    private $tabBlocks;
-    /**
-     * @var array|null
-     */
-    private $tabSequence;
-    /**
-     * @var JsonHexTag
-     */
-    private $jsonHexTag;
 
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param FormRepository $formRepository
-     * @param FormKey $formKey
-     * @param EventManager $eventManager
      * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         FormRepository $formRepository,
-        FormKey $formKey,
-        EventManager $eventManager,
-        JsonHexTag $jsonHexTag,
         array $data = []
     ) {
         $this->formRepository = $formRepository;
-        $this->formKey = $formKey;
-        $this->eventManager = $eventManager;
-        $this->jsonHexTag = $jsonHexTag;
         parent::__construct($context, $data);
     }
 
@@ -109,17 +72,5 @@ class Success extends \Magento\Framework\View\Element\Template
         }
 
         return $this->form;
-    }
-
-    /**
-     * @return false|string
-     */
-    public function getFormTitle()
-    {
-        if ($this->getHideTitle()) {
-            return false;
-        }
-
-        return $this->getForm()->getTitle();
     }
 }
