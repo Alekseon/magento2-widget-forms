@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.5.5] - 2025-01-22
+### Fixed
+- widget option - Success display mode - some CS fixes
+
 ## [102.5.4] - 2025-01-17
 ### Added
 - widget option - Success display mode - redirect to Success Page
