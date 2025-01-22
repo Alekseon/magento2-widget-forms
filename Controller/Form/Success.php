@@ -16,6 +16,7 @@ use Magento\Widget\Model\Widget;
 /**
  * Class Success
  * @package Alekseon\WidgetForms\Controller
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Success implements HttpGetActionInterface
 {
