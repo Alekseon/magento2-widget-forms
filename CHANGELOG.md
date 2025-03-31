@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.5.3] - 2025-03-31
+### changed
+- added customEvent dispatch alekseonFormSubmitted after successful form submission for external integrations
+
 ## [102.5.2] - 2024-11-17
 ### changed
 - use prepareLayout method instead of toHtml

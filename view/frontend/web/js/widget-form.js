@@ -85,6 +85,15 @@ define([
         },
 
         onSuccess: function(response) {
+            // Emit custom JS event for external integrations
+            const submittedEvent = new CustomEvent('alekseonFormSubmitted', {
+                detail: {
+                    formId: this.options.formId,
+                    formData: $(this.options.form).serializeArray()
+                }
+            });
+            document.dispatchEvent(submittedEvent);
+
             if (this.options.success_mode === 'form') {
                 this.options.form.parentElement.innerHTML = response.message;
             } else {
