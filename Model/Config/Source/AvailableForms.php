@@ -39,7 +39,9 @@ class AvailableForms implements \Magento\Framework\Option\ArrayInterface
      */
     public function toOptionArray()
     {
-        $optionArray = [];
+        $optionArray = [
+            '' => __('-- Not Selected --'),
+        ];
         $options = $this->toArray();
         foreach ($options as $optionId => $optionLabel)
         {

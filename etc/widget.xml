@@ -11,7 +11,7 @@
         <label translate="true">[Alekseon] Widget Form</label>
         <description translate="true">Widget Form</description>
         <parameters>
-            <parameter name="form_id" xsi:type="select" visible="true" source_model="Alekseon\WidgetForms\Model\Config\Source\AvailableForms">
+            <parameter name="form_id" xsi:type="select" required="true" visible="true" source_model="Alekseon\WidgetForms\Model\Config\Source\AvailableForms">
                 <label translate="true">Select Form</label>
             </parameter>
             <parameter name="hide_title" xsi:type="select" visible="true"
