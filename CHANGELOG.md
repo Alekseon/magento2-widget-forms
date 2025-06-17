@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.5.6] - 2025-06-17
+### Fixed
+- set form_id as required in widget
+### Added
+- "Not Selected" option in available forms options
+
 ## [102.5.5] - 2025-01-22
 ### Fixed
 - widget option - Success display mode - some CS fixes
