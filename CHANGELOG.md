@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [Unreleased]
+### Fixed
+- fix error element ID already exists when Blocks HTML output cache is disabled.
+
 ## [102.5.6] - 2025-06-17
 ### Fixed
 - set form_id as required in widget
