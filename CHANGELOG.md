@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.5.7] - 2026-02-11
+### Fixed
+- fix error element ID already exists when Blocks HTML output cache is disabled.
+- cache key include default values, for ask about product, sku value were cached.
+
 ## [102.5.6] - 2025-06-17
 ### Fixed
 - set form_id as required in widget

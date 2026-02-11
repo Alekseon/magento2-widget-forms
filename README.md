@@ -20,6 +20,18 @@
 - <a href="https://github.com/Alekseon/magento2-widget-forms/wiki/Ask-About-Product">Ask About Product</a><br>
 - <a href="https://github.com/Alekseon/magento2-widget-forms/wiki/Multi-step-Survey">Multi-step Survey</a> (soon)<br>
 
+## Videos
+
+<div align="center">
+<a href="https://www.youtube.com/watch?v=V6P5MBqiUJo" target="_blank">
+  <img src="https://img.youtube.com/vi/V6P5MBqiUJo/0.jpg" alt="How to modify contact us form in Magento Open Source">
+</a>
+
+<a href="https://www.youtube.com/watch?v=0JoRBGZZMK4" target="_blank">
+  <img src="https://img.youtube.com/vi/0JoRBGZZMK4/0.jpg" alt="How to modify contact us form in Magento Open Source">
+</a>
+</div>
+
 ## Installation  
   
 In your Magento2 root directory, you may install this package via composer:  

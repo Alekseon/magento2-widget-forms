@@ -27,15 +27,19 @@ class Tab extends \Magento\Framework\View\Element\Template
      */
     public function getSubmitButtonHtml()
     {
-        return $this->getLayout()->createBlock(
-            \Alekseon\WidgetForms\Block\Form\Action::class,
-            'form_' . $this->getForm()->getId() . '_action_' . $this->getTab()->getId(),
-            [
-                'data' => [
-                    'submit_button_label' => $this->getSubmitButtonLabel()
-                ],
-            ]
-        )->toHtml();
+        $alias = 'form_' . $this->getForm()->getId() . '_action_' . $this->getTab()->getId();
+        if (!$this->getLayout()->getBlock($alias)) {
+            $this->getLayout()->createBlock(
+                \Alekseon\WidgetForms\Block\Form\Action::class,
+                $alias,
+                [
+                    'data' => [
+                        'submit_button_label' => $this->getSubmitButtonLabel()
+                    ],
+                ]
+            );
+        }
+        return $this->getLayout()->getBlock($alias)->toHtml();
     }
 
     /**
