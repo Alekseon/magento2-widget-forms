@@ -313,6 +313,13 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         if ($this->getForm()) {
             $cacheKeyInfo['widget_data'] =  $this->serialize();
         }
+
+        foreach ($this->getFormFieldsCollection() as $field) {
+            if ($field->getDefaultValue() !== '') {
+                $cacheKeyInfo['value_' . $field->getAttributeCode()] = $field->getDefaultValue();
+            }
+        }
+
         return $cacheKeyInfo;
     }
 
