@@ -315,8 +315,8 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
         }
 
         foreach ($this->getFormFieldsCollection() as $field) {
-            if ($field->getDefaultValue() !== '') {
-                $cacheKeyInfo['value_' . $field->getAttributeCode()] = $field->getDefaultValue();
+            if ($field->getData('default_value') !== '') {
+                $cacheKeyInfo['value_' . $field->getAttributeCode()] = $field->getData('default_value');
             }
         }
 

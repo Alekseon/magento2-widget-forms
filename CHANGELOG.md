@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [Unreleased]
+### Fixed
+- fix cache key whe default value is array
+
 ## [102.5.7] - 2026-02-11
 ### Fixed
 - fix error element ID already exists when Blocks HTML output cache is disabled.
