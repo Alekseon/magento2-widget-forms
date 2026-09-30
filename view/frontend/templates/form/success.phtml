@@ -12,5 +12,5 @@
 $form = $block->getForm();
 ?>
 <?php if ($form): ?>
-    <?= $block->getSuccessMessage(); ?>
+    <?= /* @noEscape */ $block->getSuccessMessage(); ?>
 <?php endif ?>

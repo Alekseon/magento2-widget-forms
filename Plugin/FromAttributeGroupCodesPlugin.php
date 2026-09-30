@@ -7,10 +7,8 @@ declare(strict_types=1);
 
 namespace Alekseon\WidgetForms\Plugin;
 
-/**
- * Class FromAttributeGroupCodesPlugin
- * @package Alekseon\WidgetForms\Plugin
- */
+use \Alekseon\AlekseonEav\Api\Data\AttributeInterface;
+
 class FromAttributeGroupCodesPlugin
 {
     /**
@@ -24,14 +22,13 @@ class FromAttributeGroupCodesPlugin
      */
     public function __construct(
         \Alekseon\CustomFormsBuilder\Model\FormRepository $formRepository
-    )
-    {
+    ) {
         $this->formRepository = $formRepository;
     }
 
     /**
-     * @param $attribute
-     * @param $result
+     * @param AttributeInterface $attribute
+     * @param bool $result
      * @return bool
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
@@ -42,8 +39,8 @@ class FromAttributeGroupCodesPlugin
     }
 
     /**
-     * @param $attribute
-     * @param $result
+     * @param AttributeInterface $attribute
+     * @param bool $result
      * @return bool
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
