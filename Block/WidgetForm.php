@@ -17,9 +17,6 @@ use Magento\Framework\EntityManager\EventManager;
 use Magento\Framework\Data\Form\FormKey;
 
 /**
- * Class WidgetForm
- * @package Alekseon\WidgetForms\Block
- *
  * @method bool getHideTitle()
  * @method bool getHideDescription()
  */
@@ -35,11 +32,11 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      */
     private $formRepository;
     /**
-     * @var
+     * @var \Alekseon\CustomFormsBuilder\Model\Form|false|null
      */
     private $form;
     /**
-     * @var
+     * @var \Alekseon\CustomFormsBuilder\Model\ResourceModel\FormRecord\Attribute\Collection|null
      */
     private $formFieldsCollection;
     /**
@@ -68,6 +65,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      * @param FormRepository $formRepository
      * @param FormKey $formKey
      * @param EventManager $eventManager
+     * @param JsonHexTag $jsonHexTag
      * @param array $data
      */
     public function __construct(
@@ -208,7 +206,7 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @param $tabSequenceNumber
+     * @param int $tabSequenceNumber
      * @return false|mixed
      */
     public function getTabBlock($tabSequenceNumber)
@@ -244,13 +242,17 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
             if ($identifier) {
                 try {
                     $form = $this->formRepository->getByIdentifier($identifier, null, true);
-                } catch (\Exception $e) {}
+                } catch (\Exception $e) {
+                    // Form does not exist
+                }
             } else {
                 $formId = (int)$this->getData('form_id');
                 if ($formId) {
                     try {
                         $form = $this->formRepository->getById($formId, null, true);
-                    } catch (\Exception $e) {}
+                    } catch (\Exception $e) {
+                        // Form does not exist
+                    }
                 }
             }
 

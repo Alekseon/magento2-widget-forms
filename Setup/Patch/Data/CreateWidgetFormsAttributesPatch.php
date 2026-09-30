@@ -73,7 +73,7 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
     }
 
     /**
-     * @param $eavSetup
+     * @param \Alekseon\AlekseonEav\Setup\EavDataSetup $eavSetup
      * @return void
      */
     private function createWidgetFormAttributes($eavSetup)
@@ -165,7 +165,7 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
                 'frontend_input' => 'select',
                 'frontend_label' => 'Email field',
                 'backend_type' => 'varchar',
-                'source_model' => 'Alekseon\WidgetForms\Model\Attribute\Source\TextFormAttributes',
+                'source_model' => \Alekseon\WidgetForms\Model\Attribute\Source\TextFormAttributes::class,
                 'visible_in_grid' => false,
                 'is_required' => false,
                 'sort_order' => 20,
@@ -176,7 +176,7 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
     }
 
     /**
-     * @param $eavSetup
+     * @param \Alekseon\AlekseonEav\Setup\EavDataSetup $eavSetup
      * @return void
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */

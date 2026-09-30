@@ -14,8 +14,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Widget\Model\Widget;
 
 /**
- * Class Success
- * @package Alekseon\WidgetForms\Controller
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Success implements HttpGetActionInterface
@@ -97,7 +95,7 @@ class Success implements HttpGetActionInterface
     }
 
     /**
-     * @param $form
+     * @param \Alekseon\CustomFormsBuilder\Model\Form $form
      * @return string
      */
     public function getSuccessMessage($form)
@@ -112,7 +110,7 @@ class Success implements HttpGetActionInterface
     }
 
     /**
-     * @param $form
+     * @param \Alekseon\CustomFormsBuilder\Model\Form $form
      * @return string
      */
     public function getSuccessTitle($form)
@@ -135,11 +133,15 @@ class Success implements HttpGetActionInterface
         if ($formId) {
             try {
                 $form = $this->formRepository->getByIdentifier($formId, null, true);
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+                // Form does not exist
+            }
         } else {
             try {
                 $form = $this->formRepository->getById($formId, null, true);
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+                // Form does not exist
+            }
         }
 
         if ($form && $form->getCanUseForWidget()) {

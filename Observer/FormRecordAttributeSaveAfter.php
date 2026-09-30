@@ -10,10 +10,6 @@ namespace Alekseon\WidgetForms\Observer;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
-/**
- * Class FormRecordAttributeSaveAfter
- * @package Alekseon\WidgetForms\Observer
- */
 class FormRecordAttributeSaveAfter implements ObserverInterface
 {
     /**
