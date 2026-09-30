@@ -11,6 +11,19 @@
   
 <p align="center"><i>Let you add forms to CMS pages</i></p>  
 
+<p align="center">
+  <a href="https://packagist.org/packages/alekseon/widget-forms/stats">
+    <img src="https://poser.pugx.org/alekseon/widget-forms/downloads"
+         alt="Total Downloads">
+    <br/>    
+    <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/Alekseon/magento2-widget-forms?style=flat">
+    <br/>
+<a href="https://package-maven.com/alekseon/widget-forms">
+    <img src="https://package-maven.com/badge/alekseon/widget-forms"
+         alt="Magento Package Maven Badge" />
+</a>    
+</p>  
+
 ## Demo
 
 <a target="_blank" href="https://widget-forms.alekseon.com/default">https://widget-forms.alekseon.com/default</a>
