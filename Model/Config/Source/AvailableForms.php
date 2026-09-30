@@ -7,14 +7,10 @@ declare(strict_types=1);
 
 namespace Alekseon\WidgetForms\Model\Config\Source;
 
-/**
- * Class AvailableForms
- * @package Alekseon\WidgetForms\Model\Config\Source
- */
 class AvailableForms implements \Magento\Framework\Option\ArrayInterface
 {
     /**
-     * @var
+     * @var array|null
      */
     private $options;
     /**
@@ -43,8 +39,7 @@ class AvailableForms implements \Magento\Framework\Option\ArrayInterface
             '' => __('-- Not Selected --'),
         ];
         $options = $this->toArray();
-        foreach ($options as $optionId => $optionLabel)
-        {
+        foreach ($options as $optionId => $optionLabel) {
             $optionArray[$optionId] = $optionLabel;
         }
         return $optionArray;

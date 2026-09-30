@@ -9,10 +9,6 @@ namespace Alekseon\WidgetForms\Block\Form;
 
 use Magento\Framework\View\Element\Template;
 
-/**
- * Class AdditionalInfo
- * @package Alekseon\WidgetForms\Block\Form
- */
 class AdditionalInfo extends \Magento\Framework\View\Element\Template
 {
     /**
