@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.5.11]
+### Fixed
+- fixed PHPStan error
+
 ## [102.5.10]
 ### Fixed
 - improved Coding Standard
