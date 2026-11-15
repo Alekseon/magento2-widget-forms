@@ -88,8 +88,8 @@ define([
         onSuccess: function(response) {
             if (this.options.success_mode === 'form') {
                 this.options.form.parentElement.innerHTML = response.message;
-            } else if (this.success_mode === 'success_page') {
-                window.location.href = this.formSuccessUrl;
+            } else if (this.options.success_mode === 'success_page') {
+                window.location.href = this.options.formSuccessUrl;
                 return;
             } else {
                 alert({
