@@ -7,9 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Changed
 ### Fixed
-- fixed success page redirect ignoring widget options
 ### Added
 ### Removed
+
+## [102.5.12] - 2026-11-16
+### Fixed
+- fixed success page redirect ignoring widget options
 
 ## [102.5.11]
 ### Fixed
