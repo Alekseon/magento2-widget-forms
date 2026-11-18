@@ -43,6 +43,10 @@ class Submit implements HttpPostActionInterface
      */
     private $formRecordFactory;
     /**
+     * @var \Alekseon\CustomFormsBuilder\Model\ResourceModel\FormRecord
+     */
+    private $formRecordResource;
+    /**
      * @var \Magento\Framework\Data\Form\FormKey\Validator
      */
     private $formKeyValidator;
@@ -61,7 +65,16 @@ class Submit implements HttpPostActionInterface
 
     /**
      * Submit constructor.
+     *
      * @param Context $context
+     * @param \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
+     * @param \Alekseon\CustomFormsBuilder\Model\FormRepository $formRepository
+     * @param \Alekseon\CustomFormsBuilder\Model\FormRecordFactory $formRecordFactory
+     * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
+     * @param \Magento\Widget\Model\Template\FilterEmulate $templateFilter
+     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Magento\Customer\Model\Session $customerSession
+     * @param \Alekseon\CustomFormsBuilder\Model\ResourceModel\FormRecord $formRecordResource
      */
     public function __construct(
         Context $context,
@@ -71,7 +84,8 @@ class Submit implements HttpPostActionInterface
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Magento\Widget\Model\Template\FilterEmulate $templateFilter,
         \Psr\Log\LoggerInterface $logger,
-        \Magento\Customer\Model\Session $customerSession
+        \Magento\Customer\Model\Session $customerSession,
+        \Alekseon\CustomFormsBuilder\Model\ResourceModel\FormRecord $formRecordResource
     ) {
         $this->request = $context->getRequest();
         $this->response = $context->getResponse();
@@ -83,9 +97,12 @@ class Submit implements HttpPostActionInterface
         $this->templateFilter = $templateFilter;
         $this->logger = $logger;
         $this->customerSession = $customerSession;
+        $this->formRecordResource = $formRecordResource;
     }
 
     /**
+     * Save the submitted form record and return the submission result.
+     *
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
      */
     public function execute()
@@ -97,7 +114,7 @@ class Submit implements HttpPostActionInterface
             $this->validateData();
             $post = $this->getRequest()->getPost();
             $formRecord = $this->formRecordFactory->create();
-            $formRecord->getResource()->setCurrentForm($form);
+            $this->formRecordResource->setCurrentForm($form);
             $formRecord->setStoreId((int) $form->getStoreId());
             $formRecord->setFormId($form->getId());
             $formFields = $form->getFieldsCollection();
@@ -107,7 +124,7 @@ class Submit implements HttpPostActionInterface
                 $formRecord->setData($fieldCode, $value);
             }
 
-            $formRecord->getResource()->save($formRecord);
+            $this->formRecordResource->save($formRecord);
             $this->eventManager->dispatch(
                 'alekseon_widget_form_after_submit',
                 [
@@ -144,6 +161,8 @@ class Submit implements HttpPostActionInterface
     }
 
     /**
+     * Get the configured submission success message.
+     *
      * @param \Alekseon\CustomFormsBuilder\Model\FormRecord $formRecord
      * @return string
      */
@@ -159,6 +178,8 @@ class Submit implements HttpPostActionInterface
     }
 
     /**
+     * Get the configured submission success title.
+     *
      * @param \Alekseon\CustomFormsBuilder\Model\FormRecord $formRecord
      * @return string
      */
@@ -172,6 +193,8 @@ class Submit implements HttpPostActionInterface
     }
 
     /**
+     * Validate the form key and honeypot field.
+     *
      * @return void
      * @throws LocalizedException
      */
@@ -187,7 +210,9 @@ class Submit implements HttpPostActionInterface
     }
 
     /**
+     * Get the form identified by the submission request.
      *
+     * @return \Alekseon\CustomFormsBuilder\Model\Form
      */
     public function getForm()
     {
@@ -197,6 +222,8 @@ class Submit implements HttpPostActionInterface
     }
 
     /**
+     * Get the submission request.
+     *
      * @return \Magento\Framework\App\RequestInterface
      */
     public function getRequest()
@@ -205,6 +232,8 @@ class Submit implements HttpPostActionInterface
     }
 
     /**
+     * Get the submission response.
+     *
      * @return \Magento\Framework\App\ResponseInterface
      */
     public function getResponse()
