@@ -43,6 +43,10 @@ class Submit implements HttpPostActionInterface
      */
     private $formRecordFactory;
     /**
+     * @var \Alekseon\CustomFormsBuilder\Model\ResourceModel\FormRecord
+     */
+    private $formRecordResource;
+    /**
      * @var \Magento\Framework\Data\Form\FormKey\Validator
      */
     private $formKeyValidator;
@@ -71,7 +75,8 @@ class Submit implements HttpPostActionInterface
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Magento\Widget\Model\Template\FilterEmulate $templateFilter,
         \Psr\Log\LoggerInterface $logger,
-        \Magento\Customer\Model\Session $customerSession
+        \Magento\Customer\Model\Session $customerSession,
+        \Alekseon\CustomFormsBuilder\Model\ResourceModel\FormRecord $formRecordResource
     ) {
         $this->request = $context->getRequest();
         $this->response = $context->getResponse();
@@ -83,6 +88,7 @@ class Submit implements HttpPostActionInterface
         $this->templateFilter = $templateFilter;
         $this->logger = $logger;
         $this->customerSession = $customerSession;
+        $this->formRecordResource = $formRecordResource;
     }
 
     /**
@@ -97,7 +103,7 @@ class Submit implements HttpPostActionInterface
             $this->validateData();
             $post = $this->getRequest()->getPost();
             $formRecord = $this->formRecordFactory->create();
-            $formRecord->getResource()->setCurrentForm($form);
+            $this->formRecordResource->setCurrentForm($form);
             $formRecord->setStoreId((int) $form->getStoreId());
             $formRecord->setFormId($form->getId());
             $formFields = $form->getFieldsCollection();
@@ -107,7 +113,7 @@ class Submit implements HttpPostActionInterface
                 $formRecord->setData($fieldCode, $value);
             }
 
-            $formRecord->getResource()->save($formRecord);
+            $this->formRecordResource->save($formRecord);
             $this->eventManager->dispatch(
                 'alekseon_widget_form_after_submit',
                 [
