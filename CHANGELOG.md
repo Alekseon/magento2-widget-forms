@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.6.0] - 2026-11-19
+### Changed
+- widget form cache identities include identities of form fields (e.g. CMS block field refreshes form after CMS block change)
+### Removed
+- _module.less moved to Alekseon_CustomFormsFrontend
+
 ## [102.5.12] - 2026-11-16
 ### Fixed
 - fixed success page redirect ignoring widget options

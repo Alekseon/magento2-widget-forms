@@ -330,7 +330,20 @@ class WidgetForm extends \Magento\Framework\View\Element\Template
      */
     public function getIdentities(): array
     {
-        return $this->getForm() ? $this->getForm()->getIdentities() : [];
+        if (!$this->getForm()) {
+            return [];
+        }
+
+        $identities = $this->getForm()->getIdentities();
+        // e.g. CMS block field - cached form has to be refreshed when CMS block is changed
+        foreach ($this->getFormFieldsCollection() as $field) {
+            $inputTypeModel = $field->getInputTypeModel();
+            if ($inputTypeModel instanceof \Magento\Framework\DataObject\IdentityInterface) {
+                $identities = array_merge($identities, $inputTypeModel->getIdentities());
+            }
+        }
+
+        return array_unique($identities);
     }
 
     /**
