@@ -18,7 +18,7 @@ jobs:
           - 3306:3306
         options: --tmpfs /tmp:rw --tmpfs /var/lib/mysql:rw --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
       es:
-        image: docker.io/wardenenv/elasticsearch:7.8
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.17.10
         ports:
           - 9200:9200
         env:
@@ -28,9 +28,12 @@ jobs:
         options: --health-cmd="curl localhost:9200/_cluster/health?wait_for_status=yellow&timeout=60s" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v4
-      - name: M2 Integration Tests with Magento 2 (Php 8.3)
-        uses: extdn/github-actions-m2/magento-integration-tests/8.3@master
+      - name: M2 Integration Tests with Magento 2 (Php 8.4)
+        uses: extdn/github-actions-m2/magento-integration-tests/8.4@master
         with:
           module_name: Alekseon_WidgetForms
           composer_name: alekseon/widget-forms
-          ce_version: '2.4.0'
+          ce_version: '2.4.8-p3'
+        env:
+          MAGENTO_MARKETPLACE_USERNAME: ${{ secrets.MAGENTO_MARKETPLACE_USERNAME }}
+          MAGENTO_MARKETPLACE_PASSWORD: ${{ secrets.MAGENTO_MARKETPLACE_PASSWORD }}

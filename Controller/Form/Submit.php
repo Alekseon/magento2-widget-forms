@@ -14,8 +14,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Widget\Model\Widget;
 
 /**
- * Class Submit
- * @package Alekseon\WidgetForms\Controller
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Submit implements HttpPostActionInterface
@@ -146,7 +144,7 @@ class Submit implements HttpPostActionInterface
     }
 
     /**
-     * @param $form
+     * @param \Alekseon\CustomFormsBuilder\Model\FormRecord $formRecord
      * @return string
      */
     public function getSuccessMessage($formRecord)
@@ -161,7 +159,7 @@ class Submit implements HttpPostActionInterface
     }
 
     /**
-     * @param $form
+     * @param \Alekseon\CustomFormsBuilder\Model\FormRecord $formRecord
      * @return string
      */
     public function getSuccessTitle($formRecord)

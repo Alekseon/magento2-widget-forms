@@ -13,7 +13,9 @@
 
 ## Demo
 
-<a target="_blank" href="https://widget-forms.alekseon.com/">https://widget-forms.alekseon.com/</a>
+<a target="_blank" href="https://widget-forms.alekseon.com/default">https://widget-forms.alekseon.com/default</a>
+<br> 
+<a target="_blank" href="https://widget-forms.alekseon.com/hyva">https://widget-forms.alekseon.com/hyva</a>
 
 ## Examples of usage
 

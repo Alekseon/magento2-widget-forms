@@ -11,10 +11,6 @@ use Alekseon\AlekseonEav\Model\Adminhtml\System\Config\Source\InputType;
 use Alekseon\AlekseonEav\Api\Data\EntityInterface;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
-/**
- * Class General
- * @package Alekseon\CustomFormsBuilder\Block\Adminhtml\Form\Edit\Tab
- */
 class WidgetSettings extends \Alekseon\AlekseonEav\Block\Adminhtml\Entity\Edit\Form implements
     \Magento\Backend\Block\Widget\Tab\TabInterface
 {
@@ -75,7 +71,6 @@ class WidgetSettings extends \Alekseon\AlekseonEav\Block\Adminhtml\Entity\Edit\F
         return parent::_prepareForm();
     }
 
-
     /**
      * Initialize form fileds values
      *
@@ -87,7 +82,6 @@ class WidgetSettings extends \Alekseon\AlekseonEav\Block\Adminhtml\Entity\Edit\F
         return parent::_initFormValues();
     }
 
-
     /**
      * @inheritDoc
      */
@@ -98,7 +92,8 @@ class WidgetSettings extends \Alekseon\AlekseonEav\Block\Adminhtml\Entity\Edit\F
                 '<a href="https://github.com/Alekseon/magento2-widget-forms/wiki/Template-Variables" target="_blank">'
                 . __('Template Variables')
                 . ' </a>'
-                . __( ' are allowed.'));
+                . __(' are allowed.')
+            );
         }
 
         return parent::_addAdditionalFormElementData($element);

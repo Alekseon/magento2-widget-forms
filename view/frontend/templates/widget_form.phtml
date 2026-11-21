@@ -11,26 +11,26 @@
 ?>
 <?php if ($block->getForm()): ?>
     <div class="alekseon-widget-form-wrapper <?= $escaper->escapeHtmlAttr($block->getFormWrapperClass()) ?>" id="widget-form-wrapper-<?= $escaper->escapeHtmlAttr($block->getForm()->getId()) ?>">
-        <form id="alekseon-widget-form-<?= $block->getForm()->getId() ?>"
+        <form id="alekseon-widget-form-<?= $escaper->escapeHtmlAttr($block->getForm()->getId()) ?>"
               data-mage-init='{"validation":{}}'
               autocomplete="off"
               enctype="multipart/form-data"
         >
             <input type="hidden" name="hideit" id="hideit" />
-            <input type="hidden" name="form_key" id="form_key" value="<?= $block->getFormKey()?>" />
-            <?= $block->getBlocksContainer('tabs_container')->toHtml() ?>
+            <input type="hidden" name="form_key" id="form_key" value="<?= $escaper->escapeHtmlAttr($block->getFormKey()) ?>" />
+            <?= /* @noEscape */ $block->getBlocksContainer('tabs_container')->toHtml() ?>
         </form>
-        <?= $block->getBlocksContainer('after_form')->toHtml() ?>
+        <?= /* @noEscape */ $block->getBlocksContainer('after_form')->toHtml() ?>
     </div>
     <script type="text/x-magento-init">
     {
-        "#alekseon-widget-form-<?= $block->getForm()->getId() ?>": {
+        "#alekseon-widget-form-<?= $escaper->escapeJs($block->getForm()->getId()) ?>": {
             "Alekseon_WidgetForms/js/widget-form": {
-                "formId": "alekseon-widget-form-<?= $block->getForm()->getId() ?>",
-                "formSubmitUrl": "<?= $block->getSubmitFormUrl() ?>",
-                "tabs": <?= $block->getTabsJson() ?>,
-                "success_mode": "<?= $block->getData('success_display_mode') ?>",
-                "formSuccessUrl": "<?= $escaper->escapeUrl($block->getSuccessFormUrl()) ?>"
+                "formId": "alekseon-widget-form-<?= $escaper->escapeJs($block->getForm()->getId()) ?>",
+                "formSubmitUrl": "<?= $escaper->escapeJs($block->getSubmitFormUrl()) ?>",
+                "tabs": <?= /* @noEscape */ $block->getTabsJson() ?>,
+                "success_mode": "<?= $escaper->escapeJs($block->getData('success_display_mode')) ?>",
+                "formSuccessUrl": "<?= $escaper->escapeJs($block->getSuccessFormUrl()) ?>"
             }
         }
     }

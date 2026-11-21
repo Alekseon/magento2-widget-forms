@@ -12,9 +12,6 @@ use Alekseon\CustomFormsBuilder\Model\FormTab;
 use Alekseon\CustomFormsBuilder\Model\FormRepository;
 
 /**
- * Class WidgetForm
- * @package Alekseon\WidgetForms\Block
- *
  * @method bool getHideTitle()
  * @method bool getHideDescription()
  */
@@ -59,6 +56,7 @@ class Success extends \Magento\Framework\View\Element\Template
                 try {
                     $form = $this->formRepository->getById($formId, null, true);
                 } catch (\Exception $e) {
+                    // // Form does not exist
                 }
             }
 

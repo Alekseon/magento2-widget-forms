@@ -11,10 +11,6 @@ use Alekseon\AlekseonEav\Model\Adminhtml\System\Config\Source\InputType;
 use Alekseon\AlekseonEav\Api\Data\EntityInterface;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
-/**
- * Class NewsletterSettings
- * @package Alekseon\WidgetForms\Block\Adminhtml\Form\Edit\Tab
- */
 class NewsletterSettings extends \Alekseon\AlekseonEav\Block\Adminhtml\Entity\Edit\Form implements
     \Magento\Backend\Block\Widget\Tab\TabInterface
 {
@@ -68,17 +64,17 @@ class NewsletterSettings extends \Alekseon\AlekseonEav\Block\Adminhtml\Entity\Ed
 
         /** @var \Magento\Framework\Data\Form $form */
         $form = $this->_formFactory->create();
-        $newsletterFieldset = $form->addFieldset('newsletter_settings_fieldset',
+        $newsletterFieldset = $form->addFieldset(
+            'newsletter_settings_fieldset',
             [
                 'legend' => __('Newsletter Settings')
             ]
         );
-        $this->addAllAttributeFields($newsletterFieldset, $dataObject,['included' => ['newsletter']]);
+        $this->addAllAttributeFields($newsletterFieldset, $dataObject, ['included' => ['newsletter']]);
         $this->setForm($form);
 
         return parent::_prepareForm();
     }
-
 
     /**
      * Initialize form fileds values

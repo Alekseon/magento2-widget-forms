@@ -10,10 +10,6 @@ namespace Alekseon\WidgetForms\Observer;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
-/**
- * Class AddFrontendInputBlockOptions
- * @package Alekseon\WidgetForms\Observer
- */
 class AddFrontendInputBlockOptions implements ObserverInterface
 {
     /**

@@ -7,10 +7,6 @@ declare(strict_types=1);
 
 namespace Alekseon\WidgetForms\Model\Attribute\Source;
 
-/**
- * Class TextFormAttributes
- * @package Alekseon\WidgetForms\Model\Attribute\Source
- */
 class TextFormAttributes extends \Alekseon\CustomFormsBuilder\Model\Attribute\Source\TextFormAttributes
 {
 }

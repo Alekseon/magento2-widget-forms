@@ -9,10 +9,6 @@ namespace Alekseon\WidgetForms\Plugin;
 
 use Alekseon\CustomFormsBuilder\Block\Adminhtml\Form\Edit\Tab\Fields\Form;
 
-/**
- * Class AddFormFieldsetWarningPlugin
- * @package Alekseon\WidgetForms\Plugin
- */
 class AddFormFieldsetWarningPlugin
 {
     /**

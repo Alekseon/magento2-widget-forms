@@ -11,10 +11,31 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Removed
 
 ## [Unreleased]
-### Fixed
-- fix error element ID already exists when Blocks HTML output cache is disabled.
 ### Changed
 - moved `.control.multi-columns` styles (view/frontend/web/css/source/_module.less) to Alekseon_CustomFormsFrontend module
+
+## [102.5.11]
+### Fixed
+- fixed PHPStan error
+
+## [102.5.10]
+### Fixed
+- improved Coding Standard
+
+## [102.5.9]
+### Fixed
+- improved Coding Standard
+
+## [102.5.8]
+### Fixed
+- fix cache key whe default value is array
+
+## [102.5.7] - 2026-02-11
+### Fixed
+- fix error element ID already exists when Blocks HTML output cache is disabled.
+<<<<<<< HEAD
+### Changed
+- cache key include default values, for ask about product, sku value were cached.
 
 ## [102.5.6] - 2025-06-17
 ### Fixed

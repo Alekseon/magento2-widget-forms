@@ -12,10 +12,6 @@ use Alekseon\AlekseonEav\Model\Attribute\InputValidator\EmailFactory;
 use Alekseon\CustomFormsBuilder\Model\FormRecord\Attribute;
 use Alekseon\CustomFormsBuilder\Model\FormRepository;
 
-/**
- * Class NewsletterEmailValidatorPlugin
- * @package Alekseon\WidgetForms\Plugin
- */
 class NewsletterEmailValidatorPlugin
 {
     /**

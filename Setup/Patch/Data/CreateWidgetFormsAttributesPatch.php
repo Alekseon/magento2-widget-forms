@@ -8,7 +8,6 @@ declare(strict_types=1);
 namespace Alekseon\WidgetForms\Setup\Patch\Data;
 
 use Alekseon\AlekseonEav\Model\Adminhtml\System\Config\Source\Scopes;
-use Alekseon\CustomFormsBuilder\Model\FormFactory;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\Patch\PatchRevertableInterface;
@@ -28,25 +27,26 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
      */
     private $formAttributeRepository;
     /**
-     * @var FormFactory
+     * @var \Alekseon\CustomFormsBuilder\Model\ResourceModel\Form\CollectionFactory
      */
-    private $formFactory;
+    private $formCollectionFactory;
 
     /**
      * @param ModuleDataSetupInterface $moduleDataSetup
      * @param \Alekseon\AlekseonEav\Setup\EavDataSetupFactory $eavSetupFactory
      * @param \Alekseon\CustomFormsBuilder\Model\Form\AttributeRepository $formAttributeRepository
+     * @param \Alekseon\CustomFormsBuilder\Model\ResourceModel\Form\CollectionFactory $formCollectionFactory
      */
     public function __construct(
         ModuleDataSetupInterface $moduleDataSetup,
         \Alekseon\AlekseonEav\Setup\EavDataSetupFactory $eavSetupFactory,
         \Alekseon\CustomFormsBuilder\Model\Form\AttributeRepository $formAttributeRepository,
-        FormFactory $formFactory
+        \Alekseon\CustomFormsBuilder\Model\ResourceModel\Form\CollectionFactory $formCollectionFactory
     ) {
         $this->moduleDataSetup = $moduleDataSetup;
         $this->eavSetupFactory = $eavSetupFactory;
         $this->formAttributeRepository = $formAttributeRepository;
-        $this->formFactory = $formFactory;
+        $this->formCollectionFactory = $formCollectionFactory;
     }
 
     /**
@@ -73,7 +73,7 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
     }
 
     /**
-     * @param $eavSetup
+     * @param \Alekseon\AlekseonEav\Setup\EavDataSetup $eavSetup
      * @return void
      */
     private function createWidgetFormAttributes($eavSetup)
@@ -165,7 +165,7 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
                 'frontend_input' => 'select',
                 'frontend_label' => 'Email field',
                 'backend_type' => 'varchar',
-                'source_model' => 'Alekseon\WidgetForms\Model\Attribute\Source\TextFormAttributes',
+                'source_model' => \Alekseon\WidgetForms\Model\Attribute\Source\TextFormAttributes::class,
                 'visible_in_grid' => false,
                 'is_required' => false,
                 'sort_order' => 20,
@@ -176,7 +176,7 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
     }
 
     /**
-     * @param $eavSetup
+     * @param \Alekseon\AlekseonEav\Setup\EavDataSetup $eavSetup
      * @return void
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
@@ -199,7 +199,7 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
         // this attribute "enable_multiple_steps" was created with typo in code in old version of module
         $wrongAttribute = $this->formAttributeRepository->getByAttributeCode('enable_multpiple_steps', true);
         if ($wrongAttribute && $wrongAttribute->getId()) {
-            $formsWithEnabledSteps = $this->formFactory->create()->getCollection()
+            $formsWithEnabledSteps = $this->formCollectionFactory->create()
                 ->addAttributeToFilter('enable_multpiple_steps', 1);
 
             foreach ($formsWithEnabledSteps as $form) {

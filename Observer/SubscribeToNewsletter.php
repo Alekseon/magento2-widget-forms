@@ -15,10 +15,6 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Newsletter\Model\SubscriptionManagerInterface;
 use Magento\Store\Model\StoreManager;
 
-/**
- * Class SubscribeToNewsletter
- * @package Alekseon\WidgetForms\Observer
- */
 class SubscribeToNewsletter implements ObserverInterface
 {
     /**
