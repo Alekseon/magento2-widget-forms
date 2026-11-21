@@ -42,8 +42,7 @@ class NewsletterEmailValidatorPlugin
      */
     public function afterGetInputValidators(Attribute $attribute, $validators)
     {
-        $formId = $attribute->getFormId();
-        $form = $this->formRepository->getById($formId);
+        $form = $attribute->getForm();
 
         if ($form->getSubscribeToNewsletter() && $form->getNewsletterEmail() == $attribute->getAttributeCode()) {
             $emailValidator = $this->emailValidatorFactory->create();

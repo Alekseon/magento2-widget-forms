@@ -192,7 +192,11 @@ class Submit implements HttpPostActionInterface
     public function getForm()
     {
         $formId = $this->getRequest()->getParam('form_id');
-        $form = $this->formRepository->getById($formId);
+        $form = $this->formRepository->getById((int) $formId);
+        if (!$form->getCanUseForWidget()) {
+            throw new LocalizedException(__('Form is not available.'));
+        }
+
         return $form;
     }
 
