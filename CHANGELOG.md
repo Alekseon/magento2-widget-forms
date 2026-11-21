@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Changed
 - moved `.control.multi-columns` styles (view/frontend/web/css/source/_module.less) to Alekseon_CustomFormsFrontend module
+### Fixed
+- submit controller rejects forms which are not allowed to be used in widget (`can_use_for_widget`)
 
 ## [102.5.11]
 ### Fixed
