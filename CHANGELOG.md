@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
-## [Unreleased]
+## [102.5.13] - 2026-11-21
 ### Changed
 - moved `.control.multi-columns` styles (view/frontend/web/css/source/_module.less) to Alekseon_CustomFormsFrontend module
 ### Fixed
