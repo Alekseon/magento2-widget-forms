@@ -88,10 +88,11 @@ class FrontendView extends Template
 
         $fields = [];
         foreach ($form->getFieldsCollection() as $field) {
+            $typeConfig = $field->getFrontendInputTypeConfig();
             $fields[] = [
                 'id' => (string) $field->getId(),
-                'label' => (string) $field->getFrontendLabel(),
-                'type' => 'Text Field (MOCK)', // MOCK - frontend input label (InputType::getOptionArray())
+                'label' => $this->getFieldLabel($field),
+                'type' => $typeConfig ? (string) __($typeConfig->getLabel()) : (string) $field->getFrontendInput(),
                 'group_code' => (string) $field->getGroupCode(),
                 'sort_order' => (int) $field->getSortOrder(),
                 'width' => 100, // MOCK - saved getAttributeExtraParam('frontend_width'), validated, default 100
@@ -102,12 +103,29 @@ class FrontendView extends Template
             'multipleSteps' => (bool) $form->getEnableMultipleSteps(),
             'tabs' => $tabs,
             'fields' => $fields,
-            'widthOptions' => [ // MOCK - from source model (allowed widths 25 | 50 | 75 | 100)
-                ['value' => 25, 'label' => '25% (MOCK)'],
-                ['value' => 50, 'label' => '50% (MOCK)'],
-                ['value' => 75, 'label' => '75% (MOCK)'],
-                ['value' => 100, 'label' => '100% (MOCK)'],
+            'widthOptions' => [
+                ['value' => 25, 'label' => '25%'],
+                ['value' => 50, 'label' => '50%'],
+                ['value' => 75, 'label' => '75%'],
+                ['value' => 100, 'label' => '100%'],
             ],
         ]);
+    }
+
+    /**
+     * Field label; static fields (Static Text, Static Heading, CMS Block) have no label - show their content instead.
+     *
+     * @param \Alekseon\CustomFormsBuilder\Model\FormRecord\Attribute $field
+     * @return string
+     */
+    private function getFieldLabel($field): string
+    {
+        $label = (string) $field->getFrontendLabel();
+        if ($label === '') {
+            $content = $field->getInputParam('content') ?: $field->getInputParam('cms_block_id');
+            $label = mb_strimwidth(trim(strip_tags((string) $content)), 0, 50, '…');
+        }
+
+        return $label;
     }
 }

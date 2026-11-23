@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 ### Fixed
 ### Added
+- "Frontend View" fieldset in Widget Settings: drag & drop field order and field width (25 / 50 / 75 / 100%)
+- fields grid wrapper (`.widget-form-fields-grid`) in form tab template
 ### Removed
 
 ## [102.5.13] - 2026-11-21
