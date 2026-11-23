@@ -20,7 +20,9 @@
     <?php if ($block->getWidgetFormBlock()->getFormDescription()): ?>
         <div class="field note no-label"><?= $escaper->escapeHtmlAttr($block->getWidgetFormBlock()->getFormDescription()) ?></div>
     <?php endif ?>
-    <?= $block->getChildHtml() ?>
+    <div class="fieldset widget-form-fields-grid">
+        <?= $block->getChildHtml() ?>
+    </div>
 </fieldset>
 <div class="actions-toolbar"
      id="form-tab-actions-<?= $escaper->escapeHtmlAttr($block->getTab()->getTabSequenceNumber()) ?>"

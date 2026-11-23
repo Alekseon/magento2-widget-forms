@@ -1,0 +1,39 @@
+<?php
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
+
+/**
+ * @var \Alekseon\WidgetForms\Block\Adminhtml\Form\Edit\Tab\WidgetSettings\FrontendView $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+<div class="entry-edit form-inline">
+<fieldset class="fieldset admin__fieldset frontend-view" id="frontend_view_container">
+    <legend class="admin__legend legend">
+        <span><?= $escaper->escapeHtml(__('Frontend View')) ?></span>
+    </legend><br />
+    <table id="frontend_view_table" class="admin__control-table frontend-view-table">
+        <thead>
+            <tr>
+                <th class="col-draggable"></th>
+                <th class="col-label"><?= $escaper->escapeHtml(__('Field')) ?></th>
+                <th class="col-type"><?= $escaper->escapeHtml(__('Type')) ?></th>
+                <th class="col-width"><?= $escaper->escapeHtml(__('Width')) ?></th>
+            </tr>
+        </thead>
+    </table>
+</fieldset>
+</div>
+<script type="text/x-magento-init">
+{
+    "#frontend_view_table": {
+        "Alekseon_WidgetForms/js/form/edit/frontend-view": {
+            "data": <?= /* @noEscape */ $block->getFieldsJson() ?>,
+            "tabLinkSelector": "#form_tabs_form_widget_settings_tab",
+            "sortOrderStep": 10
+        }
+    }
+}
+</script>

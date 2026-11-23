@@ -6,9 +6,15 @@
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Alekseon_WidgetForms::css/frontend-view.css"/>
+    </head>
     <body>
         <referenceBlock name="form_edit_tabs">
-            <block class="Alekseon\WidgetForms\Block\Adminhtml\Form\Edit\Tab\WidgetSettings" name="form_widget_settings_tab"/>
+            <block class="Alekseon\WidgetForms\Block\Adminhtml\Form\Edit\Tab\WidgetSettings" name="form_widget_settings_tab">
+                <block class="Alekseon\WidgetForms\Block\Adminhtml\Form\Edit\Tab\WidgetSettings\FrontendView"
+                       name="form_widget_settings_frontend_view" as="form_after"/>
+            </block>
             <action method="addTab">
                 <argument name="name" xsi:type="string">form_widget_settings_tab</argument>
                 <argument name="block" xsi:type="string">form_widget_settings_tab</argument>

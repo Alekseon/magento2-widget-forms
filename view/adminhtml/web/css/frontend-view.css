@@ -1,0 +1,51 @@
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ *
+ * "Frontend View" fieldset in Widget Settings tab (form edit). Table rules scoped to #frontend_view_table.
+ */
+#frontend_view_table {
+    width: 100%;
+}
+
+#frontend_view_table .col-draggable {
+    width: 3rem;
+    text-align: center;
+}
+
+#frontend_view_table .col-width {
+    width: 12rem;
+}
+
+#frontend_view_table tr.frontend-view-row {
+    background: #fff;
+    cursor: grab;
+}
+
+#frontend_view_table tr.frontend-view-row.ui-sortable-helper {
+    cursor: grabbing;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+}
+
+#frontend_view_table .draggable-handle:before {
+    font-family: 'Admin Icons';
+    content: '\e617';
+    font-size: 1.8rem;
+    color: #9e9e9e;
+}
+
+#frontend_view_table tr.frontend-view-row:hover .draggable-handle:before {
+    color: #514943;
+}
+
+#frontend_view_table tr.frontend-view-placeholder {
+    height: 4.2rem;
+    background: #e5f7fe;
+    outline: 1px dashed #007bdb;
+}
+
+#frontend_view_table .frontend-view-group-header th {
+    background: #f1f1f1;
+    font-weight: 600;
+    text-align: left;
+}

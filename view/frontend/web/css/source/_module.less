@@ -1,9 +1,36 @@
 
+//
+//  Frontend View: fields grid (widths configured in admin "Frontend View" tab)
+//  _____________________________________________
+
+& when (@media-common = true) {
+  .fieldset > .fieldset.widget-form-fields-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: @indent__base;
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+    > .field {
+      grid-column: span 12;
+      min-width: 0;
+    }
+  }
+}
+
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
   .control.multi-columns {
     display: grid;
     grid-auto-flow: column;
     grid-template-rows: repeat(6, auto);
     column-gap: 10px;
+  }
+
+  .fieldset > .fieldset.widget-form-fields-grid {
+    > .field-width-25 { grid-column: span 3; }
+    > .field-width-50 { grid-column: span 6; }
+    > .field-width-75 { grid-column: span 9; }
+    > .field-width-100 { grid-column: span 12; }
   }
 }
