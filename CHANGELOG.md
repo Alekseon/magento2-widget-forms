@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Removed
 
+## [102.5.13] - 2026-11-21
+### Changed
+- moved `.control.multi-columns` styles (view/frontend/web/css/source/_module.less) to Alekseon_CustomFormsFrontend module
+### Fixed
+- submit controller rejects forms which are not allowed to be used in widget (`can_use_for_widget`)
+
 ## [102.5.12] - 2026-11-16
 ### Fixed
 - fixed success page redirect ignoring widget options
@@ -33,6 +39,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [102.5.7] - 2026-02-11
 ### Fixed
 - fix error element ID already exists when Blocks HTML output cache is disabled.
+<<<<<<< HEAD
+### Changed
 - cache key include default values, for ask about product, sku value were cached.
 
 ## [102.5.6] - 2025-06-17
